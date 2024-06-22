@@ -1,0 +1,4 @@
+###Prueba
+GET  http://localhost:3000/workers
+##Content-Type: application/json{}
+
