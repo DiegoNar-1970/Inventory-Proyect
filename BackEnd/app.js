@@ -1,5 +1,6 @@
-import express, { json } from 'express';
+import express, { json, response } from 'express';
 import mongoose from 'mongoose';
+import notFound from './src/middlewares/notFound.js'
 import dot from 'dotenv';
 import { workerRouter } from './src/routes/Empleado.js';
 dot.config();
@@ -11,7 +12,7 @@ app.disable('x-powered-by');
 
 app.use('/workers',workerRouter)
 
-
+app.use(notFound);
 
 mongoose
 .connect(process.env.MONGODB_URI)
