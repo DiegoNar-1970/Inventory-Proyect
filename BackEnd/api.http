@@ -1,18 +1,31 @@
-###Prueba
-GET  http://localhost:3000/workers
+### Get id
+GET  http://localhost:3000/profile?id=667855e820fa11ca9ed31951
+
+### Get all
+GET  http://localhost:3000/profile
 
 ###Agregar un perfil
-
-POST http://localhost:3000/workers 
+POST http://localhost:3000/profile 
 Content-Type: application/json
 
 {
-  "cc": 1,
-  "name": "John",
-  "lastName": "Doe",
-  "birthdate": "1990-01-01T00:00:00.000Z",
-  "sex": "male",
-  "phone": 1,
-  "email": "john.doe@example.com",
-  "eps": "Health Insurance A"
+  "cc": 1004688991,
+  "name": "Diego",
+  "lastName": "Naranjo",
+  "birthdate": "2003-03-03T00:00:00.000Z",
+  "sex": "man",
+  "phone": 3107088958,
+  "email": "diegonaranjo303@gmail.com",
+  "eps": "AIC"
 }
+###Update
+PATCH  http://localhost:3000/profile/667855e820fa11ca9ed31951
+Content-Type: application/json
+
+{
+  "cc":1004688923,
+  "name":"rodolfo"
+}
+
+###Delete
+DELETE  http://localhost:3000/profile/667897ec23dbd8c8c16fda8d

@@ -14,5 +14,5 @@ const profileSchema = new Schema({
     employe:{type:mongoose.Schema.Types.ObjectId, ref:'Employe'}
 });
 
-const Perfil = mongoose.model('Profile',profileSchema);
-export default  Perfil;
+const Profile = mongoose.model('Profile',profileSchema);
+export default  Profile;

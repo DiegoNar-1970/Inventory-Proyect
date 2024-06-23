@@ -2,7 +2,7 @@ import express from 'express';
 import mongoose from 'mongoose';
 import {notFound} from './src/middlewares/notFound.js'
 import dot from 'dotenv';
-import { workerRouter } from './src/routes/Empleado.js';
+import { profileRouter } from './src/routes/profileRouter.js';
 
 dot.config();
 
@@ -13,7 +13,7 @@ app.use(express.json());
 app.disable('x-powered-by');
 
 
-app.use('/workers',workerRouter)
+app.use('/profile',profileRouter)
 
 app.use(notFound);
 
