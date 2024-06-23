@@ -1,7 +1,5 @@
 import {Router} from 'express';
-
+import {profileController} from '../controllers/profile.js'
 export const workerRouter=Router();
 
-workerRouter.get('/',(req,res)=>{
-    res.send("Hello word")
-});
+workerRouter.post ('/', profileController.create);

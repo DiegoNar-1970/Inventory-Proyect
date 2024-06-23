@@ -1,15 +1,18 @@
 import mongoose from "mongoose";
-const {Shema}=mongoose
 
-const perfilShema = new Shema({
-    identificacion:{ required:true },
-    name:{ required:true },
-    apellido:{ required:true },
-    fechaNacimiento:{ required:true },
-    sexo:{ required:true },
-    telefono:{ required:true },
-    correo:{ required:true },
-    eps:{ required:true }
+const {Schema}=mongoose
+
+const profileSchema = new Schema({
+    cc: { type: Number, required: true },
+    name: { type: String, required: true },
+    lastName: { type: String, required: true },
+    birthdate: { type: String, required: true },
+    sex: { type: String, required: true },
+    phone: { type: Number, required: true },
+    email: { type: String, required: true },
+    eps: { type: String, required: true },
+    employe:{type:mongoose.Schema.Types.ObjectId, ref:'Employe'}
 });
-const Perfil = mongoose.model('Perfil',perfilShema);
+
+const Perfil = mongoose.model('Profile',profileSchema);
 export default  Perfil;

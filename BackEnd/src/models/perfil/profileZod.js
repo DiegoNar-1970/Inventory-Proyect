@@ -1,23 +1,24 @@
 import z from 'zod'
 
-const profileShema = z.object({
-    identificacion: z.number({
+const profileSchema = z.object({
+    cc: z.number({
     invalid_type_error: 'Movie title must be a string',
     required_error: 'Movie title is required.'
-  }),
-  name: z.string().default('none'),
-  apellido: z.string().default('none'),
-  fechaNacimiento: z.date().default('none'),
-  sexo: z.string().default('none'),
-  telefono: z.number().min(1).max(999999999).default('none'),
-  correo: z.string().default('none'),
-  eps:z.string().default('none')
+  }).min(1).max(99999999999),
+  name: z.string(),
+  lastName: z.string(),
+  birthdate: z.string(),
+  sex: z.string(),
+  phone: z.number().min(1).max(99999999999),
+  email: z.string(),
+  eps:z.string(),
+  empolye:z.object().optional()
 })
 
 export function validateProfile (input) {
-  return profileShema.safeParse(input)
+  return profileSchema.safeParse(input)
 }
 
 export function validatePartialProfile (input) {
-  return profileShema.partial().safeParse(input)
+  return profileSchema.partial().safeParse(input)
 }

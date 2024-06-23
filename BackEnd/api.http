@@ -1,4 +1,18 @@
 ###Prueba
 GET  http://localhost:3000/workers
-##Content-Type: application/json{}
 
+###Agregar un perfil
+
+POST http://localhost:3000/workers 
+Content-Type: application/json
+
+{
+  "cc": 1,
+  "name": "John",
+  "lastName": "Doe",
+  "birthdate": "1990-01-01T00:00:00.000Z",
+  "sex": "male",
+  "phone": 1,
+  "email": "john.doe@example.com",
+  "eps": "Health Insurance A"
+}
