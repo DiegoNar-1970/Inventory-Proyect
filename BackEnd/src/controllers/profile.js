@@ -10,9 +10,9 @@ export class profileController{
         try{
             const newProfile = new Profile(result.data)
             const saveProfile= await newProfile.save()
-            res.status(201).json(saveProfile)
+            return res.status(201).json(saveProfile)
         }catch(err){
-            res.status(400).json({message:'Bad Request'})
+           return res.status(400).json({message:'Bad Request'})
         }
     }
 
@@ -22,15 +22,15 @@ export class profileController{
             try{
                 const profileFind = await Profile.findById(id);
                 console.log(profileFind);
-                res.send(profileFind);
+                return res.send(profileFind);
             }catch(err){
-                res.status(404).json({message:'Not Found'});
-            }
+                return res.status(404).json({message:'Not Found'});
+        }
         try{
             const profiles= await Profile.find();
-            res.send(profiles);
+            return res.send(profiles);
         }catch(err){
-            res.status(400).json({message:'Bad request'});
+            return res.status(400).json({message:'Bad request'});
         }
     }
 
@@ -42,9 +42,9 @@ export class profileController{
         try{
             const {id}=req.params;
             const updateProfile = await Profile.findByIdAndUpdate(id,result.data,{new:true});
-            res.send(updateProfile);
+           return res.send(updateProfile);
         }catch(err){
-            res.status(400).json({message:'Bad request'});
+            return res.status(400).json({message:'Bad request'});
         }
     }
     static async deleteProfile(req,res){
@@ -52,9 +52,9 @@ export class profileController{
             const {id} =req.params;
             const deletedInfo= await Profile.findById(id);
             const deleted= await Profile.deleteOne({_id:id});
-            res.status(200).json({deleted:deletedInfo,info:deleted});
+            return res.status(200).json({deleted:deletedInfo,info:deleted});
         }catch(err){
-            res.status(400).json({message:'Bad request'});
+            return res.status(400).json({message:'Bad request'});
         }
 
     }

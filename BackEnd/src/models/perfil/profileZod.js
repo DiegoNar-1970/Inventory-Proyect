@@ -12,7 +12,6 @@ const profileSchema = z.object({
   phone: z.number().min(1).max(99999999999),
   email: z.string(),
   eps:z.string(),
-  empolye:z.object().optional()
 })
 
 export function validateProfile (input) {

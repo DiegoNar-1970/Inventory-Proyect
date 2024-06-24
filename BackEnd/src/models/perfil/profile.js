@@ -11,7 +11,6 @@ const profileSchema = new Schema({
     phone: { type: Number, required: true },
     email: { type: String, required: true },
     eps: { type: String, required: true },
-    employe:{type:mongoose.Schema.Types.ObjectId, ref:'Employe'}
 });
 
 const Profile = mongoose.model('Profile',profileSchema);
