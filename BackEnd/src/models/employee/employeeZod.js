@@ -1,19 +1,23 @@
 import z from 'zod'
 
 const employeeSchema = z.object({
-    position: z.string({
-    invalid_type_error: 'Employee position just be a string',
-    required_error: 'Employee position is required.'
-  }),
+  admissionDate:z.date({
+      invalid_type_error: 'admissionDate just be a date',}).optional,
+
+  position: z.string({
+      invalid_type_error: 'Employee position just be a string',
+      required_error: 'Employee position is required.'}),
+
   area: z.string({
-    invalid_type_error: 'Employee area just be a string',
-    required_error: 'Employee area is required.'}).default('none'),
+      invalid_type_error: ' area just be a string',
+      required_error: ' area is required.'}),
+
   shift: z.string({
-    invalid_type_error: 'Employee position just be a string',
-    required_error: 'Employee position is required.'}).default('none'),
+      invalid_type_error: 'shift just be a string',
+      required_error: 'shift is required.'}),
+
   profile: z.object({
-    invalid_type_error: 'Employee profile just be a ProfileObject',
-    required_error: 'Employee profile is required.'}).optional()
+      invalid_type_error: 'profile just be a ProfileSchema'}).optional()
 })
 
 export function validateEmployeeSchema(input) {

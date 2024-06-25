@@ -2,6 +2,7 @@ import mongoose from "mongoose";
 const {Schema}=mongoose;
 
 const employeeSchema = new Schema({
+    admissionDate:{type:date,default:Date.now},
     position:{ type: String, required: true },
     area:{ type: String, required: true },
     shift:{ type: String, required: true },
