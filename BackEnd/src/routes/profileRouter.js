@@ -5,5 +5,6 @@ export const profileRouter=Router();
 
 profileRouter.post ('/', profileController.create);
 profileRouter.get ('/', profileController.getAll);
+profileRouter.get ('/', profileController.findCc);
 profileRouter.delete('/:id', profileController.deleteProfile);
 profileRouter.patch('/:id', profileController.updateProfile);

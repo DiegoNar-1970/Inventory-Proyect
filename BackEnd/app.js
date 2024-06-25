@@ -21,7 +21,6 @@ app.use(notFound);
 mongoose
 .connect(process.env.MONGODB_URI)
 .then(()=>{
-    console.log('completed')
         const PORT = process.env.PORT ?? 3000;
         app.listen(PORT,()=>{
         console.log(`server listening on port http://localhost:${PORT}`)

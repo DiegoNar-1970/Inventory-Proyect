@@ -1,5 +1,5 @@
-import Profile  from '../models/perfil/profile.js'
-import {validateProfile,validatePartialProfile} from '../models/perfil/profileZod.js'
+import Profile  from '../models/profile/profile.js'
+import {validateProfile,validatePartialProfile} from '../models/profile/profileZod.js'
 
 export class profileController{
     static async create (req,res) {
@@ -12,7 +12,19 @@ export class profileController{
             const saveProfile= await newProfile.save()
             return res.status(201).json(saveProfile)
         }catch(err){
-           return res.status(400).json({message:'Bad Request'})
+            if(err.code==11000){
+                return res.status(400).json({message:"duplicate key"})
+            }
+            return res.status(400).json({message:err})
+        }
+    }   
+    static async findCc(req,res){
+        try{
+            const {cc}=req.query;
+            const profile = await Profile.findOne({cc:cc});
+           return res.status(201).json(profile);
+        }catch(err){
+            res.status(404).json({message:`Cc ${cc} not found` })
         }
     }
 
@@ -20,14 +32,13 @@ export class profileController{
         const {id} =req.query ;
         if(id)
             try{
-                const profileFind = await Profile.findById(id);
-                console.log(profileFind);
+                const profileFind = await Profile.findById(id, {__v:0});
                 return res.send(profileFind);
             }catch(err){
                 return res.status(404).json({message:'Not Found'});
         }
         try{
-            const profiles= await Profile.find();
+            const profiles= await Profile.find({}, {__v:0});
             return res.send(profiles);
         }catch(err){
             return res.status(400).json({message:'Bad request'});

@@ -1,7 +1,7 @@
 import mongoose from "mongoose";
 const {Schema}=mongoose;
 
-const employeSchema = new Schema({
+const employeeSchema = new Schema({
     position:{ type: String, required: true },
     area:{ type: String, required: true },
     shift:{ type: String, required: true },
@@ -10,6 +10,6 @@ const employeSchema = new Schema({
     }]
 });
 
-const Employe=mongoose.model('Employe',employeSchema);
+const Employee=mongoose.model('Employee',employeeSchema);
 
-export default Employe;
+export default Employee;

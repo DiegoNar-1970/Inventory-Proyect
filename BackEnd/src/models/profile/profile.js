@@ -3,7 +3,7 @@ import mongoose from "mongoose";
 const {Schema}=mongoose
 
 const profileSchema = new Schema({
-    cc: { type: Number, required: true },
+    cc: { type: Number, required: true, unique:true},
     name: { type: String, required: true },
     lastName: { type: String, required: true },
     birthdate: { type: String, required: true },
