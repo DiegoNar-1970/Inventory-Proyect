@@ -6,7 +6,7 @@ const workHourSchema = new Schema({
     employee: { type: mongoose.Schema.Types.ObjectId, ref: 'Employee', required: true },
     week: { type: Number, required: true },
     dayHour: { type: date},
-    date: { type: date, default:Date.now },
+    date: { type: date, default:Date.now() },
     holiday:[{type:Boolean},{type:number}]
   });
   

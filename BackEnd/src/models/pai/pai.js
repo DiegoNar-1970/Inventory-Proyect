@@ -4,7 +4,7 @@ const {Schema}=mongoose
 const paiSchema=new Schema({
     employe:{type:Schema.Types.ObjectId,ref:'Employee'},
     pai:{type:number},
-    date:{type:Date,default:Date.now},
+    date:{type:Date,default:Date.now()},
     week:{type:number},
     news:{type:Schema.Types.ObjectId,ref:'News'},
 })

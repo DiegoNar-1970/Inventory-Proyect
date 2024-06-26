@@ -2,7 +2,7 @@ import z from 'zod'
 
 const employeeSchema = z.object({
   admissionDate:z.date({
-      invalid_type_error: 'admissionDate just be a date',}).optional,
+      invalid_type_error: 'admissionDate just be a date',}).optional(),
 
   position: z.string({
       invalid_type_error: 'Employee position just be a string',
@@ -21,9 +21,9 @@ const employeeSchema = z.object({
 })
 
 export function validateEmployeeSchema(input) {
-  return employeeSchema.safeParse(input)
+  return employeeSchema.safeParse(input);
 }
 
 export function validatePartialEmployee (input) {
-  return employeeSchema.partial().safeParse(input)
+  return employeeSchema.partial().safeParse(input);
 }

@@ -6,7 +6,7 @@ const permissionSche = new Schema({
     reason: { type: String, required: true },
     paiState: { type: Boolean, required: true },
     paiValue: { type: Number, required: true },
-    startDate: { type: Date, default:Date.now},
+    startDate: { type: Date, default:Date.now()},
     endDate: { type: Date, required: true },
   });
   

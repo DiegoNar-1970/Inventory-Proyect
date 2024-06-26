@@ -2,6 +2,7 @@ import mongoose from 'mongoose';
 import Employee from '../models/employee/employee.js'
 import { validateEmployeeSchema } from '../models/employee/employeeZod.js';
 import Profile from '../models/profile/profile.js';
+import {EmployeeModel} from '../models/employee/employee.js'
 
 
 export class employeeController{
@@ -14,11 +15,12 @@ export class employeeController{
                     {cc:1, name:1, lastName:1, sex:1,
                         phone:1, email:1, eps:1, _id:0, _v:0
                     });
-                    mongoose.connection.close();
-                return res.status(201).json(employeeId);
+                    
+                return (res.status(201).json(employeeId),
+                    mongoose.connection.close());
             }catch(err){
-                mongoose.connection.close();
-                return res.status(404).json({message:"Employee not Found"})
+                return (res.status(404).json({message:"Employee not Found"}),
+                    mongoose.connection.close());
             }
         }
         
@@ -28,34 +30,63 @@ export class employeeController{
                     phone:1, email:1, eps:1, _id:0
                 }
             );
-            mongoose.connection.close();
+
             res.send(allEmployees)
         }catch(err){
-            res.status(400).json({message:'Bad request'});
+            
+           return (res.status(400).json({message:'Bad request'}),
+           mongoose.connection.close());
         }
         
     }
     static async create (req,res){
         const result=validateEmployeeSchema(req.body)
         if(!result.success){
-            mongoose.connection.close();
-            return res.status(400).json({error:JSON.parse(result.error.message)})
+            
+            return (res.status(400).json({error:JSON.parse(result.error.message)}),
+            mongoose.connection.close());
         }
         try{
             const {id} = req.params;
             const profile= await Profile.findById(id);
             if(!profile){
-                mongoose.connection.close();
-                return res.status(404).json({ message: 'Profile not found' });
+                
+                return (res.status(404).json({ message: 'Profile not found' }),
+                mongoose.connection.close());
             }
             const newEmploye = new Employee(result.data);
             newEmploye.profile=newEmploye.profile.concat(profile);
             const saveEmployee= await newEmploye.save();
-            mongoose.connection.close();
-           return res.send(saveEmployee);
+            
+           return (res.send(saveEmployee) ,mongoose.connection.close())  ;
         }catch(err){
-            mongoose.connection.close();
-            res.status(400).json({message:err});
+            
+            return (res.status(400).json({message:err}),
+            mongoose.connection.close());
         }
+    }
+    static async update(req,res){
+        try{
+            const result=req.body;
+            const {id} =req.params;
+            const employeeUpd= await EmployeeModel.findByIdAndUpdate(id,result);
+            console.log(employeeUpd)
+            return (res.send(employeeUpd) , mongoose.connection.close());
+        }catch(err){
+            res.status(404).json({message:err.message})
+        }
+
+    }
+
+    static async delete(req,res){
+        try{
+            const {id}=req.params
+            await EmployeeModel.fidnAndDelete(id);
+            return (res.status(201).json({message:'Employee deleted'}),
+            mongoose.connection.close());
+        }catch(err){
+            res.status(404).json({message:err})
+        }
+
     }
 }
