@@ -7,22 +7,22 @@ make error  []
 ###############!!!-----code errors-------!!!###################
 controllerWorkHour
 i cant be a feedback
-    //     const {id}=req.params;
-    //     const result= req.body;;
-    //     if(!result || !id){
-    //         return res.status(400).json({message:'insufficient params'})
-    //     }
-    //     try{
-    //         const newWorkH =await WorkHourModel.create(id,result.data)
-    //         console.log(newWorkH);
-    //         const saveNewWork=newWorkH.save();
-    //         return res.send(saveNewWork), mongoose.connection.close();
+        const {id}=req.params;
+        const result= req.body;;
+        if(!result || !id){
+            return res.status(400).json({message:'insufficient params'})
+        }
+        try{
+            const newWorkH =await WorkHourModel.create(id,result.data)
+            console.log(newWorkH);
+            const saveNewWork=newWorkH.save();
+            return res.send(saveNewWork), mongoose.connection.close();
     
-    //     }catch(err){
-    //         return res.status(400).json({message:err})            
-    //     }
+        }catch(err){
+            return res.status(400).json({message:err})            
+        }
         
-    // 
+        
         static async create(req,res){
         const { id } = req.params;
     const result = req.body;
@@ -43,33 +43,36 @@ i cant be a feedback
     }
     Zod from workHour 
     // import z from "zod";
+    import z from "zod";
 
-// const holidaySchema = z.object({
-//   isHoliday: z.boolean(),
-//   holidayNumber: z.number()
-// });
-
-// const workHourSchemaZod = z.object({
-//     employee: z.object().optional(),
-//     week: z.number(),
-//     dayHour: z.number().min(0).max(24).optional(),
-//     date:z.date().optional(),
-//     holiday:z.array(holidaySchema).optional
-//   });
-
-//   export function vWorkHourSchemaZod (input) {
-//     return workHourSchemaZod.safeParse(input)
-//   }
-  
-//   export function vPworkHourSchemaZod (input) {
-//     return workHourSchemaZod.partial().safeParse(input)
-//   }
 const holidaySchema = z.object({
   isHoliday: z.boolean(),
   holidayNumber: z.number()
 });
 
-// Definición del esquema principal
+const workHourSchemaZod = z.object({
+    employee: z.object().optional(),
+    week: z.number(),
+    dayHour: z.number().min(0).max(24).optional(),
+    date:z.date().optional(),
+    holiday:z.array(holidaySchema).optional
+  });
+
+  export function vWorkHourSchemaZod (input) {
+    return workHourSchemaZod.safeParse(input)
+  }
+  
+  export function vPworkHourSchemaZod (input) {
+    return workHourSchemaZod.partial().safeParse(input)
+  }
+
+
+
+const holidaySchema = z.object({
+  isHoliday: z.boolean(),
+  holidayNumber: z.number()
+});
+
 const workHourSchemaZod = z.object({
   employee: z.string().optional(),
   dayHour: z.number().min(0).max(24).optional(),
@@ -85,20 +88,23 @@ export function vPworkHourSchemaZod(input) {
   return workHourSchemaZod.partial().safeParse(input);
 }
 worHourModel
-      // const result= await vWorkHourSchemaZod(data);
-      //   console.log(result.error.message);
-      //   if(!result.success){
-      //     console.log(result.err,result);
-      //       return {message:result.error.message}
-      //   }
-      // try{
-      //   const newWorkH = await new WorkHour(data);
-      //   const employee = await Employee.findById(id);
-      //   newWorkH.employee=newWorkH.employee.concat(employee);
-      //   return newWorkH
-      // }catch(err){
-      //   return {message:err}
-      // }
+
+      const result= await vWorkHourSchemaZod(data);
+        console.log(result.error.message);
+        if(!result.success){
+          console.log(result.err,result);
+            return {message:result.error.message}
+        }
+      try{
+        const newWorkH = await new WorkHour(data);
+        const employee = await Employee.findById(id);
+        newWorkH.employee=newWorkH.employee.concat(employee);
+        return newWorkH
+      }catch(err){
+        return {message:err}
+      }
+
+
         export class WorkHourModel
     static async create(id,data){
       console.log("Datos recibidos para la validación:", data);
