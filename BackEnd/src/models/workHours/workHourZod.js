@@ -1,0 +1,22 @@
+import { z } from "zod";
+
+const holidaySchema = z.object({
+  isHoliday: z.boolean(),
+  holidayNumber: z.number()
+});
+
+// Definición del esquema principal
+const workHourSchemaZod = z.object({
+  employee: z.string().optional(),
+  dayHour: z.number().min(0).max(24).optional(),
+  date: z.date().optional(),
+  holiday: z.array(holidaySchema).optional()
+});
+
+export function vWorkHourSchemaZod(input) {
+  return workHourSchemaZod.safeParse(input);
+}
+
+export function vPworkHourSchemaZod(input) {
+  return workHourSchemaZod.partial().safeParse(input);
+}

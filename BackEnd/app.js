@@ -5,6 +5,7 @@ import dot from 'dotenv';
 import { profileRouter } from './src/routes/profileRouter.js';
 import { employeeRouter } from './src/routes/employeeRouter.js';
 import { newsRouter } from './src/routes/news.js';
+import  {workHourRouter} from './src/routes/worHours.js'
 
 dot.config();
 
@@ -15,9 +16,10 @@ app.use(express.json());
 app.disable('x-powered-by');
 
 
-app.use('/profile',profileRouter)
-app.use('/employee',employeeRouter)
-app.use('/news',newsRouter)
+app.use('/profile',profileRouter);
+app.use('/employee',employeeRouter);
+app.use('/news',newsRouter);
+app.use('/workHour',workHourRouter);
 
 app.use(notFound);
 

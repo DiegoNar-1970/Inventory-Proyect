@@ -16,11 +16,10 @@ export class employeeController{
                         phone:1, email:1, eps:1, _id:0, _v:0
                     });
                     
-                return (res.status(201).json(employeeId),
-                    mongoose.connection.close());
+                return res.status(201).json(employeeId)
+                    ;
             }catch(err){
-                return (res.status(404).json({message:"Employee not Found"}),
-                    mongoose.connection.close());
+                return res.status(404).json({message:"Employee not Found"});
             }
         }
         
@@ -34,8 +33,8 @@ export class employeeController{
             res.send(allEmployees)
         }catch(err){
             
-           return (res.status(400).json({message:'Bad request'}),
-           mongoose.connection.close());
+           return res.status(400).json({message:'Bad request'})
+           ;
         }
         
     }
@@ -43,26 +42,24 @@ export class employeeController{
         const result=validateEmployeeSchema(req.body)
         if(!result.success){
             
-            return (res.status(400).json({error:JSON.parse(result.error.message)}),
-            mongoose.connection.close());
+            return res.status(400).json({error:JSON.parse(result.error.message)});
         }
         try{
             const {id} = req.params;
             const profile= await Profile.findById(id);
             if(!profile){
                 
-                return (res.status(404).json({ message: 'Profile not found' }),
-                mongoose.connection.close());
+                return (res.status(404).json({ message: 'Profile not found' }))
             }
             const newEmploye = new Employee(result.data);
             newEmploye.profile=newEmploye.profile.concat(profile);
             const saveEmployee= await newEmploye.save();
             
-           return (res.send(saveEmployee) ,mongoose.connection.close())  ;
+           return res.send(saveEmployee) ;
         }catch(err){
             
-            return (res.status(400).json({message:err}),
-            mongoose.connection.close());
+            return res.status(400).json({message:err})
+            ;
         }
     }
     static async update(req,res){
@@ -71,7 +68,7 @@ export class employeeController{
             const {id} =req.params;
             const employeeUpd= await EmployeeModel.findByIdAndUpdate(id,result);
             console.log(employeeUpd)
-            return (res.send(employeeUpd) , mongoose.connection.close());
+            return res.send(employeeUpd) ;
         }catch(err){
             res.status(404).json({message:err.message})
         }
@@ -82,8 +79,8 @@ export class employeeController{
         try{
             const {id}=req.params
             await EmployeeModel.fidnAndDelete(id);
-            return (res.status(201).json({message:'Employee deleted'}),
-            mongoose.connection.close());
+            return res.status(201).json({message:'Employee deleted'})
+            ;
         }catch(err){
             res.status(404).json({message:err})
         }
