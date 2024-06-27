@@ -10,6 +10,21 @@ export class NewsController{
         }catch(err){
             return res.status(404).json({message:err})
         }
-        
+    }
+    static async create(req,res){
+        const {id}=req.params;
+        if(!id){
+            res.status(400).json({message:'arguments required'})
+        }
+        try{
+            const news = await NewsModel.create(id,req.body);
+            if(news.message){
+                return res.status(400).json({message:news.message,
+                    error:news.error
+                });}
+                return res.send(news)
+        }catch(err){
+            return res.status(404).json({message:err})
+        }
     }
 }

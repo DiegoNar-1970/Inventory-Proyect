@@ -1,4 +1,5 @@
 import express from 'express';
+import cron from 'node-cron'
 import mongoose from 'mongoose';
 import {notFound} from './src/middlewares/notFound.js'
 import dot from 'dotenv';
@@ -6,7 +7,7 @@ import { profileRouter } from './src/routes/profileRouter.js';
 import { employeeRouter } from './src/routes/employeeRouter.js';
 import { newsRouter } from './src/routes/news.js';
 import  {workHourRouter} from './src/routes/worHours.js'
-
+import addAnnualVacation  from './src/helpers/addForYear.js';
 dot.config();
 
 const app = express();
@@ -29,6 +30,7 @@ mongoose
         const PORT = process.env.PORT ?? 3000;
         app.listen(PORT,()=>{
         console.log(`server listening on port http://localhost:${PORT}`)
+        cron.schedule('0 0 1 * *', addAnnualVacation);
     });
 })
 

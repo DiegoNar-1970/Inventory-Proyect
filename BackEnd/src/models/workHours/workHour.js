@@ -4,7 +4,9 @@ import Employee from "../employee/employee.js";
 const {Schema}=mongoose
 
 const workHourSchema = new Schema({
-    employee: { type: mongoose.Schema.Types.ObjectId, ref: 'Employee'},
+    employee: { 
+      type: mongoose.Schema.Types.ObjectId, ref: 'Employee'
+    },
     week: { type: Number },
     dayHour: { type: Number},
     date: { type: Date, default:Date.now() },
@@ -34,5 +36,23 @@ const workHourSchema = new Schema({
         return { message: err.message };
       }
     }
-
+    static async getAll(id=0){
+      if(id!=0){
+        try{
+          const worHour = await WorkHour.findById(id,{__v:0});
+          if(worHour==undefined){
+            return {message:'not found'}
+          }
+          return worHour;
+        }catch(err){
+          return {message:err.message};
+        }
+      }
+      try{
+        const worHours=await WorkHour.find({},{__v:0});
+        return worHours;
+      }catch(err){
+        return {message:err.message};
+      }
+    }
     }

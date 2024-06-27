@@ -13,7 +13,7 @@ export class employeeController{
             try{
                 const employeeId = await Employee.findById(id,{__v:0}).populate('profile',
                     {cc:1, name:1, lastName:1, sex:1,
-                        phone:1, email:1, eps:1, _id:0, _v:0
+                        phone:1, email:1, eps:1, _id:0, __v:0
                     });
                     
                 return res.status(201).json(employeeId)
