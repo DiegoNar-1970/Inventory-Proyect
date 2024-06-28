@@ -12,12 +12,8 @@ export class NewsController{
         }
     }
     static async create(req,res){
-        const {id}=req.params;
-        if(!id){
-            res.status(400).json({message:'arguments required'})
-        }
         try{
-            const news = await NewsModel.create(id,req.body);
+            const news = await NewsModel.create(req.body);
             if(news.message){
                 return res.status(400).json({message:news.message,
                     error:news.error

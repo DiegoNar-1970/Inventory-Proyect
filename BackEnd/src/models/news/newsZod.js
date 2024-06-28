@@ -1,10 +1,6 @@
 import z from 'zod'
 
 const newsSchema=z.object({
-    employee: z.string({
-        invalid_type_error: 'employee just be a string',
-        required_error: 'employee is required.'}).optional(),
-
     week: z.number({
         invalid_type_error: 'week just be a number',
         required_error: 'week is required.'}).min(1).max(60).nonnegative(),
