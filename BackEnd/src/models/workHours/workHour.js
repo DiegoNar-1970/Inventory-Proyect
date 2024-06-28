@@ -13,7 +13,7 @@ const workHourSchema = new Schema({
     holiday: {
       type: [{
           isHoliday: { type: Boolean },
-          holidayNumber: { type: Number }
+          hrsHoliday: { type: Number }
       }]}
   });
   

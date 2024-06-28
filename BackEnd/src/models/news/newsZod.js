@@ -1,9 +1,15 @@
 import z from 'zod'
 
 const newsSchema=z.object({
-    week: z.number({
-        invalid_type_error: 'week just be a number',
-        required_error: 'week is required.'}).min(1).max(60).nonnegative(),
+    employee: z.string({
+        invalid_type_error: 'employee just be a string',
+        required_error: 'employee is required.'}).optional(),
+
+        week: z.array(z.number({
+            invalid_type_error: 'week must be a number'
+        })).nonempty({
+            message: 'week array cannot be empty'
+        }),
   
     date: z.date({
         invalid_type_error: 'date just be a date'}).optional(),

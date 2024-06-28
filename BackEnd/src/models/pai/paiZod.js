@@ -12,9 +12,11 @@ const paiSchema=z.object({
         date: z.date({
             invalid_type_error: 'date just be a date'}).optional(),
 
-        week: z.number({
-            invalid_type_error: 'week just be a number',
-            required_error: 'date is required.'}).nonnegative().min(0).max(60),
+            week: z.array(z.number({
+                invalid_type_error: 'week must be a number'
+            })).nonempty({
+                message: 'week array cannot be empty'
+            }),
 
         news: z.object({
             invalid_type_error: 'news just be a instance of News',})

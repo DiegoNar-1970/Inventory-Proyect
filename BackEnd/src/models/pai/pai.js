@@ -8,7 +8,7 @@ const paiSchema=new Schema({
     employee:{type:Schema.Types.ObjectId,ref:'Employee'},
     pai:{type:Number},
     date:{type:Date,default:Date.now()},
-    week:{type:Number},
+    week:[{type:Number}],
     news:{type:Schema.Types.ObjectId,ref:'News',
         optional:true
     },
@@ -50,7 +50,7 @@ export class PaiModel{
         const result= await validatePartiaPaiSchema(data);
         if(!result.success){
             return {message:'validation error',
-                err:result.error.errors
+                err:result.error
             }
         }
         try{
