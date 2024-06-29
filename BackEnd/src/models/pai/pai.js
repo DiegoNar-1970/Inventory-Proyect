@@ -1,15 +1,15 @@
 import mongoose from "mongoose";
-const {Schema}=mongoose
+const {Schema,Types}=mongoose
 import {validatePartiaPaiSchema} from './paiZod.js'
 import  Employee from '../employee/employee.js'
 import News from '../news/news.js'
 
 const paiSchema=new Schema({
-    employee:{type:Schema.Types.ObjectId,ref:'Employee'},
-    pai:{type:Number},
+    employee:{type:Types.ObjectId,ref:'Employee'},
+    pai:{type:Types.Decimal128},
     date:{type:Date,default:Date.now()},
     week:[{type:Number}],
-    news:{type:Schema.Types.ObjectId,ref:'News',
+    news:{type:Types.ObjectId,ref:'News',
         optional:true
     },
 })

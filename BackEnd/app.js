@@ -8,6 +8,8 @@ import { employeeRouter } from './src/routes/employeeRouter.js';
 import { newsRouter } from './src/routes/news.js';
 import  {workHourRouter} from './src/routes/worHours.js'
 import {paiRouter} from './src/routes/pai.js'
+import {infoPaimentRouter} from './src/routes/infoPaimentRouter.js'
+
 import addAnnualVacation  from './src/helpers/addForYear.js';
 dot.config();
 
@@ -23,6 +25,7 @@ app.use('/employee',employeeRouter);
 app.use('/news',newsRouter);
 app.use('/workHour',workHourRouter);
 app.use('/pai',paiRouter)
+app.use('/infoPaiment',infoPaimentRouter)
 
 app.use(notFound);
 
