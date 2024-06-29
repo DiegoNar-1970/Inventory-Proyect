@@ -1,9 +1,6 @@
-import mongoose from 'mongoose';
-import Employee from '../models/employee/employee.js'
-import { validateEmployeeSchema } from '../models/employee/employeeZod.js';
-import Profile from '../models/profile/profile.js';
-import {EmployeeModel} from '../models/employee/employee.js'
 
+import Employee from '../models/employee/employee.js'
+import {EmployeeModel} from '../models/employee/employee.js'
 
 export class employeeController{
 
@@ -12,9 +9,7 @@ export class employeeController{
         if(id){
             try{
                 const employeeId = await Employee.findById(id,{__v:0}).populate('profile',
-                    {cc:1, name:1, lastName:1, sex:1,
-                        phone:1, email:1, eps:1, _id:0, __v:0
-                    });
+                    { _id:0, __v:0});
                     
                 return res.status(201).json(employeeId)
                     ;
@@ -25,9 +20,7 @@ export class employeeController{
         
         try{
             const allEmployees= await Employee.find({},{__v:0}).populate('profile',
-                {cc:1, name:1, lastName:1, birthdate:1, sex:1,
-                    phone:1, email:1, eps:1, _id:0
-                }
+                { _id:0,__v:0}
             );
 
             res.send(allEmployees)
@@ -39,28 +32,20 @@ export class employeeController{
         
     }
     static async create (req,res){
-        const result=validateEmployeeSchema(req.body)
-        if(!result.success){
-            
-            return res.status(400).json({error:JSON.parse(result.error.message)});
-        }
-        try{
-            const {id} = req.params;
-            const profile= await Profile.findById(id);
-            if(!profile){
-                
-                return (res.status(404).json({ message: 'Profile not found' }))
+       const {id}=req.query;
+       if(!id || id===undefined || id===null){
+        return res.status(400).json({message:'profile required'})
+       }
+       try{
+        const employee=await EmployeeModel.create(id,req.body);
+            if(employee.message){
+                return send.status(401).json(employee.err);
             }
-            const newEmploye = new Employee(result.data);
-            newEmploye.profile=newEmploye.profile.concat(profile);
-            const saveEmployee= await newEmploye.save();
-            
-           return res.send(saveEmployee) ;
-        }catch(err){
-            
-            return res.status(400).json({message:err})
-            ;
-        }
+            return res.status(201).json(employee);
+       }catch(err){
+            return res.status(400).json({message:'Bad request'})
+       }
+
     }
     static async update(req,res){
         try{

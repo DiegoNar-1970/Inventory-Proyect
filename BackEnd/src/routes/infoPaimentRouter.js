@@ -3,4 +3,4 @@ import {InfoPaimentController} from '../controllers/infoPaiment.js'
 
 export const infoPaimentRouter=Router();
 
-infoPaimentRouter.get('/',InfoPaimentController.getAll);
+infoPaimentRouter.get('/:cc',InfoPaimentController.getAll);

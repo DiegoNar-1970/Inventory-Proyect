@@ -1,17 +1,16 @@
 import mongoose from "mongoose";
 const {Schema}=mongoose;
 import {validatePartialEmployee} from '../employee/employeeZod.js'
-import { optional } from "zod";
+import Profile from '../profile/profile.js'
 
 const employeeSchema = new Schema({
     admissionDate:{type:Date, default:Date.now()},
     position:{ type: String},
     area:{ type: String },
     shift:{ type: String},
-    profile:[{
-        type:mongoose.Schema.Types.ObjectId,ref:'Profile',
-        optional:true
-    }]
+    profile:{
+        type:mongoose.Schema.Types.ObjectId,ref:'Profile'
+    }
 });
 const Employee=mongoose.model('Employee',employeeSchema);
 export default Employee;
@@ -35,6 +34,31 @@ export class EmployeeModel{
             return deleted;
         }catch(err){
             return { message:err.message};
+        }
+    }
+
+    static async create(id,data){
+        const result= await validatePartialEmployee(data);
+        console.log('validacion del body', result);
+        if(!result.success){
+            return {message:'invalid Type', err:result.error.errors};
+        }
+
+        try{
+            const profile= await Profile.findById(id);
+            console.log('resultado del profile',profile);
+
+            if(!profile || profile===undefined || profile===null){
+                return {message:'profile not found'};       
+            }
+            console.log('despues de las validaciones')
+
+            const employee= new Employee({...result.data,profile});
+            console.log('creacion del empleado',employee);
+            await employee.save();
+            return employee;
+        }catch(err){
+            return {message:err.message};
         }
     }
 }

@@ -1,11 +1,12 @@
 import mongoose from "mongoose";
+import WorkHour from "../workHours/workHour.js";
 const {Schema,Types,model}=mongoose
 
 const infoPaimentSche = new Schema({
     employee: { 
       type: mongoose.Schema.Types.ObjectId, ref: 'Employee'
     },
-    week:[{ type: number }],
+    week:[{ type: Number }],
     horasDominicales:{
         type: [{
             hours: { type: Types.Decimal128 },
@@ -38,3 +39,29 @@ const infoPaimentSche = new Schema({
   });
   const InfoPaiment = model('InfoPaiment',infoPaimentSche)
   export default InfoPaiment;
+
+  export class InfoPaimentModel{
+    static async create(cc){
+        //Hallar el total de horas 
+        console.log(cc)
+        const allHours=await WorkHour.find({},{__v:0})
+        .populate({
+            path: 'holiday',
+            select: '-_id isHoliday hrsHoliday'
+        })
+        .populate({
+            path:'employee',
+            select:'profile area',
+            populate:{
+                path:'profile',
+                match:{'cc':cc},
+                select:'cc name '
+            }
+        })
+        .exec();
+        const filteredHours = allHours.filter(workHour => workHour.employee !== null);
+        console.log('Todos los documentos WorkHour:', allHours);
+        console.log('Documentos WorkHour después de filtrar:', filteredHours);
+        return allHours
+    }
+  }

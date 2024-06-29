@@ -5,7 +5,7 @@ const {Schema}=mongoose
 
 const workHourSchema = new Schema({
     employee: { 
-      type: mongoose.Schema.Types.ObjectId, ref: 'Employee'
+      type: Schema.Types.ObjectId, ref: 'Employee'
     },
     week: { type: Number },
     dayHour: { type: Number},
@@ -49,7 +49,15 @@ const workHourSchema = new Schema({
         }
       }
       try{
-        const worHours=await WorkHour.find({},{__v:0});
+        const worHours=await WorkHour.find({},{__v:0})
+        .populate({
+          path:'employee',
+          select:'-__v -shift -admissionDate',
+          populate:{
+              path:'profile',
+              select:'-__v -birthdate -sex'
+          }
+      });
         return worHours;
       }catch(err){
         return {message:err.message};
