@@ -59,27 +59,29 @@ const infoPaimentSche = new Schema({
         .exec();
         ///comvertir esto en un helper para ahorrar codigo
          const filteredHours = allHours.filter(workHour => workHour.employee !== null);
-         const hourNormal = filteredHours.filter(workHour => !workHour.holiday || workHour.holiday.length === 0);
-         const hourHolidays = filteredHours.filter(workHour => workHour.holiday && workHour.holiday.length > 0);
-         const totalNormalHours = hourNormal.reduce((sum, workHour) => sum + workHour.dayHour, 0);
- 
+         const {normalHours,hourHolidays}= Object.groupBy(filteredHours,(hours)=>{
+            if(hours.holiday === null) return "normalHours"
+
+            return 'hourHolidays'
+         });
+
+         const totalNormalHours = normalHours.reduce((sum, workHour) => sum + workHour.dayHour, 0);
+         
          let totalHolidayHours = 0;
          hourHolidays.forEach(workHour => {
              workHour.holiday.forEach(holiday => {
                  totalHolidayHours += holiday.hrsHoliday;
-             });
-         });
- 
-         console.log('Todos los documentos WorkHour:', allHours);
-         console.log('Documentos WorkHour después de filtrar:', filteredHours);
-         console.log('Total de horas normales:', totalNormalHours);
-         console.log('Total de horas festivas:', totalHolidayHours);
- 
+                });
+            });
+            console.log('Total de horas normales:', totalNormalHours);
+            console.log('Total de horas festivas:', totalHolidayHours);
+            console.log('estas son las horas normales',normalHours,'hasta aqui van las horas normales ')
+            console.log('-----------------------------------------')
+            console.log('estas son las horas festivas',hourHolidays,'hasta aqui van las horas festivas ')
+
+
+            
          // ahora debemos calcular el suelo 
-         return {
-             allHours: filteredHours,
-             totalNormalHours,
-             totalHolidayHours
-         };
+         return {normalHours,hourHolidays};
     }
   }
