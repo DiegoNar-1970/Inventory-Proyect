@@ -1,4 +1,4 @@
-import mongoose from "mongoose";
+
 import { WorkHourModel } from "../models/workHours/workHour.js";
 
 export class WorkHourController{

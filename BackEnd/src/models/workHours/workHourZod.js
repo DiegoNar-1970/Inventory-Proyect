@@ -11,7 +11,7 @@ const workHourSchemaZod = z.object({
   dayHour: z.number().min(0).max(24).optional(),
   week: z.number(),
   date: z.date().optional(),
-  holiday: z.array(holidaySchema).optional()
+  holiday: z.array(holidaySchema).optional().default(undefined)
 });
 
 export function vWorkHourSchemaZod(input) {

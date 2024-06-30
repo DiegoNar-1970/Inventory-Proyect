@@ -42,8 +42,6 @@ const infoPaimentSche = new Schema({
 
   export class InfoPaimentModel{
     static async create(cc){
-        //Hallar el total de horas 
-        console.log(cc)
         const allHours=await WorkHour.find({},{__v:0})
         .populate({
             path: 'holiday',
@@ -59,9 +57,29 @@ const infoPaimentSche = new Schema({
             }
         })
         .exec();
-        const filteredHours = allHours.filter(workHour => workHour.employee !== null);
-        console.log('Todos los documentos WorkHour:', allHours);
-        console.log('Documentos WorkHour después de filtrar:', filteredHours);
-        return allHours
+        ///comvertir esto en un helper para ahorrar codigo
+         const filteredHours = allHours.filter(workHour => workHour.employee !== null);
+         const hourNormal = filteredHours.filter(workHour => !workHour.holiday || workHour.holiday.length === 0);
+         const hourHolidays = filteredHours.filter(workHour => workHour.holiday && workHour.holiday.length > 0);
+         const totalNormalHours = hourNormal.reduce((sum, workHour) => sum + workHour.dayHour, 0);
+ 
+         let totalHolidayHours = 0;
+         hourHolidays.forEach(workHour => {
+             workHour.holiday.forEach(holiday => {
+                 totalHolidayHours += holiday.hrsHoliday;
+             });
+         });
+ 
+         console.log('Todos los documentos WorkHour:', allHours);
+         console.log('Documentos WorkHour después de filtrar:', filteredHours);
+         console.log('Total de horas normales:', totalNormalHours);
+         console.log('Total de horas festivas:', totalHolidayHours);
+ 
+         // ahora debemos calcular el suelo 
+         return {
+             allHours: filteredHours,
+             totalNormalHours,
+             totalHolidayHours
+         };
     }
   }
