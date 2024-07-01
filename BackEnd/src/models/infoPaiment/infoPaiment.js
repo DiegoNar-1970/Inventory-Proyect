@@ -61,7 +61,6 @@ const infoPaimentSche = new Schema({
          const filteredHours = allHours.filter(workHour => workHour.employee !== null);
          const {normalHours,hourHolidays}= Object.groupBy(filteredHours,(hours)=>{
             if(hours.holiday === null) return "normalHours"
-
             return 'hourHolidays'
          });
 
@@ -73,12 +72,6 @@ const infoPaimentSche = new Schema({
                  totalHolidayHours += holiday.hrsHoliday;
                 });
             });
-            console.log('Total de horas normales:', totalNormalHours);
-            console.log('Total de horas festivas:', totalHolidayHours);
-            console.log('estas son las horas normales',normalHours,'hasta aqui van las horas normales ')
-            console.log('-----------------------------------------')
-            console.log('estas son las horas festivas',hourHolidays,'hasta aqui van las horas festivas ')
-
 
             
          // ahora debemos calcular el suelo 
