@@ -1,6 +1,8 @@
 import mongoose from "mongoose";
 import WorkHour from "../workHours/workHour.js";
+import Employee from "../employee/employee.js";
 const {Schema,Types,model}=mongoose
+import { calcPaiment } from "../../helpers/filtersPaiment.js";
 
 const infoPaimentSche = new Schema({
     employee: { 
@@ -8,49 +10,46 @@ const infoPaimentSche = new Schema({
     },
     week:[{ type: Number }],
     horasDominicales:{
-        type: [{
-            hours: { type: Types.Decimal128 },
-            paimentForHour: { type:Types.Decimal128, default:10.000}
-        }]},
+            hours: { type: Number, default:0 },
+            paimentForHour: { type:Number, default:11.062}
+        },
     horasDominicalesNocturnas:{
-        type: [{
-            hours: { type: Types.Decimal128 },
-            paimentForHour: { type: Types.Decimal128, default:12.300 }
-        }]},
+            hours: { type: Number, default:0 },
+            paimentForHour: { type: Number, default:13.830}
+        },
     horasDiurnas:{
-        type: [{
-            hours: { type: Types.Decimal128 },
-            paimentForHour: { type: Types.Decimal128, default:52.00}
-        }]},
+            hours: { type: Number, default:0},
+            paimentForHour: { type: Number, default:5.531}
+        },
     horasNocturnas:{
-        type: [{
-            hours: { type: Types.Decimal128 },
-            paimentForHour: { type: Types.Decimal128, default:8.000 }
-        }]},
+            hours: { type: Number, default:0},
+            paimentForHour: { type: Number, default:9.681 }
+        },
         horasExtras:{
-            type: [{
-                hours: { type: Types.Decimal128 },
-                paimentForHour: { type: Types.Decimal128, default:4.500 }
-            }]},
+                hours: { type: Number, default:0},
+                paimentForHour: { type: Number, default:6.915 }
+            },
     date: { type: Date, default:Date.now() },
-    sueldoBasico:{type:Types.Decimal128},
-    pagoHoras:{type:Types.Decimal128},
-    sueldoTotal:{type:Types.Decimal128}
+    sueldoBasico:{type:Number},
+    sueldoTotal:{type:Number}
   });
   const InfoPaiment = model('InfoPaiment',infoPaimentSche)
   export default InfoPaiment;
 
   export class InfoPaimentModel{
-    static async create(cc,startDate,endDate){
-        const normalHour=5.531;
-        const exNormalHour=6.915;
-        const holidayHour=11.062;
-        //se recibe un string en formato YYYY/MM/DD 
-        //hay que volverlo un tipo Date 
+    static async create(cc,{startDate,endDate,startWeek,endWeek}){
+
         const newStartDate = new Date(startDate.trim());
+
         const newEndDate = new Date(endDate.trim()); 
+
+        const employee=await Employee.findOne({},{__v:0}).populate({
+            path:'profile',
+            match:{'cc':cc},
+            select:"-__v"
+        });
         
-        const allHours=await WorkHour.find({date:{$gte : newStartDate, $lte : newEndDate}
+        const allObjectHours=await WorkHour.find({date:{$gte : newStartDate, $lte : newEndDate}
         },{__v:0})
         .populate({
             path: 'holiday',
@@ -66,42 +65,39 @@ const infoPaimentSche = new Schema({
             }
         })
         .exec();
-        ///comvertir esto en un helper para ahorrar codigo
-         const filteredHours = allHours.filter(workHour => workHour.employee !== null);
-         const {normalHours,hourHolidays}= Object.groupBy(filteredHours,(hours)=>{
-            if(hours.holiday === null) return "normalHours"
-            return 'hourHolidays'
-         });
-         const totalNormalHours = normalHours.reduce((sum, workHour) => sum + workHour.dayHour, 0);
-         let totalHolidayHours = 0;
-         hourHolidays.forEach(workHour => {
-             workHour.holiday.forEach(holiday => {
-                 totalHolidayHours += holiday.hrsHoliday;
-                });
+        try{
+            const {
+                totalHolidayHours,
+                totalNormalHours,
+                exHours,
+                basicPaiment,
+                salary
+            }   = await calcPaiment(allObjectHours)
+        
+            const infoPaiment=new InfoPaiment({
+                employee,
+                week: [startWeek, endWeek],
+                horasDominicales: {
+                    hours: totalHolidayHours
+                },
+                horasDiurnas: {
+                    hours: totalNormalHours
+                },
+                horasExtras: {
+                    hours: exHours
+                },
+                sueldoBasico: basicPaiment,
+                sueldoTotal: salary
             });
-        
-        if(totalNormalHours > 94 & totalHolidayHours !== 0 ){
-                let exHours = totalNormalHours - 94 ;
-                let PaiHoliday=totalHolidayHours * 11.062
-                let basicPai = (exHours * 6.915) + (94 * 5.531) + PaiHoliday;
-            }
-            if(totalNormalHours < 94 & totalHolidayHours !== 0 ){
-                let PaiHoliday=totalHolidayHours * 11.062
-                let basicPai = (totalNormalHours * 5.531) + PaiHoliday;
-            }
-         if(totalNormalHours > 94 & totalHolidayHours === 0 ){
-            let exHours = totalNormalHours - 94 ;
-            let basicPai = (exHours * 6.915)+(94 * 5.531);
-            }
-            if(totalNormalHours < 94 & totalHolidayHours === 0 ){
-                let basicPai = exHours * 5.531;
-            }
-
-
-
-         
-        
-         // ahora debemos calcular el suelo 
-         return {normalHours,hourHolidays};
+                        
+            console.log(infoPaiment);
+            await   infoPaiment.save();
+            return infoPaiment;
+        }catch(err){
+            return {message:'error save',err:err}
+    }
+            
+        // ahora debemos calcular el suelo 
+         //return {normalHours,hourHolidays};
     }
   }
