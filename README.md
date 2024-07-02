@@ -7,3 +7,4 @@ I will use express and Mongo Db, then to learn about NoSql databases, then I wil
         i have to better the imports [❌]
         modify the news [✔], its dont need employee
         make an endpoint of employees and their overtime and total hours [✔]
+        api ready
