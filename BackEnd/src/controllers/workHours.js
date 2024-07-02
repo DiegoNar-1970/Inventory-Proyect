@@ -25,7 +25,8 @@ export class WorkHourController{
         return res.status(400).json({ message: 'insufficient params' });
     }
     try {
-      const newWorkH = await WorkHourModel.create(id, result);
+      const {date}=req.body;
+      const newWorkH = await WorkHourModel.create(id, result,date);
       if (newWorkH.message) {
         return res.status(400).json({ message: newWorkH.message,
             error:newWorkH.error

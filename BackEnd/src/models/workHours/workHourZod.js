@@ -10,7 +10,7 @@ const workHourSchemaZod = z.object({
   employee: z.string().optional(),
   dayHour: z.number().min(0).max(24).optional(),
   week: z.number(),
-  date: z.date().optional(),
+  date: z.string().optional(),
   holiday: z.array(holidaySchema).optional().default(undefined)
 });
 

@@ -23,15 +23,24 @@ const workHourSchema = new Schema({
   export default WorkHour;
 
   export class WorkHourModel{
-    static async create(id,data){
+    static async create(id,data,date){
+
       const result = vWorkHourSchemaZod(data);
       if (!result.success) {
         return { message: 'invalid type', error: result.error };
       }
       try {
-        const newWorkH = new WorkHour(result.data);
+
+        if(date){
+          const newDate=new Date(date.trim())
+          const newWorkH = new WorkHour({newDate,...result.data});
+          const employee = await Employee.findById(id);
+          newWorkH.employee = employee;
+          await newWorkH.save();
+          return newWorkH;
+        }
         const employee = await Employee.findById(id);
-        newWorkH.employee = employee;
+        const newWorkH = new WorkHour({employee,...result.data});
         await newWorkH.save();
         return newWorkH;
       } catch (err) {

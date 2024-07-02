@@ -2,9 +2,9 @@ import { InfoPaimentModel } from "../models/infoPaiment/infoPaiment.js";
 
 export class InfoPaimentController{
     static async getAll(req,res){
+        const {startDate,endDate}=req.body;
         const {cc}=req.params;
-        console.log(cc);
-        const total=await InfoPaimentModel.create(cc)
-        res.status(201).json(total)
+        const hola=await InfoPaimentModel.create(cc,startDate,endDate);
+        res.status(201).json(hola)
     }
 }

@@ -41,8 +41,17 @@ const infoPaimentSche = new Schema({
   export default InfoPaiment;
 
   export class InfoPaimentModel{
-    static async create(cc){
-        const allHours=await WorkHour.find({},{__v:0})
+    static async create(cc,startDate,endDate){
+        const normalHour=5.531;
+        const exNormalHour=6.915;
+        const holidayHour=11.062;
+        //se recibe un string en formato YYYY/MM/DD 
+        //hay que volverlo un tipo Date 
+        const newStartDate = new Date(startDate.trim());
+        const newEndDate = new Date(endDate.trim()); 
+        
+        const allHours=await WorkHour.find({date:{$gte : newStartDate, $lte : newEndDate}
+        },{__v:0})
         .populate({
             path: 'holiday',
             select: '-_id isHoliday hrsHoliday'
@@ -63,17 +72,35 @@ const infoPaimentSche = new Schema({
             if(hours.holiday === null) return "normalHours"
             return 'hourHolidays'
          });
-
          const totalNormalHours = normalHours.reduce((sum, workHour) => sum + workHour.dayHour, 0);
-         
          let totalHolidayHours = 0;
          hourHolidays.forEach(workHour => {
              workHour.holiday.forEach(holiday => {
                  totalHolidayHours += holiday.hrsHoliday;
                 });
             });
+        
+        if(totalNormalHours > 94 & totalHolidayHours !== 0 ){
+                let exHours = totalNormalHours - 94 ;
+                let PaiHoliday=totalHolidayHours * 11.062
+                let basicPai = (exHours * 6.915) + (94 * 5.531) + PaiHoliday;
+            }
+            if(totalNormalHours < 94 & totalHolidayHours !== 0 ){
+                let PaiHoliday=totalHolidayHours * 11.062
+                let basicPai = (totalNormalHours * 5.531) + PaiHoliday;
+            }
+         if(totalNormalHours > 94 & totalHolidayHours === 0 ){
+            let exHours = totalNormalHours - 94 ;
+            let basicPai = (exHours * 6.915)+(94 * 5.531);
+            }
+            if(totalNormalHours < 94 & totalHolidayHours === 0 ){
+                let basicPai = exHours * 5.531;
+            }
 
-            
+
+
+         
+        
          // ahora debemos calcular el suelo 
          return {normalHours,hourHolidays};
     }
