@@ -38,70 +38,73 @@ const infoPaimentSche = new Schema({
 
   export class InfoPaimentModel{
     static async create(cc,{startDate,endDate,startWeek,endWeek}){
-        try{
+        try {
             const newStartDate = new Date(startDate.trim());
-            const newEndDate = new Date(endDate.trim()); 
+            const newEndDate = new Date(endDate.trim());
 
-            const employee=await Employee.findOne({},{__v:0}).populate({
-                path:'profile',
-                match:{'cc':cc},
-                select:"-__v"
-            });
-            if(!employee) {
-                return {message:'employee dont find'}
+            const employee = await this.findEmployee(cc);
+            if (!employee) {
+                return { message: 'employee not found' };
             }
-        }catch(err){
-            return {message:err.message}
-        }
-        const allObjectHours=await WorkHour.find({date:{$gte : newStartDate, $lte : newEndDate}
-        },{__v:0})
-        .populate({
-            path: 'holiday',
-            select: '-_id isHoliday hrsHoliday'
-        })
-        .populate({
-            path:'employee',
-            select:'profile area',
-            populate:{
-                path:'profile',
-                match:{'cc':cc},
-                select:'cc name '
-            }
-        })
-        .exec();
-        try{
+
+            const allObjectHours = await this.findWorkHours(newStartDate, newEndDate, cc);
+
             const {
                 totalHolidayHours,
                 totalNormalHours,
                 exHours,
                 basicPaiment,
                 salary
-            }   = await calcPaiment(allObjectHours)
-        
-            const infoPaiment=new InfoPaiment({
+            } = calcPaiment(allObjectHours);
+
+            const infoPaiment = new InfoPaiment({
                 employee,
                 week: [startWeek, endWeek],
-                horasDominicales: {
-                    hours: totalHolidayHours
-                },
-                horasDiurnas: {
-                    hours: totalNormalHours
-                },
-                horasExtras: {
-                    hours: exHours
-                },
+                horasDominicales: { hours: totalHolidayHours },
+                horasDiurnas: { hours: totalNormalHours },
+                horasExtras: { hours: exHours },
                 sueldoBasico: basicPaiment,
                 sueldoTotal: salary
             });
-                        
-            console.log(infoPaiment);
-            await   infoPaiment.save();
+
+            await infoPaiment.save();
             return infoPaiment;
-        }catch(err){
-            return {message:'error save',err:err}
+        } catch (err) {
+            return { message: 'error saving payment info', err: err.message };
+        }
     }
-            
-        // ahora debemos calcular el suelo 
-         //return {normalHours,hourHolidays};
+
+    static async findEmployee(cc) {
+        try {
+            return await Employee.findOne({}, { __v: 0 }).populate({
+                path: 'profile',
+                match: { cc },
+                select: "-__v"
+            });
+        } catch (err) {
+            throw new Error(`Error finding employee: ${err.message}`);
+        }
+    }
+
+    static async findWorkHours(startDate, endDate, cc) {
+        try {
+            return await WorkHour.find({ date: { $gte: startDate, $lte: endDate } }, { __v: 0 })
+                .populate({
+                    path: 'holiday',
+                    select: '-_id isHoliday hrsHoliday'
+                })
+                .populate({
+                    path: 'employee',
+                    select: 'profile area',
+                    populate: {
+                        path: 'profile',
+                        match: { cc },
+                        select: 'cc name'
+                    }
+                })
+                .exec();
+        } catch (err) {
+            throw new Error(`Error finding work hours: ${err.message}`);
+        }
     }
   }

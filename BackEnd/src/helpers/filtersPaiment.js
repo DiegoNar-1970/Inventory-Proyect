@@ -2,11 +2,6 @@ export function calcPaiment(allObjectHours){
    const normalHour=5.531;
    const exNormalHour=6.915;
    const holidayHour=11.062;
-   let exHours=0;
-   let PaiHoliday=0;
-   let salary=0;
-   let basicPaiment=0;
-
     const filterEmployeeH = allObjectHours.filter(workHour => workHour.employee !== null);
     const {normalHours,hourHolidays}= Object.groupBy(filterEmployeeH,(hours)=>{
        if(hours.holiday === null) return "normalHours"
@@ -20,28 +15,15 @@ export function calcPaiment(allObjectHours){
             totalHolidayHours += holiday.hrsHoliday;
            });
        });
-   if(totalNormalHours > 94 & totalHolidayHours !== 0 ){
-           exHours = totalNormalHours - 94 ;
-           PaiHoliday=totalHolidayHours * holidayHour
-           basicPaiment=94 * normalHour
-           salary = (exHours * exNormalHour) + (94 * normalHour) + PaiHoliday;
-       }
-
-       if(totalNormalHours < 94 & totalHolidayHours !== 0 ){
-           PaiHoliday=totalHolidayHours * holidayHour
-           basicPaiment=totalNormalHours * normalHour
-           salary = (totalNormalHours * normalHour) + PaiHoliday;
-           }
-
-    if(totalNormalHours > 94 & totalHolidayHours === 0 ){
-       basicPaiment = 94 * normalHour
-       exHours = totalNormalHours - 94 ;
-       salary = (exHours * exNormalHour) + (94 * normalHour);
-       }
-
-       if(totalNormalHours < 94 & totalHolidayHours === 0 ){
-           basicPaiment=totalNormalHours * normalHour
-           salary = exHours * normalHour;
+       let exHours = 0;
+       let PaiHoliday = totalHolidayHours * holidayHour;
+       let basicPaiment = totalNormalHours * normalHour;
+       let salary = basicPaiment + PaiHoliday;
+   
+       if (totalNormalHours > 94) {
+           exHours = totalNormalHours - 94;
+           basicPaiment = 94 * normalHour;
+           salary = basicPaiment + (exHours * exNormalHour) + PaiHoliday;
        }
        return {
         totalHolidayHours,
