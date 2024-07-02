@@ -3,7 +3,6 @@ import WorkHour from "../workHours/workHour.js";
 import Employee from "../employee/employee.js";
 const {Schema,model}=mongoose
 import { calcPaiment } from "../../helpers/filtersPaiment.js";
-import { queryCond } from "../../helpers/queryConditios.js";
 
 const infoPaimentSche = new Schema({
     employee: { 
@@ -38,19 +37,19 @@ const infoPaimentSche = new Schema({
   export default InfoPaiment;
 
   export class InfoPaimentModel{
-    static async create(cc,data){
+    static async create(cc,{startDate,endDate,startWeek,endWeek}){
         try {
+            const newStartDate = new Date(startDate.trim());
+            const newEndDate = new Date(endDate.trim());
+
             const employee = await this.findEmployee(cc);
             if (!employee) {
                 return { message: 'employee not found' };
             }
-            const query=await queryCond(data);
-            console.log(query);
-            
-            const allObjectHours = await this.findWorkHours(query, cc);
 
-            const 
-            {
+            const allObjectHours = await this.findWorkHours(newStartDate, newEndDate, cc);
+
+            const {
                 totalHolidayHours,
                 totalNormalHours,
                 exHours,
@@ -87,9 +86,9 @@ const infoPaimentSche = new Schema({
         }
     }
 
-    static async findWorkHours(query, cc) {
+    static async findWorkHours(startDate, endDate, cc) {
         try {
-            return await WorkHour.find(query,{ __v: 0 })
+            return await WorkHour.find({ date: { $gte: startDate, $lte: endDate } }, { __v: 0 })
                 .populate({
                     path: 'holiday',
                     select: '-_id isHoliday hrsHoliday'
@@ -109,32 +108,19 @@ const infoPaimentSche = new Schema({
         }
     }
 
-    static async getById(cc,data){
-        try{
-            const {query}= await queryCond(data);
-            const infoPaiment=await this.getInfoPaiment(cc,query);
-            return infoPaiment;
-        }catch(err){
-            return {message:err.message}
+    static async getById(cc){
+        const infoPaiment= await InfoPaiment.findById({},{__v:0})
+        .populate({
+            path:'employee',
+            select:'profile area',
+            populate:{
+                path:'profile',
+                match:{cc},
+                select:'-__v name lastname cc '
+            }
+        })
+        if(!infoPaiment){
+            return {message:'receipt not found'}
         }
     }
-
-    static async getInfoPaiment(cc,query){
-         try{
-            const infoPaiment= await InfoPaiment.find(query,{__v:0})
-            .populate({
-                path:'employee',
-                select:'profile area',
-                populate:{
-                    path:'profile',
-                    match:{cc},
-                    select:'name lastname cc '
-                }
-            }).exec();
-            return infoPaiment;
-        }catch(err){
-            throw new err(`Error finding receipt ${err.message}`)
-        }
-    }
-
   }
