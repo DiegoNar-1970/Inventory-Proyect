@@ -38,17 +38,21 @@ const infoPaimentSche = new Schema({
 
   export class InfoPaimentModel{
     static async create(cc,{startDate,endDate,startWeek,endWeek}){
+        try{
+            const newStartDate = new Date(startDate.trim());
+            const newEndDate = new Date(endDate.trim()); 
 
-        const newStartDate = new Date(startDate.trim());
-
-        const newEndDate = new Date(endDate.trim()); 
-
-        const employee=await Employee.findOne({},{__v:0}).populate({
-            path:'profile',
-            match:{'cc':cc},
-            select:"-__v"
-        });
-        
+            const employee=await Employee.findOne({},{__v:0}).populate({
+                path:'profile',
+                match:{'cc':cc},
+                select:"-__v"
+            });
+            if(!employee) {
+                return {message:'employee dont find'}
+            }
+        }catch(err){
+            return {message:err.message}
+        }
         const allObjectHours=await WorkHour.find({date:{$gte : newStartDate, $lte : newEndDate}
         },{__v:0})
         .populate({
