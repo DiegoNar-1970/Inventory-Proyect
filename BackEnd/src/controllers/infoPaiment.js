@@ -20,7 +20,6 @@ export class InfoPaimentController{
         
         try{
             const {cc}=req.params;
-            console.log(cc)
             if(!cc){
                 return {message:'need identification'}
             }
@@ -38,4 +37,5 @@ export class InfoPaimentController{
         }
 
     }
+    
 }

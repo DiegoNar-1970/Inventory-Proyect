@@ -34,10 +34,12 @@ const infoPaimentSche = new Schema({
     sueldoBasico:{type:Number},
     sueldoTotal:{type:Number}
   });
+  
   const InfoPaiment = model('InfoPaiment',infoPaimentSche)
   export default InfoPaiment;
 
   export class InfoPaimentModel{
+
     static async create(cc,data){
         try {
             const employee = await this.findEmployee(cc);
@@ -45,10 +47,7 @@ const infoPaimentSche = new Schema({
                 return { message: 'employee not found' };
             }
             const query=await queryCond(data);
-            console.log(query);
-            
             const allObjectHours = await this.findWorkHours(query, cc);
-
             const 
             {
                 totalHolidayHours,
@@ -58,7 +57,7 @@ const infoPaimentSche = new Schema({
                 salary
             } = calcPaiment(allObjectHours);
 
-            const infoPaiment = new InfoPaiment({
+            const in6333foPaiment = new InfoPaiment({
                 employee,
                 week: [startWeek, endWeek],
                 horasDominicales: { hours: totalHolidayHours },
@@ -67,7 +66,6 @@ const infoPaimentSche = new Schema({
                 sueldoBasico: basicPaiment,
                 sueldoTotal: salary
             });
-
             await infoPaiment.save();
             return infoPaiment;
         } catch (err) {
