@@ -1,6 +1,7 @@
 {
     "recommendations": [
         "usernamehw.errorlens",
-        "github.copilot"
+        "github.copilot",
+        "ms-ceintl.vscode-language-pack-es"
     ]
 }

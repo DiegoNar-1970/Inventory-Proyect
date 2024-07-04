@@ -1,0 +1,60 @@
+#app{
+    display:grid;
+    grid-template-areas: 
+    "aside main main "
+    "footer footer footer";
+    grid-template-columns: 220px 1fr;
+    grid-template-rows: 1fr auto;
+    background: #202124;
+    font-family: 'spotify-medium', -apple-system, system-ui, sans-serif;
+    color: white;
+}
+@font-face {
+    font-family: 'spotify';
+    src: url('./fonts/AvenirLTStd-Black.otf') format("woff2");
+    font-weight:700;
+    font-style:normal;
+    font-display:swap;
+}
+@font-face {
+    font-family: 'spotify-medium';
+    src: url('./fonts/AvenirLTStd-Medium.otf') format("woff2");
+    font-weight:600;
+    font-style:normal;
+    font-display:swap;
+}
+@font-face {
+    font-family: 'spotify-regular';
+    src: url('./fonts/Gilroy-Regular.ttf') format("woff2");
+    font-weight:700;
+    font-style:normal;
+    font-display:swap;
+}
+@font-face {
+    font-family: 'spotify-heavy';
+    src: url('./fonts/AvenirLTStd-Heavy.otf') format("woff2");
+    font-weight:600;
+    font-style:normal;
+    font-display:swap;
+}
+@font-face {
+    font-family: 'spotify-book';
+    src: url('./fonts/AvenirLTStd-Book.otf') format("woff2");
+    font-weight:600;
+    font-style:normal;
+    font-display:swap;
+}
+@font-face {
+    font-family: 'spotify-light';
+    src: url('./fonts/AvenirLTStd-Light.otf') format("woff2");
+    font-weight:600;
+    font-style:normal;
+    font-display:swap;
+}
+@font-face {
+    font-family: 'spotify-Gregular';
+    src: url('./fonts/Gilroy-Regular.ttf') format("woff2");
+    font-weight:600;
+    font-style:normal;
+    font-display:swap;
+}
