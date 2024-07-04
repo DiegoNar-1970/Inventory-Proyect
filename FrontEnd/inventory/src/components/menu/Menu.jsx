@@ -1,4 +1,4 @@
-import {NavLink} from 'react-router-dom'
+import {NavLink, Outlet} from 'react-router-dom'
 import { GiAvocado } from "react-icons/gi";
 import { FaBoxes } from "react-icons/fa";
 import { LiaSnowflakeSolid } from "react-icons/lia";
@@ -7,40 +7,49 @@ import { FaWarehouse } from "react-icons/fa";
 import { CiSettings } from "react-icons/ci";
 import { IoIosPeople } from "react-icons/io";
 import img from '../../media/img/img.png'
-import { Area } from './Area.jsx';
+import { Suspense } from 'react';
 
-export const Menu = () => {
+ const Menu = () => {
   return (
     <div className='flex flex-col flex-1 rounded-lg p-2'>
           <div className='flex items-center p-2 bg-[#1b1b1b] rounded-[1em]'>
             <span className=' mb-2 text-green-500 text-xl'>Fruty</span><span className='text-xl mb-2 text-orange-300'>Green</span>
             <GiAvocado className=' mb-2 ml-4 text-[1.5em] text-green-600 text-2x1  '/>
-            
           </div>
-          
           <div className='text-text-menu  text-[10px]p-1 m-1 mt-2'>
               <span className=''>Áreas de trabajo</span>
           </div>
           <nav className='flex-1 mt-2 bg-fondo-menu  rounded-[1em] p-2 text-text-menu '>
             <ul className='flex flex-col p-1 gap-5'>
-              <li>
-                <Area icon={FaWarehouse} href={'home'} area={'Almacén'}/>
-              </li>
-              <li>
-                <Area icon={LiaSnowflakeSolid} href={'employee'} area={'Fríos'}/>
-              </li>
-              <li>
-                <Area icon={FaBoxes} href={'home'} area={'Paletizado'}/>
-              </li>
-              <li>
-                <Area icon={IoIosPeople} href={'home'} area={'administración'}/>
-              </li>
-              <li>
-                <Area icon={GiCardboardBoxClosed} href={'home'} area={'Empaque'}/>
-              </li>
-              <li>
-                <Area icon={CiSettings} href={'home'} area={'Máquina'}/>
-              </li>
+              <div className='flex gap-2 p-1 hover:bg-gray-700 rounded-[1em]'>
+                <FaWarehouse className='text-[20px] hover:text-white transition-all'/>
+                <NavLink className='text-[15px] hover:text-white transition-all' to='/home'>Almacén</NavLink>
+              </div>
+
+              <div className='flex gap-2 p-1 hover:bg-gray-700 rounded-[1em]'>
+                <LiaSnowflakeSolid className='text-[20px] hover:text-white transition-all'/>
+                <NavLink className='text-[15px] hover:text-white transition-all' to='/employee'>Fríos</NavLink>
+              </div>
+              <div className='flex gap-2 p-1 hover:bg-gray-700 rounded-[1em]'>
+                <FaBoxes className='text-[20px] hover:text-white transition-all'/>
+                <NavLink className='text-[15px] hover:text-white transition-all' to='/home'>Paletizado</NavLink>
+              </div>
+              <div className='flex gap-2 p-1 hover:bg-gray-700 rounded-[1em]'>
+                <IoIosPeople className='text-[20px] hover:text-white transition-all'/>
+                <NavLink className='text-[15px] hover:text-white transition-all' to='/home'>administración</NavLink>
+              </div>
+              <div className='flex gap-2 p-1 hover:bg-gray-700 rounded-[1em]'>
+                <GiCardboardBoxClosed className='text-[20px] hover:text-white transition-all'/>
+                <NavLink className='text-[15px] hover:text-white transition-all' to='/home'>Empaque</NavLink>
+              </div>
+              <div className='flex gap-2 p-1 hover:bg-gray-700 rounded-[1em]'>
+                <CiSettings className='text-[20px] hover:text-white transition-all'/>
+                <NavLink className='text-[15px] hover:text-white transition-all' to='/home'>Máquina</NavLink>
+              </div>
+              <Suspense fallback={'dont worry'}>
+                <Outlet/>
+              </Suspense>
+
             </ul>
           </nav>
           <div className='flex text-text-menu hover:text-white transition-all bg-fondo-menu rounded-[1em] 
@@ -53,6 +62,7 @@ export const Menu = () => {
     </div>
   )
 }
+export default Menu;
 {/* <div className='border-b-[1px] m-4 ml-0 mr-0 p-1 flex items-center gap-3' >
 
 <div>
