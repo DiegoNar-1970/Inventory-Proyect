@@ -1,6 +1,7 @@
 ###############!!!-----code errors-------!!!###################
 y codigo para optimizar y mejorar 
 git log --graph --decorate --all --oneline
+$ git reflog
 controllerWorkHour
 i cant be a feedback
         const {id}=req.params;
@@ -13,7 +14,7 @@ i cant be a feedback
             console.log(newWorkH);
             const saveNewWork=newWorkH.save();
             return res.send(saveNewWork), mongoose.connection.close();
-    
+
         }catch(err){
             return res.status(400).json({message:err})            
         }

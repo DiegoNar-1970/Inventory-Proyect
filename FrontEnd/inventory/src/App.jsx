@@ -5,8 +5,8 @@ import Menu  from './components/menu/Menu.jsx'
 import { lazy, Suspense } from 'react'
 
 const Home=lazy(()=>import("./components/home/Home.jsx"))
-const Employee=lazy(()=>import("./components/employee/Employee.jsx"))
-
+// const Employee=lazy(()=>import("./components/employee/Employee.jsx"))
+const Almacen=lazy(()=>import("./components/almacen/Almacen.jsx"))
 
 function App() {
 
@@ -20,7 +20,7 @@ function App() {
       <section className=' [grid-area:main] overflow-auto relative p-2 bg-[#202124] rounded-lg'>
         <Routes>
           <Route path='/home' element={<Home/>}/>
-          <Route path='/employee' element={<Employee/>}/>
+          <Route path='/almacen' element={<Almacen/>}/>
           <Route path='/*' element={<Navigate to='/home'/>}/>
         </Routes>
       </section>
