@@ -14,17 +14,17 @@ function App() {
   return (
     <Suspense fallback={'dont worry'}>
     <div id="app" className=' h-screen p-2 gap-2'>
-      <section className='[grid-area:aside] flex flex-col rounded-lg bg-[202124]'>
+      <section className='[grid-area:aside] flex flex-col rounded-lg bg-[#202124]'>
         <Menu className=''/>
       </section>
-      <section className=' bg-red-50 [grid-area:main] overflow-auto'>
+      <section className=' [grid-area:main] overflow-auto relative p-2 bg-[#202124] rounded-lg'>
         <Routes>
           <Route path='/home' element={<Home/>}/>
           <Route path='/employee' element={<Employee/>}/>
           <Route path='/*' element={<Navigate to='/home'/>}/>
         </Routes>
       </section>
-      <section className='bg-green-400 [grid-area:footer] min-h-[100px]'>
+      <section className=' [grid-area:footer] min-h-[100px]'>
         <h1>hol</h1>
       </section>
     </div>

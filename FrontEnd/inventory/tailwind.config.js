@@ -8,7 +8,8 @@ export default {
     extend: {
       colors:{
         'text-menu':'#c4c7c5',
-        'fondo-menu':'#1b1b1b'
+        'fondo-menu':'#1b1b1b',
+  
       }
     },
   },

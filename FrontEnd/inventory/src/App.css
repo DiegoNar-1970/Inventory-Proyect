@@ -6,8 +6,12 @@
     grid-template-columns: 220px 1fr;
     grid-template-rows: 1fr auto;
     background: #202124;
-    font-family: 'spotify-medium', -apple-system, system-ui, sans-serif;
+    font-family: 'spotify-regular', -apple-system, system-ui, sans-serif;
     color: white;
+}
+td,th{
+    padding: 8px;
+    border-bottom: 1px solid rgb(107 114 128 );
 }
 @font-face {
     font-family: 'spotify';
