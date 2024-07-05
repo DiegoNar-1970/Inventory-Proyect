@@ -5,7 +5,7 @@ import Menu  from './components/menu/Menu.jsx'
 import { lazy, Suspense } from 'react'
 
 const Home=lazy(()=>import("./components/home/Home.jsx"))
-// const Employee=lazy(()=>import("./components/employee/Employee.jsx"))
+const Employee=lazy(()=>import("./components/employee/Employee.jsx"))
 const Almacen=lazy(()=>import("./components/almacen/Almacen.jsx"))
 
 function App() {
@@ -21,6 +21,7 @@ function App() {
         <Routes>
           <Route path='/home' element={<Home/>}/>
           <Route path='/almacen' element={<Almacen/>}/>
+          <Route path='/employee/:data' element={<Employee/>}/>
           <Route path='/*' element={<Navigate to='/home'/>}/>
         </Routes>
       </section>

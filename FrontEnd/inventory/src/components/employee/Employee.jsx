@@ -5,6 +5,7 @@ import Table from "../smallComponents/Table.jsx";
 import Search from "../smallComponents/Search.jsx";
 
 const Employee = () => {
+
   return (
     <div className="flex flex-col flex-wrap flex-1 rounded-lg gap-3 text-white">
       <article className="flex gap-2 justify-around items-center bg-fondo-menu rounded-lg p-2 box-border  ">
