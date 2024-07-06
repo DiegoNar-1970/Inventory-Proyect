@@ -1,5 +1,5 @@
 import { Link} from "react-router-dom";
-const LinkParam = ({icon:Icon,url,area}) => {
+const LinkParam = ({icon:Icon,url,area,linkName}) => {
   return (
     <>
         <div className="min-w-[100px] w-[450px] min-h-[50px] h-[50px] 
@@ -7,7 +7,7 @@ const LinkParam = ({icon:Icon,url,area}) => {
       text-black shadow-md shadow-fondo-menu transition-all">
         <Link to={`/${url}/${area}`} className="h-full w-full flex justify-center items-center gap-4">
           <Icon  className="text-[30px]"/>
-          <span>Registro empleados</span>
+          <span>{linkName}</span>
         </Link>
       </div>
     </>

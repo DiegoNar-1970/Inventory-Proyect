@@ -4,25 +4,26 @@
 import Table from "../smallComponents/Table.jsx";
 import Search from "../smallComponents/Search.jsx";
 import { useParams } from "react-router-dom";
-import { Suspense} from "react";
-import {fetchData} from '../helpers/fetchData.js'
+import { Suspense, } from "react";
+import  {fetchData} from '../helpers/fetchData.js'
+
 
 const apiData=fetchData('http://localhost:3000/profile');
 const Employee = () => {
   let {area}=useParams();
   console.log(area);
-  const data=apiData.read();
-  console.log(data);
+  const data= apiData.read();
+  const objetData=JSON.stringify(data)
+  console.log(objetData);
+
+
   return (
     <div className="flex flex-col flex-wrap flex-1 rounded-lg gap-3 text-white">
       <article className="flex gap-2 justify-around items-center bg-fondo-menu rounded-lg p-2 box-border  ">
           <Search/>
       </article>
       <article className="flex flex-col bg-fondo-menu rounded-lg box-border p-2 justify-center">
-        <Suspense fallback={'Loading.....'}>
-          <Table/>
-
-        </Suspense>
+          <Table data={data}/>
       </article>
     </div>
 

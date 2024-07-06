@@ -1,7 +1,7 @@
 
 import img from '../../media/img/img.png'
 
-const Table = () => {
+const Table = ({data}) => {
   return (
     <>
          <h1 className=" ml-1 text-[17px] text-gray-500">Personal</h1>
@@ -17,21 +17,24 @@ const Table = () => {
               </tr>
             </thead>
             <tbody>
-              <tr className="">
-                <td >
-                  <div className="flex gap-2 items-center box-border mt-1">
-                    <img className="min-w-[30px] max-w-[30px] h-full rounded-[2em] overflow-hidden text-ellipsis"src={img} alt="" />
-                    <span>Diego</span>
-                  </div>
-                </td>
-                 <td className="text-gray-500">narajo</td> 
-                <td >100</td> 
-                 <td className="text-gray-500">almacen</td> 
-                <td>💚activo 🖤</td> 
-                <td>
-                  <button className="bg-green-500 text-white rounded-[1em] p-[2px]">Actualizar</button>
-                </td>
-              </tr>
+              {data && data.map((item)=>(
+                  <tr key={item._id}>
+                    <td>
+                      <div className="flex gap-2 items-center box-border mt-1">
+                        <img className="min-w-[30px] max-w-[30px] h-full rounded-[2em] overflow-hidden text-ellipsis"src={img} alt="" />
+                        <span>{item.name}</span>
+                      </div>
+                    </td>
+                     <td className="text-gray-500">{item.lastName}</td> 
+                    <td >{item.cc}</td> 
+                     <td className="text-gray-500">{item.email}</td> 
+                    <td>💚activo 🖤</td> 
+                    <td>
+                      <button className="bg-green-500 text-white rounded-[1em] p-[2px]">Actualizar</button>
+                    </td>
+                </tr>
+              ))}
+              
             </tbody>
           </table>
     </>
