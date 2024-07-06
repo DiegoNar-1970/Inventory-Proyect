@@ -4,27 +4,25 @@
 import Table from "../smallComponents/Table.jsx";
 import Search from "../smallComponents/Search.jsx";
 import { useParams } from "react-router-dom";
-import { UseFetchArea } from "../helpers/UseFetch.js";
-import { useEffect } from "react";
+import { Suspense} from "react";
+import {fetchData} from '../helpers/fetchData.js'
 
+const apiData=fetchData('http://localhost:3000/profile');
 const Employee = () => {
-
   let {area}=useParams();
-  const {data,loading,error}=  UseFetchArea('http://localhost:3000/profile',area);
-  
-  useEffect(()=>{
-    console.log(data);
-    console.log(loading);
-  },[data,loading,area])
-
-
+  console.log(area);
+  const data=apiData.read();
+  console.log(data);
   return (
     <div className="flex flex-col flex-wrap flex-1 rounded-lg gap-3 text-white">
       <article className="flex gap-2 justify-around items-center bg-fondo-menu rounded-lg p-2 box-border  ">
           <Search/>
       </article>
       <article className="flex flex-col bg-fondo-menu rounded-lg box-border p-2 justify-center">
-        <Table/>
+        <Suspense fallback={'Loading.....'}>
+          <Table/>
+
+        </Suspense>
       </article>
     </div>
 
