@@ -16,8 +16,11 @@ dot.config();
 const app = express();
 
 app.use(express.json());
-
 app.disable('x-powered-by');
+app.use(function(req, res, next) {
+    res.header("Access-Control-Allow-Origin",'*');
+    next();
+});
 
 
 app.use('/profile',profileRouter);

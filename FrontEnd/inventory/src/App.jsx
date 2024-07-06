@@ -21,7 +21,7 @@ function App() {
         <Routes>
           <Route path='/home' element={<Home/>}/>
           <Route path='/almacen' element={<Almacen/>}/>
-          <Route path='/employee/:data' element={<Employee/>}/>
+          <Route path='/employee/:area' element={<Employee/>}/>
           <Route path='/*' element={<Navigate to='/home'/>}/>
         </Routes>
       </section>

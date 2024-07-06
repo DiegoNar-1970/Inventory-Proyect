@@ -3,8 +3,20 @@
 // import { FaHelmetSafety } from "react-icons/fa6";
 import Table from "../smallComponents/Table.jsx";
 import Search from "../smallComponents/Search.jsx";
+import { useParams } from "react-router-dom";
+import { UseFetchArea } from "../helpers/UseFetch.js";
+import { useEffect } from "react";
 
 const Employee = () => {
+
+  let {area}=useParams();
+  const {data,loading,error}=  UseFetchArea('http://localhost:3000/profile',area);
+  
+  useEffect(()=>{
+    console.log(data);
+    console.log(loading);
+  },[data,loading,area])
+
 
   return (
     <div className="flex flex-col flex-wrap flex-1 rounded-lg gap-3 text-white">
