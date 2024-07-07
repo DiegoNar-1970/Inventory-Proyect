@@ -23,11 +23,11 @@ import Links from '../menu/Links.jsx'
           <nav className='flex-1 mt-2 bg-fondo-menu  rounded-[1em] p-2 text-text-menu '>
             <ul className='flex flex-col p-1 gap-5'>
               <Links icon={FaWarehouse} href={"almacen"} area={"Almacén"}></Links>
-              <Links icon={LiaSnowflakeSolid} href={"employee"} area={"Fríos"}></Links>
-              <Links icon={FaBoxes} href={"employee"} area={"Paletizado"}></Links>
-              <Links icon={IoIosPeople} href={"employee"} area={"administración"}></Links>
-              <Links icon={GiCardboardBoxClosed} href={"employee"} area={"Empaque"}></Links>
-              <Links icon={CiSettings} href={"employee"} area={"Máquina"}></Links>
+              <Links icon={LiaSnowflakeSolid} href={"frios"} area={"Fríos"}></Links>
+              <Links icon={FaBoxes} href={"paletizado"} area={"Paletizado"}></Links>
+              <Links icon={IoIosPeople} href={"admin"} area={"administración"}></Links>
+              <Links icon={GiCardboardBoxClosed} href={"empaque"} area={"Empaque"}></Links>
+              <Links icon={CiSettings} href={"maquina"} area={"Máquina"}></Links>
             </ul>
           </nav>
       

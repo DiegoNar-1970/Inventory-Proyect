@@ -4,7 +4,6 @@
 import Table from "../smallComponents/Table.jsx";
 import Search from "../smallComponents/Search.jsx";
 import { useParams } from "react-router-dom";
-import { Suspense, } from "react";
 import  {fetchData} from '../helpers/fetchData.js'
 
 
