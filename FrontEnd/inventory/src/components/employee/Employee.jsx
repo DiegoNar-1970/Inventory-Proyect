@@ -5,16 +5,26 @@ import Table from "../smallComponents/Table.jsx";
 import Search from "../smallComponents/Search.jsx";
 import { useParams } from "react-router-dom";
 import  {fetchData} from '../helpers/fetchData.js'
+import { useEffect,useState } from "react";
 
 
-const apiData=fetchData('http://localhost:3000/profile');
+const apiData=fetchData('http://localhost:3000/employee');
 const Employee = () => {
   let {area}=useParams();
-  console.log(area);
   const data= apiData.read();
-  const objetData=JSON.stringify(data)
-  console.log(objetData);
+const [filterData,setFilterData]=useState();
 
+  useEffect(()=>{
+    try{
+      let dataFilter=data.filter(employee=>employee.area===area);
+      setFilterData(dataFilter);
+    }catch(err){
+      return(
+        <span>Not Found</span>
+      )
+    }
+
+  },[area])
 
   return (
     <div className="flex flex-col flex-wrap flex-1 rounded-lg gap-3 text-white">
@@ -22,7 +32,7 @@ const Employee = () => {
           <Search/>
       </article>
       <article className="flex flex-col bg-fondo-menu rounded-lg box-border p-2 justify-center">
-          <Table data={data}/>
+          <Table data={filterData}/>
       </article>
     </div>
 
