@@ -12,8 +12,7 @@ const apiData=fetchData('http://localhost:3000/employee');
 const Employee = () => {
   let {area}=useParams();
   const data= apiData.read();
-const [filterData,setFilterData]=useState();
-
+  const [filterData,setFilterData]=useState();
   useEffect(()=>{
     try{
       let dataFilter=data.filter(employee=>employee.area===area);
@@ -23,9 +22,9 @@ const [filterData,setFilterData]=useState();
         <span>Not Found</span>
       )
     }
-
+    
   },[area])
-
+  
   return (
     <div className="flex flex-col flex-wrap flex-1 rounded-lg gap-3 text-white">
       <article className="flex gap-2 justify-around items-center bg-fondo-menu rounded-lg p-2 box-border  ">

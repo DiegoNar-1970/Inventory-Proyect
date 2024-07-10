@@ -1,10 +1,16 @@
 
 import { useState } from 'react'
 import img from '../../media/img/img.png'
-
+import { IoCloseOutline } from "react-icons/io5";
+import FormUpEmployee from '../Forms/FormUpEmployee.jsx';
 
   const Table = ({data}) => {
-  const [see,setSee]=useState(false);
+  const [see,setSee]=useState({
+    component:'',
+    isTrue:false,
+    dataItem:{}
+  });
+  const [profile,setProfile]=useState(false);
   return (
     <>
          <h1 className=" ml-1 text-[17px] text-gray-500">Personal</h1>
@@ -30,26 +36,62 @@ import img from '../../media/img/img.png'
                      <td className="text-gray-500">{item.profile.lastName}</td> 
                     <td >{item.profile.cc}</td> 
                      <td className="text-gray-500">{item.area}</td> 
-                    <td>
-                      <button onClick={()=>setSee(!see)} className="ml-[5px] bg-[##00800017] text-green-500 rounded-[1em] 
+                    <td >
+                      <button onClick={()=>{
+                        setSee({
+                          component:'update',
+                          isTrue:true,
+                          dataItem:item
+                        })
+                      }} className="ml-[5px] bg-[##00800017] text-green-500 rounded-[1em] 
                       border-[1px] border-green-500 hover:text-white hover:bg-[#52d9669b] p-[4px]">Actualizar</button>
-                      <button className=" bg-[#ff969601] border-[1px] border-[#952c2c98] text-[#952c2c98] hover:text-white
-                       hover:bg-[#952c2c98] ml-[5px] rounded-[1em] p-[4px]">Eliminar</button>
-                      <button onClick={()=>setSee(!see)} className="ml-[5px] bg-[##00800017] text-green-500 rounded-[1em] 
+                      <button className="ml-[5px] bg-[##00800017] text-green-500 rounded-[1em] 
                       border-[1px] border-green-500 hover:text-white hover:bg-[#52d9669b] p-[4px]">Registrar Hora</button>
+                      <button onClick={()=>{
+                        setSee({
+                          component:'profile',
+                          isTrue:true,
+                          dataItem:item
+                        })
+                      }}  className="ml-[5px] bg-[##00800017] text-green-500 rounded-[1em] 
+                      border-[1px] border-green-500 hover:text-white hover:bg-[#52d9669b] p-[4px]">Ver Perfil</button>
+                      <button className=" bg-[#ff969601] border-[1px] border-[#952c2c98] text-[#952c2c] hover:text-white
+                       hover:bg-[#952c2c98] ml-[5px] rounded-[1em] p-[4px]">Eliminar</button>
                     </td>
                 </tr>
               ))}
             </tbody>
           </table>
-          {see && (
+          {see.component === 'update' && see.isTrue===true && (
            <div className="fixed top-0 left-0 h-screen w-screen bg-[#ffffff41] z-10 flex items-center justify-start ">
-            <div className="bg-white p-4 rounded-lg ">
-             <p>Hola, we</p>
-             <button onClick={()=>setSee(!see)} className="mt-2 bg-red-500 text-white p-2 rounded">Cerrar</button>
+            <div className=" m-auto p-auto bg-white p-4 rounded-lg flex flex-col gap-2 text-black">
+              <div className='self-end text-[30px]'>
+                <button onClick={()=>setSee(!see)}><IoCloseOutline /></button>
+              </div>
+              <div>
+                <FormUpEmployee item={see}></FormUpEmployee>
+              </div>
+              <div className='self-center'>
+                <button onClick={()=>setSee(!see)} className="mt-2 bg-red-500 text-white p-2 rounded">Cerrar</button>
+              </div>
             </div>
            </div>
-      )}
+          )}
+          {see.component === 'profile' && see.isTrue===true && (
+           <div className="fixed top-0 left-0 h-screen w-screen bg-[#ffffff41] z-10 flex items-center justify-start ">
+            <div className=" m-auto p-auto bg-white p-4 rounded-lg flex flex-col gap-2 text-black">
+              <div className='self-end text-[30px]'>
+                <button onClick={()=>setSee(!see)}><IoCloseOutline /></button>
+              </div>
+              <div>
+                
+              </div>
+              <div>
+              <button onClick={()=>setSee(!see)} className="mt-2 bg-red-500 text-white p-2 rounded">Cerrar</button>
+              </div>
+            </div>
+           </div>
+          )}
     </>
   )
 }
