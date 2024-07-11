@@ -4,12 +4,13 @@
 import Table from "../smallComponents/Table.jsx";
 import Search from "../smallComponents/Search.jsx";
 import { useParams } from "react-router-dom";
-import  {fetchData} from '../helpers/fetchData.js'
+import  {fetchData} from '../../helpers/fetchData.js'
 import { useEffect,useState } from "react";
 
 
 const apiData=fetchData('http://localhost:3000/employee');
 const Employee = () => {
+  
   let {area}=useParams();
   const data= apiData.read();
   const [filterData,setFilterData]=useState();

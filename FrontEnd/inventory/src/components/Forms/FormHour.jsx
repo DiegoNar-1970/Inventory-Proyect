@@ -3,9 +3,19 @@ import {useForm} from 'react-hook-form'
 const FormHour = ({item:{dataItem}}) => {
     const {register,handleSubmit,formState:{errors},watch }=useForm();
 
-    const onSubmit=handleSubmit((data)=>{
-      console.log('esta es la data nmms',data)
-    })
+    const onSubmit = handleSubmit((data) => {
+
+      const formattedData = {
+        ...data,
+        holiday: {
+          isHoliday:data.isHoliday || false,
+          hrsHoliday:data.hrsHoliday || 0
+        } 
+      };
+      delete formattedData.isHoliday;
+      delete formattedData.hrsHoliday;
+      console.log('Datos enviados:', formattedData);
+    });
 
   return (
     <form className='flex flex-col gap-2' onSubmit={onSubmit}>
@@ -20,54 +30,81 @@ const FormHour = ({item:{dataItem}}) => {
             required:{
               value:true,
               message:'Se necesita una semana'
-          }})
+          },valueAsNumber: true,
+          max:{
+            value:60,
+            message:'semanas maximas 60'
+          },
+          min:{
+            value:1,
+            message:'numero no permitido'
+          }
+          ,pattern: {
+            value: /^(0?[0-9]|1[0-2])$/, 
+            message: 'Ingrese un número válido del 0 al 12'
+          }, })
           } className="border-[1px] rounded-lg p-[2px] border-gray-400" />
           {errors.week && <span className='text-red-600'>{errors.week.message}</span>}
     </div>
-    {watch('isHoliday') == false && (
-            <div className='flex flex-col gap-2'>
-            <label htmlFor="lastName" className='font-medium font-sans '>Horas</label>
-            <input type="text" {...register('dayHour',{required:{
-              value:true,
-              message:'Se necesita el total de horas'
-            },maxLength:{
-                value:24,
-                message:'debe ser menor de 24 horas'
-            },minLength:{
-                value:0,
-                message:'solo horas mayores a 0'
-            }})}
-            className="border-[1px] rounded-lg p-[2px] border-gray-400"  />
-            {errors.dayHour && <span className='text-red-600'>{errors.dayHour.message}</span>} 
-          </div>
-     )}
-     {watch('isHoliday') == true && (
-                <div className='flex flex-col gap-2'>
-                    <label htmlFor="isHoliday" className='font-medium font-sans '>Horas festivas</label>
-                    <input type="number" {...register('hrsHoliday',{
-                        required:{
-                        value:true,
-                        message:'Se necesita una semana'
-                    }})
-                    } className="border-[1px] rounded-lg p-[2px] border-gray-400" />
-                    {errors.week && <span className='text-red-600'>{errors.week.message}</span>}
-                </div>
-            )}
-  <div className='flex flex-col gap-2'>
-    <label htmlFor="sex" className='font-medium font-sans '>Sexo</label>
-    <input type="text" {...register('sex',{
-      required:{
-        value:true,
-        message:'Se necesita un sexo'
-    }})
-    } className="border-[1px] rounded-lg p-[2px] border-gray-400"/>
-    {errors.sex && <span className='text-red-600'>{errors.sex.message}</span>}
-  </div>
+    {!watch('isHoliday') && (
+        <div className="flex flex-col gap-2">
+          <label htmlFor="dayHour" className="font-medium font-sans">Horas</label>
+          <input type="number" {...register('dayHour', {
+            required: {
+              value: true,
+              message: 'Se necesita el total de horas'
+            },
+            max: {
+              value: 24,
+              message: 'Debe ser menor de 24 horas'
+            },
+            min: {
+              value: 0,
+              message: 'Solo horas mayores a 0'
+            },
+            pattern: {
+              value: /^(0?[0-9]|1[0-2])$/, 
+              message: 'Ingrese un número válido del 0 al 12'
+            },valueAsNumber: true
+          })} defaultValue={0} className="border-[1px] rounded-lg p-[2px] border-gray-400" />
+          {errors.dayHour && <span className="text-red-600">{errors.dayHour.message}</span>}
+        </div>
+      )}
+
+      {watch('isHoliday') && (
+        <div className="flex flex-col gap-2">
+          <label htmlFor="hrsHoliday" className="font-medium font-sans">Horas festivas</label>
+          <input type="number" {...register('hrsHoliday', {
+            required: {
+              value: true,
+              message: 'Se necesitan las horas festivas'
+            },valueAsNumber: true,
+            max: {
+              value: 24,
+              message: 'Debe ser menor de 24 horas'
+            },
+            min: {
+              value: 0,
+              message: 'Solo horas mayores a 0'
+            },
+            pattern: {
+              value: /^(0?[0-9]|1[0-2])$/, 
+              message: 'Ingrese un número válido del 0 al 12'
+            }})} 
+            defaultValue={0} className="border-[1px] rounded-lg p-[2px] border-gray-400" />
+          {errors.hrsHoliday && <span className="text-red-600">{errors.hrsHoliday.message}</span>}
+        </div>
+      )}
   <button className='bg-black text-white rounded-lg self p-1 mt-2'>Enviar</button>
   <div className='flex flex-col gap-2'>
         <div className=' flex gap-2 items-center justify-between'>
-            <span className='font-medium font-sans '>Marcar solo si es festivo</span>
-            <input type="checkbox" {...register('isHoliday')} className="border-[1px] rounded-lg p-[2px] border-gray-400"/>
+            <label htmlFor='isHoliday' className='font-medium font-sans '>Marcar solo si es festivo</label>
+            <input type="checkbox" {...register('isHoliday',{
+              require:{
+                value:true,
+                message:'se requieren horas'
+              }
+              })} defaultChecked='' className="border-[1px] rounded-lg p-[2px] border-gray-400"/>
         </div>
   </div>
 </form>

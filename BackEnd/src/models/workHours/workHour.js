@@ -17,6 +17,12 @@ const workHourSchema = new Schema({
       }], default: function() {
         return this.isNew ? null : undefined;
       }}
+          //   {
+    //     isHoliday: { type: Boolean },
+    //     hrsHoliday: { type: Number }
+    //  }, default: function() {
+    //   return this.isNew ? null : undefined;
+    // }
   });
   
   const WorkHour = mongoose.model('WorkHour', workHourSchema);
