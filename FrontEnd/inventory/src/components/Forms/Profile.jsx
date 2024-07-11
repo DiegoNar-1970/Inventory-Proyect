@@ -6,7 +6,7 @@ const Profile = ({item:{dataItem}}) => {
     console.log(data)
   })
   return (
-    <form className='flex flex-wrap gap-2' onSubmit={onSubmit}>
+    <form className='flex flex-col gap-2' onSubmit={onSubmit}>
       <div className='flex flex-col gap-2'>
         <label htmlFor="cc" className='text-[20px]  font-medium font-sans '>Cedula</label>
         <input type="number" className='border-[1px] text-black rounded-lg p-[2px] border-gray-400'

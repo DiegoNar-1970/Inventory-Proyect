@@ -4,6 +4,7 @@ import img from '../../media/img/img.png'
 import { IoCloseOutline } from "react-icons/io5";
 import FormUpEmployee from '../Forms/FormUpEmployee.jsx';
 import Profile from '../Forms/Profile.jsx';
+import FormHour from '../Forms/FormHour.jsx';
 
   const Table = ({data}) => {
   const [see,setSee]=useState({
@@ -38,7 +39,12 @@ import Profile from '../Forms/Profile.jsx';
                     <td >{item.profile.cc}</td> 
                      <td className="text-gray-500">{item.area}</td> 
                     <td >
-                    <button className="ml-[5px] bg-[##00800017] text-green-500 rounded-[1em] 
+                    <button onClick={()=>{setSee({
+                          component:'hour',
+                          isTrue:true,
+                          dataItem:item
+                        })}}
+                    className="ml-[5px] bg-[##00800017] text-green-500 rounded-[1em] 
                       border-[1px] border-green-500 hover:text-white hover:bg-[#52d9669b] p-[4px]">Registrar Hora</button>
                       <button onClick={()=>{
                         setSee({
@@ -80,14 +86,29 @@ import Profile from '../Forms/Profile.jsx';
           )}
           {see.component === 'profile' && see.isTrue===true && (
            <div className="fixed top-0 left-0 h-screen w-screen bg-[#ffffff41] z-10 flex items-center justify-start ">
-            <div className=" m-auto p-auto bg-white p-4 rounded-lg flex flex-col gap-2 text-black min-w-[300px] max-w-[500px]">
+            <div className=" m-auto p-auto bg-white p-4 rounded-lg flex flex-col  text-black min-w-[300px] max-w-[500px] ">
               <div className='self-end text-[30px]'>
                 <button onClick={()=>setSee(!see)}><IoCloseOutline /></button>
               </div>
               <div>
                   <Profile item={see}></Profile>
               </div>
-              <div className='w-[100%]'>
+              <div className='w-[100%] mt-[10px]'>
+                <button onClick={()=>setSee(!see)} className="mt-2 w-[100%] bg-red-500 text-white p-2 rounded">Cerrar</button>
+              </div>
+            </div>
+           </div>
+          )}
+          {see.component === 'hour' && see.isTrue===true && (
+           <div className="fixed top-0 left-0 h-screen w-screen bg-[#ffffff41] z-10 flex items-center justify-start ">
+            <div className=" m-auto p-auto bg-white p-4 rounded-lg flex flex-col  text-black min-w-[300px] max-w-[500px] ">
+              <div className='self-end text-[30px]'>
+                <button onClick={()=>setSee(!see)}><IoCloseOutline /></button>
+              </div>
+              <div>
+                  <FormHour item={see}></FormHour>
+              </div>
+              <div className='w-[100%] mt-[10px]'>
                 <button onClick={()=>setSee(!see)} className="mt-2 w-[100%] bg-red-500 text-white p-2 rounded">Cerrar</button>
               </div>
             </div>
