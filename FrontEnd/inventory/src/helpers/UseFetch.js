@@ -35,19 +35,15 @@ export function UseBodyFetch(url,area,datos){
     const [data,setData]=useState();
     const [loading,setLoading]=useState(true);
     const [error,setError]=useState(null);
-    const [controller,setController]=useState(null);
+
 
     useEffect(()=>{
-        const abortController=new AbortController();
-        setController(abortController);
         setLoading(true);
-
         fetch(url,
             {method:"POST",
             headers:{'Accept':"application/json",
                 "Content-type":"application/json"},
-        body:JSON.stringify(datos),
-        signal:abortController.signal})
+        body:JSON.stringify(datos)})
 
         .then((response)=>response.json())
         .then((data)=>setData(data))
@@ -57,19 +53,10 @@ export function UseBodyFetch(url,area,datos){
             }
             setError(error)})
 
-        .finally(()=> setLoading(false));
-
-    return ()=> abortController.abort(); //se ejecuta si se llega a pausar la carga o cualquier cosa que interumpa el fetching
-    },[url,area])
-
-const cancelRequest=()=>{
-    if(controller){
-        console.log(controller)
-    controller.abort();
-    setError("request cancel")
-    }
-}    
-    return {data,loading,error,cancelRequest}
+        .finally(()=> setLoading(false)); 
+    },[url,area,datos])
+  
+    return {data,loading,error}
 }
 
 

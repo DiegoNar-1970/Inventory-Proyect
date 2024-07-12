@@ -14,6 +14,7 @@ const Employee = () => {
   let {area}=useParams();
   const data= apiData.read();
   const [filterData,setFilterData]=useState();
+
   useEffect(()=>{
     try{
       let dataFilter=data.filter(employee=>employee.area===area);

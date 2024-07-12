@@ -2,7 +2,6 @@
 y codigo para optimizar y mejorar 
 git log --graph --decorate --all --oneline
 $ git reflog
-pruebas de commits
 controllerWorkHour
 i cant be a feedback
         const {id}=req.params;

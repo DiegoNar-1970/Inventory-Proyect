@@ -9,7 +9,7 @@ import { Link } from 'react-router-dom';
 import { IoIosArrowForward } from "react-icons/io";
 
 
-const TableHours=lazy(()=>import('./components/hours/TableHours.jsx'));
+const Hours=lazy(()=>import('./components/hours/Hours.jsx'));
 const Paletizado=lazy(()=>import('./components/areas/Paletizado.jsx'));
 const Home=lazy(()=>import("./components/home/Home.jsx"));
 const Employee=lazy(()=>import("./components/employee/Employee.jsx"));
@@ -43,7 +43,7 @@ function App() {
           <Route path='/empaque' element={<Empaque/>}/>
           <Route path='/admin' element={<Administracion/>}/>
           <Route path='/employee/:area' element={<Employee/>}/>
-          <Route path='/workHour/:area' element={<TableHours/>}/>
+          <Route path='/workHour/:area' element={<Hours/>}/>
           <Route path='/*' element={<Navigate to='/home'/>}/>
         </Routes>
       </section>
