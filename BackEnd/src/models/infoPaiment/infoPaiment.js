@@ -57,7 +57,7 @@ const infoPaimentSche = new Schema({
                 salary
             } = calcPaiment(allObjectHours);
 
-            const in6333foPaiment = new InfoPaiment({
+            const infoPaiment = new InfoPaiment({
                 employee,
                 week: [startWeek, endWeek],
                 horasDominicales: { hours: totalHolidayHours },
@@ -131,7 +131,7 @@ const infoPaimentSche = new Schema({
             }).exec();
             return infoPaiment;
         }catch(err){
-            throw new err(`Error finding receipt ${err.message}`)
+            throw new Error(`Error finding receipt ${err.message}`)
         }
     }
 

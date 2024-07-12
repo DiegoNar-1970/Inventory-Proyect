@@ -37,4 +37,19 @@ export class WorkHourController{
       return res.status(400).json({ message: err.message });
     }
     }
+    static async calcHours(req,res){
+      const {area}=req.query
+      if(!area){
+        return res.status(401).json({message:'need area'})
+      }   
+      try{
+        const allHours=await WorkHourModel.calcHours(area,req.body)
+        if(allHours.message){
+         return res.status(401).json({err:allHours.message})
+        }
+       return res.send(allHours);
+      }catch(err){
+        return res.status(404).json({err:err.message})
+      }
+    }
 }

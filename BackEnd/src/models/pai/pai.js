@@ -49,7 +49,8 @@ export class PaiModel{
     static async create(employeeId,newsId,data){
         const result= await validatePartiaPaiSchema(data);
         if(!result.success){
-            return {message:'validation error',
+            return {
+                message:'validation error',
                 err:result.error
             }
         }

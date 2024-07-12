@@ -1,6 +1,7 @@
 import mongoose from "mongoose";
 import {vWorkHourSchemaZod} from '../workHours/workHourZod.js'
 import Employee from "../employee/employee.js";
+import { queryCond } from '../../helpers/queryConditios.js';
 const {Schema}=mongoose
 
 const workHourSchema = new Schema({
@@ -69,7 +70,7 @@ const workHourSchema = new Schema({
         const worHours=await WorkHour.find({},{__v:0})
         .populate({
           path:'employee',
-          select:'-__v -shift -admissionDate',
+          select:'-__v -admissionDate',
           populate:{
               path:'profile',
               select:'-__v -birthdate -sex'
@@ -79,5 +80,41 @@ const workHourSchema = new Schema({
       }catch(err){
         return {message:err.message};
       }
+    }
+
+    static async calcHours(area,data){
+      try{
+          const query=await queryCond(data);
+          console.log('esta es la query',query)
+          const hours=await this.getHours(area,query)
+          if(hours.message){
+            return{message:hours.message}
+          }
+          return hours;
+      }catch(err){
+        return {message:err}
+      }
+
+    }
+    static async getHours(area,query){
+      try{ 
+        const hours =await WorkHour.find(query,{__v:0}).populate({
+          path:'employee',
+          select:'area profile',
+          match:{area:area},
+          populate:{
+              path:'profile',
+              select:'name lastname cc '
+          }
+      }).exec();
+      
+      const filterHours=hours.filter(hour=>{
+        return hour.employee?.area===area
+      })
+      return filterHours;
+      }catch(err){
+        return {message:err.message}
+      }
+
     }
     }
