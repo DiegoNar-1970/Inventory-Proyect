@@ -10,7 +10,7 @@ import { useEffect,useState } from "react";
 
 const apiData=fetchData('http://localhost:3000/employee');
 const Employee = () => {
-  
+
   let {area}=useParams();
   const data= apiData.read();
   const [filterData,setFilterData]=useState();
@@ -35,7 +35,6 @@ const Employee = () => {
           <Table data={filterData}/>
       </article>
     </div>
-
   )
 }
 export default Employee

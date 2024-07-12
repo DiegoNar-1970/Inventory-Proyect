@@ -43,7 +43,7 @@ function App() {
           <Route path='/empaque' element={<Empaque/>}/>
           <Route path='/admin' element={<Administracion/>}/>
           <Route path='/employee/:area' element={<Employee/>}/>
-          <Route path='/horas/:area' element={<TableHours/>}/>
+          <Route path='/workHour/:area' element={<TableHours/>}/>
           <Route path='/*' element={<Navigate to='/home'/>}/>
         </Routes>
       </section>

@@ -31,7 +31,7 @@ const getSuspender = (promise) => {
     const promise = fetch(url)
       .then((response) => response.json())
       .then((data) => data);
-  
+      console.log(promise)
     return getSuspender(promise);
   }
   
