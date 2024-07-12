@@ -64,6 +64,7 @@ export function UseBodyFetch(url,area,datos){
 
 const cancelRequest=()=>{
     if(controller){
+        console.log(controller)
     controller.abort();
     setError("request cancel")
     }

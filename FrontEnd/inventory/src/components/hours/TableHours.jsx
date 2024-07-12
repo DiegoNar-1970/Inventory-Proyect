@@ -2,6 +2,8 @@
 import { useParams } from "react-router-dom";
 import Search from "../smallComponents/Search";
 import  {UseBodyFetch} from '../../helpers/UseFetch'
+import HoursTable from "./HoursTable.jsx";
+
 
 
 const TableHours = () => {
@@ -15,8 +17,8 @@ const TableHours = () => {
       endWeek:2
   }
   
-    const {data}=UseBodyFetch(`http://localhost:3000/workHour/?area=${area}`,area,datos);
-  console.log(data)
+    const {data,loading,error}=UseBodyFetch(`http://localhost:3000/workHour/?area=${area}`,area,datos);
+  console.log(data && data)
 
   return (
     <div className="flex flex-col flex-wrap flex-1 rounded-lg gap-3 text-white">
@@ -24,7 +26,9 @@ const TableHours = () => {
           <Search/>
       </article>
       <article className="flex flex-col bg-fondo-menu rounded-lg box-border p-2 justify-center">
-          <button onClick={()=>''/*hours(filterData)*/ }>see</button>
+          {error ? loading ? <span>Loading...</span>
+            :<HoursTable/>
+            :<span>ohh no... Bad request</span>}
       </article>
     </div>
   )
