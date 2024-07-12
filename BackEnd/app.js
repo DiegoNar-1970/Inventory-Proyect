@@ -3,6 +3,7 @@ import cron from 'node-cron'
 import mongoose from 'mongoose';
 import {notFound} from './src/middlewares/notFound.js'
 import dot from 'dotenv';
+import cors from 'cors'; 
 import { profileRouter } from './src/routes/profileRouter.js';
 import { employeeRouter } from './src/routes/employeeRouter.js';
 import { newsRouter } from './src/routes/news.js';
@@ -17,11 +18,8 @@ const app = express();
 
 app.use(express.json());
 app.disable('x-powered-by');
-app.use(function(req, res, next) {
-    res.header("Access-Control-Allow-Origin",'*');
-    next();
-});
 
+app.use(cors());
 
 app.use('/profile',profileRouter);
 app.use('/employee',employeeRouter);

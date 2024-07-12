@@ -1,3 +1,4 @@
+//funciona muy bien para gets pero para post esto es una mierda
 const getSuspender = (promise) => {
     let status = 'pending';
     let response;
@@ -26,12 +27,10 @@ const getSuspender = (promise) => {
   
     return { read };
   };
-  
-  export function fetchData(url) {
-    const promise = fetch(url)
+  export function fetchData(url, options = {}) {
+    const promise = fetch(url, options)
       .then((response) => response.json())
       .then((data) => data);
-      console.log(promise)
+    console.log(promise);
     return getSuspender(promise);
   }
-  

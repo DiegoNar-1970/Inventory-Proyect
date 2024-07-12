@@ -262,3 +262,33 @@ worHourModel
     // }
     
   }
+  groupBy and more 
+//     const [filterData,setFilterData]=useState();
+
+//     useEffect(()=>{
+//       try{
+//         let dataFilter=data.filter(data=>data.employee.area===area);
+//         let groupData=Object.groupBy(dataFilter,(employee)=>{
+//             return employee.employee.profile.name
+//         })
+//         setFilterData(groupData);
+//     }catch(err){
+          //////////////////this is no accept in fetch 
+//         return(
+//             <span>Not Found</span>
+//         )
+//     }
+// },[area]);
+ 
+// const hours = (data) => {
+//     let result={}
+//     Object.keys(data).forEach(key => {
+//     const totalHours=data[key].reduce((total,item)=>{
+//         return total + (item.dayHour !== undefined ? item.dayHour : 0);
+
+//         },0)
+//         result[key]=totalHours
+        
+//     });
+//     console.log(result)
+//   }
