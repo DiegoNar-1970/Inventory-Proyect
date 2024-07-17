@@ -26,8 +26,7 @@ const Employee = () => {
   const searchFilter=({target})=>{
     target.value 
     ? setNameFilter(areaFilter.filter(employee=>employee.profile.name.toLowerCase().includes(target.value.toLowerCase())))
-    :setNameFilter(areaFilter)
-    
+    :setNameFilter(areaFilter);
   }
   return (
     <div className="flex flex-col flex-wrap flex-1 rounded-lg gap-3 text-white">
