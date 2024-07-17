@@ -17,7 +17,7 @@ import Links from '../menu/Links.jsx'
             <GiAvocado className=' mb-2 ml-4 text-[1.5em] text-green-600 text-2x1  '/>
           </div>
           <div className='text-gray-500 text-[10px]p-1 m-1 mt-2'>
-              <span className=''>Áreas de trabajo</span>
+              <span >Áreas de trabajo</span>
           </div>
           
           <nav className='flex-1 mt-2 bg-fondo-menu  rounded-[1em] p-2 text-text-menu '>
