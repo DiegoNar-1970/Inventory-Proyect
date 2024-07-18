@@ -292,3 +292,19 @@ worHourModel
 //     });
 //     console.log(result)
 //   }
+
+uso de groupby
+      const group = Object.groupBy(filterHours,(hour)=>{
+        return `${hour.employee.profile.cc} ${hour.employee.profile.cc}` ;
+      })
+        console.log(group)
+      let result={}
+      const totalHours=Object.keys(group).forEach(key=>{
+        const totalHours=group[key].reduce((total,item)=>{
+          return total + (item.dayHour!= undefined ? item.dayHour : 0 )
+        },0)
+        
+        return result[key]=totalHours
+    })
+
+        console.log('result',result)

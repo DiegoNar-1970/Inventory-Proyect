@@ -105,31 +105,31 @@ const workHourSchema = new Schema({
           match:{area:area},
           populate:{
               path:'profile',
-              select:'name lastname cc '
+              select:'cc lastcc cc '
           }
       }).exec();
       
       const filterHours=hours.filter(hour=>{
         return hour.employee?.area===area
       })
+      const reduce=filterHours.reduce((acc,hora)=>{
+        //necesitamos crear la llave para tener una referencia
+        const cc=hora.employee.profile.cc
+        //como acc no es de ningun tipo hay que crearle
+        //manualmente la estructura que tendra 
+        if(!acc[cc]){
+          acc[cc]={
+            horasTotales:0,
+            data:[]
+          }
+        }
+        //logica
+        acc[cc].horasTotales+=hora.dayHour;
+        acc[cc].data.push(hora);
+        return acc;
+      },{})
 
-      const group = Object.groupBy(filterHours,(hour)=>{
-        return hour.employee.profile.name;
-      })
-
-      let result={}
-      const totalHours=Object.keys(group).forEach(key=>{
-        const totalHours=group[key].reduce((total,item)=>{
-          return total + (item.dayHour!= undefined ? item.dayHour : 0 )
-        },0)
-        
-        return result[key]={"horas":totalHours,"data":group[key]}
-    })
-
-        console.log('result',result)
-      
-    
-      return result;
+      return reduce;
       }catch(err){
         return {message:err.message}
       }
