@@ -2,6 +2,7 @@ import mongoose from "mongoose";
 import {vWorkHourSchemaZod} from '../workHours/workHourZod.js'
 import Employee from "../employee/employee.js";
 import { queryCond } from '../../helpers/queryConditios.js';
+import { object } from "zod";
 const {Schema}=mongoose
 
 const workHourSchema = new Schema({
@@ -18,6 +19,7 @@ const workHourSchema = new Schema({
       }], default: function() {
         return this.isNew ? null : undefined;
       }}
+      //es mejor tratar con objetos y no arrays
           //   {
     //     isHoliday: { type: Boolean },
     //     hrsHoliday: { type: Number }
@@ -58,7 +60,7 @@ const workHourSchema = new Schema({
       if(id!=0){
         try{
           const worHour = await WorkHour.findById(id,{__v:0});
-          if(worHour==undefined){
+          if(worHour===undefined){
             return {message:'not found'}
           }
           return worHour;
@@ -85,7 +87,6 @@ const workHourSchema = new Schema({
     static async calcHours(area,data){
       try{
           const query=await queryCond(data);
-          console.log('esta es la query',query)
           const hours=await this.getHours(area,query)
           if(hours.message){
             return{message:hours.message}
@@ -111,7 +112,24 @@ const workHourSchema = new Schema({
       const filterHours=hours.filter(hour=>{
         return hour.employee?.area===area
       })
-      return filterHours;
+
+      const group = Object.groupBy(filterHours,(hour)=>{
+        return hour.employee.profile.name;
+      })
+
+      let result={}
+      const totalHours=Object.keys(group).forEach(key=>{
+        const totalHours=group[key].reduce((total,item)=>{
+          return total + (item.dayHour!= undefined ? item.dayHour : 0 )
+        },0)
+        
+        return result[key]={"horas":totalHours,"data":group[key]}
+    })
+
+        console.log('result',result)
+      
+    
+      return result;
       }catch(err){
         return {message:err.message}
       }
