@@ -2,7 +2,6 @@ import mongoose from "mongoose";
 import {vWorkHourSchemaZod} from '../workHours/workHourZod.js'
 import Employee from "../employee/employee.js";
 import { queryCond } from '../../helpers/queryConditios.js';
-import { object } from "zod";
 const {Schema}=mongoose
 
 const workHourSchema = new Schema({
@@ -12,20 +11,18 @@ const workHourSchema = new Schema({
     week: { type: Number },
     dayHour: { type: Number},
     date: { type: Date, default:Date.now() },
-    holiday: {
-      type: [{
-          isHoliday: { type: Boolean },
-          hrsHoliday: { type: Number }
-      }], default: function() {
-        return this.isNew ? null : undefined;
-      }}
+    holiday:{
+        isHoliday: { type: Boolean, default:false },
+        hrsHoliday: { type: Number, default:0}
+     }
+        // {
+    //   type: [{
+    //       isHoliday: { type: Boolean },
+    //       hrsHoliday: { type: Number }
+    //   }], default: function() {
+    //     return this.isNew ? null : undefined;
+    //   }}
       //es mejor tratar con objetos y no arrays
-          //   {
-    //     isHoliday: { type: Boolean },
-    //     hrsHoliday: { type: Number }
-    //  }, default: function() {
-    //   return this.isNew ? null : undefined;
-    // }
   });
   
   const WorkHour = mongoose.model('WorkHour', workHourSchema);
@@ -35,12 +32,14 @@ const workHourSchema = new Schema({
     static async create(id,data,date){
 
       const result = vWorkHourSchemaZod(data);
+      console.log(result)
       if (!result.success) {
         return { message: 'invalid type', error: result.error };
       }
       try {
 
         if(date){
+          //usar la funcion de query 
           const newDate=new Date(date.trim())
           const newWorkH = new WorkHour({newDate,...result.data});
           const employee = await Employee.findById(id);
@@ -105,13 +104,14 @@ const workHourSchema = new Schema({
           match:{area:area},
           populate:{
               path:'profile',
-              select:'cc lastcc cc '
+              select:'cc lastName name '
           }
       }).exec();
-      
+      console.log('esto empieza aqui',hours,'aqui termina')
       const filterHours=hours.filter(hour=>{
         return hour.employee?.area===area
       })
+
       const reduce=filterHours.reduce((acc,hora)=>{
         //necesitamos crear la llave para tener una referencia
         const cc=hora.employee.profile.cc
@@ -119,12 +119,21 @@ const workHourSchema = new Schema({
         //manualmente la estructura que tendra 
         if(!acc[cc]){
           acc[cc]={
+            cc:0,
+            name:'',
             horasTotales:0,
+            horasExtras:0,
             data:[]
           }
         }
+        
         //logica
+        if(!acc[cc].name || !acc[cc].cc ){
+          acc[cc].name=hora.employee.profile.name;
+          acc[cc].cc=hora.employee.profile.cc;
+        }
         acc[cc].horasTotales+=hora.dayHour;
+        acc[cc].horasExtras+=hora.holiday.hrsHoliday
         acc[cc].data.push(hora);
         return acc;
       },{})

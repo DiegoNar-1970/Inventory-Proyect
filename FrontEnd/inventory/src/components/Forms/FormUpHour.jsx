@@ -1,7 +1,15 @@
 import {useForm} from 'react-hook-form'
 
-const FormHour = ({item:{dataItem}}) => {
-    const {register,handleSubmit,formState:{errors},watch }=useForm();
+const FormUpHour = ({result}) => {
+ const {dataResult}=result
+ console.log(dataResult)
+
+  const {register,handleSubmit,formState:{errors},watch}=useForm({
+    defaultValues: {
+      isHoliday: dataResult.holiday.isHoliday,
+      hrsHoliday: dataResult.holiday.hrsHoliday,
+      dayHour:dataResult.dayHour,
+    }});
 
     const onSubmit = handleSubmit((data) => {
 
@@ -12,41 +20,32 @@ const FormHour = ({item:{dataItem}}) => {
           hrsHoliday:data.hrsHoliday || 0
         } 
       };
+      //se accede a los datos isHoliDay de data no de holiday
       delete formattedData.isHoliday;
       delete formattedData.hrsHoliday;
       console.log('Datos enviados:', formattedData);
     });
 
+
   return (
     <form className='flex flex-col gap-2' onSubmit={onSubmit}>
-    <div className='hidden gap-2'>
-      <label htmlFor="employee" className='text-[20px]  font-medium font-sans '></label>
-      <input type="text" className='border-[1px] text-black rounded-lg p-[2px] border-gray-400'
-        {...register('employee')} defaultValue={dataItem._id} />
-    </div>
-     <div className='flex flex-col gap-2'>
-          <label htmlFor="week" className='font-medium font-sans '>Semana</label>
-          <input type="number" {...register('week',{
-            required:{
-              value:true,
-              message:'Se necesita una semana'
-          },valueAsNumber: true,
-          max:{
-            value:60,
-            message:'semanas maximas 60'
-          },
-          min:{
-            value:1,
-            message:'numero no permitido'
-          }
-          ,pattern: {
-            value: /^(0?[0-9]|1[0-2])$/, 
-            message: 'Ingrese un número válido del 0 al 12'
-          }, })
-          } className="border-[1px] rounded-lg p-[2px] border-gray-400" />
-          {errors.week && <span className='text-red-600'>{errors.week.message}</span>}
-    </div>
-    {!watch('isHoliday') && (
+      <div className='flex flex-col gap-2'>
+        <label htmlFor="cc" className='font-medium font-sans '>Identificacion</label>
+        <input type="text"
+        defaultValue={dataResult.employee.profile.cc}
+        readOnly
+        className="border-[1px] rounded-lg p-[2px]
+        border-gray-400" />
+      </div>
+      <div className='flex flex-col gap-2'>
+        <label htmlFor="cc" className='font-medium font-sans '>Nombre</label>
+        <input type="text"
+        defaultValue={dataResult.employee.profile.name}
+        readOnly
+        className="border-[1px] rounded-lg p-[2px]
+        border-gray-400" />
+      </div>
+      {!watch('isHoliday') && (
         <div className="flex flex-col gap-2">
           <label htmlFor="dayHour" className="font-medium font-sans">Horas</label>
           <input type="number" {...register('dayHour', {
@@ -91,24 +90,36 @@ const FormHour = ({item:{dataItem}}) => {
               value: /^(0?[0-9]|1[0-2])$/, 
               message: 'Ingrese un número válido del 0 al 12'
             }})} 
-            defaultValue={0} className="border-[1px] rounded-lg p-[2px] border-gray-400" />
+            defaultValue={dataResult.holiday.hrsHoliday} className="border-[1px] rounded-lg p-[2px] border-gray-400" />
           {errors.hrsHoliday && <span className="text-red-600">{errors.hrsHoliday.message}</span>}
         </div>
       )}
-  <button className='bg-black text-white rounded-lg self p-1 mt-2'>Enviar</button>
-  <div className='flex flex-col gap-2'>
-        <div className=' flex gap-2 items-center justify-between'>
+      <div className='flex flex-col gap-2'>
+        <label htmlFor="week" className='font-medium font-sans '>Semana</label>
+        <input type="text" {...register('week',{
+          required:{
+            value:true,
+            message:'Se necesita la Semana'
+        }})
+        } className="border-[1px] rounded-lg p-[2px] 
+        border-gray-400"
+        defaultValue={dataResult.week}/>
+        {errors.position && <span className='text-red-600'>{errors.position.message}</span>}
+      </div>
+
+      <button className='bg-black text-white rounded-lg self p-1 mt-2'>Enviar</button>
+
+      <div className=' flex gap-2 items-center justify-between'>
             <label htmlFor='isHoliday' className='font-medium font-sans '>Hoy es festivo?</label>
             <input type="checkbox" {...register('isHoliday',{
               require:{
                 value:true,
                 message:'se requieren horas'
               }
-              })} defaultChecked='' className="border-[1px] rounded-lg p-[2px] border-gray-400"/>
+              })} defaultChecked={dataResult.holiday.isHoliday} className="border-[1px] rounded-lg p-[2px] border-gray-400"/>
         </div>
-  </div>
-</form>
+    </form>
   )
 }
 
-export default FormHour
+export default FormUpHour

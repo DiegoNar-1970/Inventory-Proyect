@@ -38,15 +38,18 @@ const Profile = ({item:{dataItem}}) => {
         value:true,
         message:'Se necesita una fecha de nacimiento'
       },
+
       validate:(value)=>{
         const birtDate=new Date(value);
         const newDate=new Date();
         let years=newDate.getFullYear()-birtDate.getFullYear();
           years > 18 ? true : 'menor de edad'
       }})} 
+
       className="border-[1px] rounded-lg p-[2px]
       border-gray-400"  defaultValue={dataItem.profile.lastName}/>
       {errors.shift && <span className='text-red-600'>{errors.shift.message}</span>} 
+    
     </div>
     <div className='flex flex-col gap-2'>
       <label htmlFor="sex" className='font-medium font-sans '>Sexo</label>
@@ -75,18 +78,22 @@ const Profile = ({item:{dataItem}}) => {
     <div className='flex flex-col gap-2'>
       <label htmlFor="email" className='font-medium font-sans '>Correo</label>
       <input type="email" {...register('email',{
+        
         required:{
           value:true,
           message:'Se necesita un email'
       },
+
       pattern:{
         value:/^[-\w.%+]{1,64}@(?:[A-Z0-9-]{1,63}\.){1,125}[A-Z]{2,63}$/i,
         message:'email invalido'
       }})
+
       } className="border-[1px] rounded-lg p-[2px] 
       border-gray-400"
       defaultValue={dataItem.profile.email}/>
       {errors.email && <span className='text-red-600'>{errors.email.message}</span>}
+    
     </div>
     <div className='flex flex-col gap-2'>
       <label htmlFor="eps" className='font-medium font-sans '>Eps</label>
