@@ -1,16 +1,12 @@
 import {useForm} from 'react-hook-form'
 
 const FormUpEmployee = ({item}) => {
-  const {register,
-          handleSubmit,
-          formState:{errors}
-    }=useForm();
+  const {register,handleSubmit,formState:{errors}}=useForm();
 
   const onSubmit=handleSubmit((data)=>{
     console.log(data)
   })
   const {dataItem}=item;
-  console.log(errors)
   return (
     <form className='flex flex-col gap-2' onSubmit={onSubmit}>
       <div className='flex flex-col gap-2'>

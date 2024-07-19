@@ -4,7 +4,7 @@ import img from '../../media/img/img.png'
 import { IoCloseOutline } from "react-icons/io5";
 import FormUpHour from '../Forms/FormUpHour.jsx'
 import FormSeeHour from '../Forms/FormSeeHours.jsx'
-
+import { formatedDate } from '../../helpers/formateDate.js';
 
 
 const HoursTable = ({datos}) => {
@@ -16,7 +16,9 @@ const HoursTable = ({datos}) => {
   });
 
   // console.log(Object.keys(datos).forEach((key)=>{
+    //aqui se usa employee para que sea igual a el objeto especificado con [key]
   //   const employee = datos[key];
+  //como es un forEach accede a ese empleado y puede acceder a la informacion
   //   console.log(employee.data.map(result=>{return result.employee.profile.cc}))
   // }))
 
@@ -28,7 +30,8 @@ const HoursTable = ({datos}) => {
          <tr className="" >
            <th className="border-b-[1px] border-gray-500">nombre</th>
            <th className="border-b-[1px] border-gray-500">Cedula</th>
-           <th className="border-b-[1px] border-gray-500">results</th>
+           <th className="border-b-[1px] border-gray-500">Horas</th>
+           <th className="border-b-[1px] border-gray-500">Horas Festivas</th>
            <th className="border-b-[1px] border-gray-500">Fecha</th>
            <th className="border-b-[1px] border-gray-500">Acciones</th>
          </tr>
@@ -39,14 +42,15 @@ const HoursTable = ({datos}) => {
           {data.map((result)=>(
             <tr key={result._id}>
              <td>
-             <div className="flex gap-2 results-center box-border mt-1">
+              <div className="flex gap-2 results-center box-border mt-1">
                <img className="min-w-[30px] max-w-[30px] h-full rounded-[2em] overflow-hidden text-ellipsis"src={img} alt="" />
                <span>{result.employee.profile.name}</span>
              </div>
-           </td>
+            </td>
             <td className="text-gray-500">{result.employee.profile.cc}</td> 
-           <td >{result.dayHour}</td> 
-            <td className="text-gray-500">{result.date}</td> 
+            <td >{result.dayHour}</td> 
+            <td >{result.holiday.hrsHoliday}</td> 
+            <td className="text-gray-500">{formatedDate(result.date)}</td> 
            <td >
            <button onClick={()=>{setSee({
                  component:'update',
