@@ -30,15 +30,15 @@ const Employee = () => {
   }
   return (
     <div className="flex flex-col flex-wrap flex-1 rounded-lg gap-3 text-white">
-      <article className="flex gap-2 justify-around items-center bg-fondo-menu rounded-lg p-2 box-border  ">
-       <div className="flex gap-2 items-center bg-gray-500 rounded-2xl ">
+      <article className="flex gap-2 justify-between bg-fondo-menu rounded-lg p-2 box-border  ">
+       <div className="flex gap-2 items-center  bg-gray-500 rounded-2xl ">
           <input onChange={searchFilter} className="rounded-2xl outline-none  p-[6px]
           rounded-r-none text-black" 
           placeholder="nombre" type="search" />
 
             <IoSearch className="text-[30px]"/>
         </div>
-        <div className="flex items-center gap-2">
+        <div className="flex gap-2 ">
           <IoPersonAddOutline className="text-[30px] text-green-500" />
           <button>agregar persona</button>
         </div>
