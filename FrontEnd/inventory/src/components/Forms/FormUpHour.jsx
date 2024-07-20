@@ -1,14 +1,18 @@
 import {useForm} from 'react-hook-form'
 
 const FormUpHour = ({result}) => {
+
  const {dataResult}=result
+
  console.log(dataResult)
 
   const {register,handleSubmit,formState:{errors},watch}=useForm({
+
     defaultValues: {
       isHoliday: dataResult.holiday.isHoliday,
       hrsHoliday: dataResult.holiday.hrsHoliday,
       dayHour:dataResult.dayHour,
+    
     }});
 
     const onSubmit = handleSubmit((data) => {
