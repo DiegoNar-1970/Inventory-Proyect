@@ -5,10 +5,11 @@ import { IoCloseOutline } from "react-icons/io5";
 import FormUpHour from '../Forms/FormUpHour.jsx'
 import FormSeeHour from '../Forms/FormSeeHours.jsx'
 import { formatedDate } from '../../helpers/formateDate.js';
+import SeeTotalHours from '../Forms/SeeTotalHours.jsx';
 
 
 const HoursTable = ({datos}) => {
-  
+  console.log(datos)
   const [see,setSee]=useState({
     component:'',
     isTrue:false,
@@ -32,15 +33,17 @@ const HoursTable = ({datos}) => {
            <th className="border-b-[1px] border-gray-500">Cedula</th>
            <th className="border-b-[1px] border-gray-500">Horas</th>
            <th className="border-b-[1px] border-gray-500">Horas Festivas</th>
+           <th className="border-b-[1px] border-gray-500">Semana</th>
            <th className="border-b-[1px] border-gray-500">Fecha</th>
            <th className="border-b-[1px] border-gray-500">Acciones</th>
          </tr>
        </thead>
        <tbody>
-         {datos && Object.entries(datos).map(([key,{data}])=> (
+         {datos && Object.entries(datos).map(([key,info])=> (
           <React.Fragment key={key}>
-          {data.map((result)=>(
+          {info.data.map((result)=>(
             <tr key={result._id}>
+              {console.log('info',info)}
              <td>
               <div className="flex gap-2 results-center box-border mt-1">
                <img className="min-w-[30px] max-w-[30px] h-full rounded-[2em] overflow-hidden text-ellipsis"src={img} alt="" />
@@ -50,6 +53,7 @@ const HoursTable = ({datos}) => {
             <td className="text-gray-500">{result.employee.profile.cc}</td> 
             <td >{result.dayHour}</td> 
             <td >{result.holiday.hrsHoliday}</td> 
+            <td >{result.week}</td> 
             <td className="text-gray-500">{formatedDate(result.date)}</td> 
            <td >
            <button onClick={()=>{setSee({
@@ -58,7 +62,7 @@ const HoursTable = ({datos}) => {
                  dataResult:result
                })}}
            className="ml-[5px] bg-[##00800017] text-green-500 rounded-[1em] 
-             border-[1px] border-green-500 hover:text-white hover:bg-[#52d9669b] p-[4px]">Actualizar Hora</button>
+             border-[1px] border-green-500 hover:text-white hover:bg-[#52d9669b] p-[4px]">Actualizar</button>
              <button onClick={()=>{
                setSee({
                  component:'info',
@@ -66,7 +70,15 @@ const HoursTable = ({datos}) => {
                  dataResult:result
                })
              }}  className="ml-[5px] bg-[##00800017] text-white rounded-[1em] 
-             border-[1px] border-white hover:text-[#52d9669b] hover:border-[#52d9669b] p-[4px]">Ver info</button>
+             border-[1px] border-white hover:text-[#52d9669b] hover:border-[#52d9669b] p-[4px]">Informacion</button>
+             <button onClick={()=>{
+               setSee({
+                 component:'allHours',
+                 isTrue:true,
+                 dataResult:info
+               })
+             }}  className="ml-[5px] bg-[##00800017] text-white rounded-[1em] 
+             border-[1px] border-white hover:text-[#52d9669b] hover:border-[#52d9669b] p-[4px]">Total Horas</button>
              <button onClick={()=>{
                setSee({
                  component:'delete',
@@ -114,19 +126,20 @@ const HoursTable = ({datos}) => {
        </div>
       </div>
      )}
-     {see.component === 'delete' && see.isTrue===true && (
+     
+     {see.component === 'allHours' && see.isTrue===true && (
       <div className="fixed top-0 left-0 h-screen w-screen bg-[#ffffff41] z-10 flex results-center justify-start ">
-       <div className=" m-auto p-auto bg-white p-4 rounded-lg flex flex-col  text-black min-w-[300px] max-w-[500px] ">
-         <div className='self-end text-[30px]'>
+       <section className=" m-auto p-auto bg-white p-4 rounded-lg flex flex-col  text-black min-w-[300px] max-w-[500px] ">
+         <article className='self-end text-[30px]'>
            <button onClick={()=>setSee(!see)}><IoCloseOutline /></button>
-         </div>
-         <div>
-             
-         </div>
-         <div className='w-[100%] mt-[10px]'>
+         </article>
+         <article>
+                  <SeeTotalHours result={see}/>
+         </article>
+         <article className='w-[100%] mt-[10px]'>
            <button onClick={()=>setSee(!see)} className="mt-2 w-[100%] bg-red-500 text-white p-2 rounded">Cerrar</button>
-         </div>
-       </div>
+         </article>
+       </section>
       </div>
      )}
 </>
