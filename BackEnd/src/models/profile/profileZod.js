@@ -2,8 +2,8 @@ import z from 'zod'
 
 const profileSchema = z.object({
     cc: z.number({
-    invalid_type_error: 'Movie title must be a string',
-    required_error: 'Movie title is required.'
+    invalid_type_error: 'identify must be a string',
+    required_error: 'identify title is required.'
   }).min(1).max(99999999999),
   name: z.string(),
   lastName: z.string(),

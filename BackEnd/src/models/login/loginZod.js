@@ -1,10 +1,6 @@
 import z from 'zod'
 
 const loginSchema=z.object({
-    name:z.string({
-        invalid_type_error:'name just be a string',
-        required_error: 'name is required.'
-    }).min(4).max(15),
     userName:z.string({
         invalid_type_error:'username just be a string',
         required_error: 'userName is required.'}),
