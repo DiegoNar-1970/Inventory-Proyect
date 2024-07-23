@@ -11,6 +11,7 @@ import  {workHourRouter} from './src/routes/worHours.js'
 import {paiRouter} from './src/routes/pai.js'
 import {infoPaimentRouter} from './src/routes/infoPaimentRouter.js'
 import { UserRouter } from './src/routes/userRouter.js';
+import {LoginRouter} from './src/routes/loginRouter.js'
 
 import addAnnualVacation  from './src/helpers/addForYear.js';
 dot.config();
@@ -29,6 +30,7 @@ app.use('/workHour',workHourRouter);
 app.use('/pai',paiRouter);
 app.use('/infoPaiment',infoPaimentRouter);
 app.use('/register',UserRouter);
+app.use('/login',LoginRouter);
 
 app.use(notFound);
 

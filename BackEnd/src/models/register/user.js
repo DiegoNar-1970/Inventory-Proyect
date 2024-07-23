@@ -1,7 +1,7 @@
 import {Schema,model} from "mongoose";
 import {validatePartialUser} from './userZod.js';
 import bcrypt from 'bcrypt'
-import { optional } from "zod";
+
 
  const UserSchema=new Schema({
     name : { type : String, require : true },
