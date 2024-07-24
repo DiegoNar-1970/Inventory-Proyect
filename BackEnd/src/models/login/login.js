@@ -21,7 +21,6 @@ export class LoginModel{
             if(!user) return {message:'userName not found'}
     
             const isValid=await bcrypt.compare(password , user.password )
-            console.log(isValid)
     
             if(!isValid) throw new Error('password invalid');
             
@@ -29,8 +28,6 @@ export class LoginModel{
                 //el toObject() es porque al usar el ... copia todos los datos
                 //del documento en mongose, isNew etc
             const {password: _, ...publicUser}=user.toObject();
-    
-            console.log('sin pasword',publicUser)
     
             return publicUser
 
