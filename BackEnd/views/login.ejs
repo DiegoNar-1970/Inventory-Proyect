@@ -4,13 +4,11 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>My EJS App</title>
   <style>
-    
         html{
             width: 100%;
             height: 100%;
             box-sizing: border-box;
             background-color: rgb(78, 77, 77);
-           
         }
         .green{
             color: green;
@@ -53,14 +51,27 @@
             <input type="text" placeholder="Usuario"id="">
             <label for="password">Contraseña</label>
             <input type="password" placeholder="******" name="" id="">
-            <p id="dataOutput"></p>        
+            <p class="dataOutput">po</p>        
         </article>
         <article class="article-footer">
-            <button id="fetchDataBtn">Registrarse</button>
-            <button id="fetchDataBtn">Login</button>
+            <button id="register">Registrarse</button>
+            <button id="login">Login</button>
         </article>
     </section>
 
-  <script src="/js/main.js"></script>
+  <script>
+    const login = document.getElementById('login')
+        login.onclick=()=>{
+        fetch('http://localhost:3000/profile')
+        .then((res)=>res.json())
+        .then((data)=>{
+            console.log(data);
+            const p=document.querySelector('.dataOutput');
+            data.map((data)=>{
+                p.innerHTML=data.cc
+            })
+        })
+    }
+  </script>
 </body>
 </html>
