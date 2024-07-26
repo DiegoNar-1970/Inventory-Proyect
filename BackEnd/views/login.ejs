@@ -1,6 +1,66 @@
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>My EJS App</title>
+  <style>
+    
+        html{
+            width: 100%;
+            height: 100%;
+            box-sizing: border-box;
+            background-color: rgb(78, 77, 77);
+           
+        }
+        .green{
+            color: green;
+        }
+        .orange{
+            color: orange;
+        }
+        .section{
+            display: flex;
+            flex-direction: column;
+            width: 250px;
+            
+        }
+        .article-body{
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+            margin-top: 15px;
+        }
+        .article-footer{
+            display: flex;
+            justify-content: space-between;
+        }
+        .body{
+            width: 100%;
+            height: 100%;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+  </style>
+</head>
+<body class="body">
+    <section class="section">
+        <article>
+            <span class="green">Fruty</span><span class="orange">Green</span>
+        </article>
+        <article class="article-body">
+            <label for="userName" >Usuario</label>
+            <input type="text" placeholder="Usuario"id="">
+            <label for="password">Contraseña</label>
+            <input type="password" placeholder="******" name="" id="">
+            <p id="dataOutput"></p>        
+        </article>
+        <article class="article-footer">
+            <button id="fetchDataBtn">Registrarse</button>
+            <button id="fetchDataBtn">Login</button>
+        </article>
+    </section>
 
-<html>
-    <body>
-        <h1>Bienvenido <%= ejemplo %></h1>
-    </body>
+  <script src="/js/main.js"></script>
+</body>
 </html>
