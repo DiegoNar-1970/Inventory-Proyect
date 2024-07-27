@@ -16,7 +16,7 @@ export class LoginModel{
 
     static async login({userName,password}){
         try{
-            const user=await User.findOne({userName});
+            const user=await User.findOne({userName},{__v:0});
     
             if(!user) return {message:'userName not found'}
     
