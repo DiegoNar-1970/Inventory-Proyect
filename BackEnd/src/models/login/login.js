@@ -1,12 +1,12 @@
 import mongoose from 'mongoose';
 import User from '../register/User.js';
 import bcrypt from 'bcrypt'
+import jwt from 'jsonwebtoken'
 const {Schema} = mongoose;
 
 const LoginShema = new Schema({
-    userName : { type : String, require : true, unique:true },
+    userName : { type : String, require : true },
     password : { type : String, require : true },
-    roles : [ { type : String, require : true } ]
 });
 
 const Login = mongoose.model('Login', LoginShema);
@@ -26,13 +26,13 @@ export class LoginModel{
             
                 //esta es una forma de evitar enviar datos sensibles 
                 //el toObject() es porque al usar el ... copia todos los datos
-                //del documento en mongose, isNew etc
+                //del documento en mongose el cual contiene configuracion isNew etc
             const {password: _, ...publicUser}=user.toObject();
-    
-            return publicUser
-
+            const token=jwt.sign(publicUser,process.env.JWT_SECRET_KEY);
+            console.log(token);
+            return token;
         }catch(err){
-            return {message:err.message}
+            return {message:err.message};
         }
 
     }

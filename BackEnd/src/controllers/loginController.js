@@ -4,14 +4,21 @@ export class LoginController{
 
     static async login(req,res){
         try{
-            const user= await LoginModel.login(req.body);
+            const token= await LoginModel.login(req.body);
+            console.log(token)
 
-            if(user.message) return res.status(401).json({message:user.message})
+            if(token.message) return res.status(401).json({message:token.message})
 
-            return res.send({user});
+            res.cookie("JWT",token)
+            
+            return res.status(200).json({
+                ok:true,
+                data:token,
+                message:"Sesion Iniciada"
+            });
 
         }catch(err){
-            return {message:err.message}
+            return res.send(500).json({message:err.message})
         }
     }
 }

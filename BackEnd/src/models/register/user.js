@@ -17,22 +17,22 @@ export class UserModel{
 
    static async createUser(body){
       const result=validatePartialUser(body);
-
+ 
       if(!result.success){
          return { message: JSON.parse(result.error.message) };
       }
       try{
          const password=result.data.password;
-         const hashedPassword= await bcrypt.hash(password,10)
+         const hashedPassword= await bcrypt.hash(password,10);
          const user=new User({
             name:result.data.name,
             userName:result.data.userName,
             password:hashedPassword
-         })
-         await user.save()
-         return user
+         });
+         await user.save();
+         return user;
       }catch(err){
-         return {message:err.message}
+         return {message:err.message};
       }
    }
 }

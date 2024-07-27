@@ -21,9 +21,6 @@ const app = express();
 app.use(express.json());
 app.disable('x-powered-by');
 app.use(cors());
-app.set('view engine','ejs');
-
-
 
 app.use('/profile',profileRouter);
 app.use('/employee',employeeRouter);
