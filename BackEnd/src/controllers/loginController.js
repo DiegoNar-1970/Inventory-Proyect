@@ -7,25 +7,25 @@ export class LoginController{
             const {foundRole,token}= await LoginModel.login(req.body);      
             if(token.message) return res.status(401).json({message:token.message})
 
-            return (
-                res
-                 .cookie("JWT", token, {
-                    httpOnly: true,
-                    maxAge: 100 * 60 * 60
-                 })
-                 .redirect(`${foundRole}`))
-
             // return (
-            //  res
-            //      .cookie("JWT", token,{
+            //     res
+            //      .cookie("JWT", token, {
             //         httpOnly: true,
             //         maxAge: 100 * 60 * 60
             //      })
-            //      .status(200).json({
-            //           ok:true,
-            //           redirection:foundRole,
-            //           message:"Sesion Iniciada"
-            //      }))
+            //      .redirect(`${foundRole}`))
+
+            return (
+             res
+                 .cookie("JWT", token,{
+                    httpOnly: true,
+                    maxAge: 100 * 60 * 60
+                 })
+                 .status(200).json({
+                      ok:true,
+                      redirection:foundRole,
+                      message:"Sesion Iniciada"
+                 }))
 
         }catch(err){
             return res.status(500).json({message:err.message})

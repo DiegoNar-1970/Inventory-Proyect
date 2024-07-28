@@ -1,28 +1,17 @@
-import { useState } from "react";
+// import { useState } from "react";
 import { useForm } from "react-hook-form"
 import { Link } from "react-router-dom";
-import { UseBodyFetch } from "../../services/UseBodyFetch";
+// import { UseBodyFetch } from "../../services/UseBodyFetch";
+import {login} from '../../services/auth.js'
 
 const Login = () => {
     const {register,handleSubmit,formState:{errors}}=useForm()
-    const [formData,setFormData]=useState(null);
 
     const url='http://localhost:3000/login'
-
-    const options={
-        method: "POST",
-        headers: {
-          'Accept': "application/json",
-          'Content-Type': "application/json",
-        },
-        body: JSON.stringify(formData),
-        credentials: 'include'
-      };
-
-    const {data}=UseBodyFetch(url,options,formData)
-    console.log(data);
-        const onSubmit = handleSubmit((input) => {
-            setFormData(input)
+        const onSubmit = handleSubmit ( async (user) => {
+            console.log(user)
+            const response = await login(url,user);
+            console.log(response);
         });
 
   return (

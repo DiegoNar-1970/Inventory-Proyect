@@ -26,16 +26,14 @@ app.use(express.json());
 app.disable('x-powered-by');
 
 app.use(cookieParser());
-app.use((req, res, next) => {
-    res.header("Access-Control-Allow-Origin", "http://localhost:5173");
-    res.header("Access-Control-Allow-Credentials", "true");
-    res.header("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept");
-    next();
-});
+// app.use((req, res, next) => {
+//     res.header("Access-Control-Allow-Origin", "http://localhost:5173");
+//     res.header("Access-Control-Allow-Credentials", "true");
+//     res.header("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept");
+//     next();
+// });
 
-app.use(cors({
-    origin: 'http://localhost:5173'
-    ,Credential:true}));
+app.use(cors());
 
 
 app.use('/login',LoginRouter);

@@ -1,13 +1,15 @@
-import { createContext } from "react";
+import { createContext,useState } from "react";
 
-export const EmployeeContext=createContext();
+export const AuthContext=createContext();
 
-export function EmployeeProvider({children}){
+export function AuthProvider({children}){
+    const [user,setUser]=useState(null)
+    
     return (
-        <EmployeeContext.Provider value={{
+        <AuthContext.Provider value={{
 
         }}>
             {children}
-        </EmployeeContext.Provider>
+        </AuthContext.Provider>
     )
 }
