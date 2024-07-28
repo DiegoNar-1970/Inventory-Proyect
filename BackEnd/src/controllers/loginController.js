@@ -4,13 +4,12 @@ export class LoginController{
 
     static async login(req,res){
         try{
-            const {foundRole,token}= await LoginModel.login(req.body);
-
+            const {foundRole,token}= await LoginModel.login(req.body);      
             if(token.message) return res.status(401).json({message:token.message})
 
             return (
                 res
-                 .cookie("JWT", token,{
+                 .cookie("JWT", token, {
                     httpOnly: true,
                     maxAge: 100 * 60 * 60
                  })
@@ -24,7 +23,6 @@ export class LoginController{
             //      })
             //      .status(200).json({
             //           ok:true,
-            //           data:token,
             //           redirection:foundRole,
             //           message:"Sesion Iniciada"
             //      }))

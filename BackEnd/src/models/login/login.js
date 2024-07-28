@@ -31,7 +31,9 @@ export class LoginModel{
                 //el toObject() es porque al usar el ... copia todos los datos
                 //del documento en mongose el cual contiene configuracion isNew etc
             const {password: _, ...publicUser}=user.toObject();
+
             const token=jwt.sign(publicUser,process.env.JWT_SECRET_KEY);
+            
             return {token,foundRole:foundRole.role};
         }catch(err){
             return {message:err.message};
