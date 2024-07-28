@@ -14,9 +14,9 @@ const UserZod=z.object({
         required_error: 'password title is required.'
     }),
     roles :  z.string({
-        invalid_type_error: 'password must be a string',
-        required_error: 'password title is required.'
-    }).optional(true)
+        invalid_type_error: 'roles have to be',
+        required_error: 'roles is required.'
+    })
 })
 
 export function validateUser (input) {

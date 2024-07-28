@@ -51,10 +51,9 @@ export class EmployeeModel{
             if(!profile || profile===undefined || profile===null){
                 return {message:'profile not found'};       
             }
-            console.log('despues de las validaciones')
+
 
             const employee= new Employee({...result.data,profile});
-            console.log('creacion del empleado',employee);
             await employee.save();
             return employee;
         }catch(err){

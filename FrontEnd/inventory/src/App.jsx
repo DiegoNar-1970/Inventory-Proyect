@@ -18,6 +18,8 @@ const Frios=lazy(()=>import("./components/areas/Frios.jsx"));
 const Empaque=lazy(()=>import("./components/areas/Empaque.jsx"))
 const Maquina=lazy(()=>import("./components/areas/Maquina.jsx"))
 const Administracion=lazy(()=>import("./components/areas/Administracion.jsx"))
+const Login=lazy(()=>import("./components/user/Login.jsx"))
+const Logout=lazy(()=>import("./components/user/Logout.jsx"))
 
 function App() {
   return (
@@ -36,6 +38,8 @@ function App() {
         </div>
         <Routes>
           <Route path='/home' element={<Home/>}/>
+          <Route path='/login' element={<Login/>}/>
+          <Route path='/logout' element={<Logout/>}/>
           <Route path='/almacen' element={<Almacen/>}/>
           <Route path='/paletizado' element={<Paletizado/>}/>
           <Route path='/maquina' element={<Maquina/>}/>

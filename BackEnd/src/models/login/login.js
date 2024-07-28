@@ -2,6 +2,7 @@ import mongoose from 'mongoose';
 import User from '../register/User.js';
 import bcrypt from 'bcrypt'
 import jwt from 'jsonwebtoken'
+import Role from '../roles/roles.js';
 const {Schema} = mongoose;
 
 const LoginShema = new Schema({
@@ -17,7 +18,9 @@ export class LoginModel{
     static async login({userName,password}){
         try{
             const user=await User.findOne({userName},{__v:0});
-    
+            
+            const foundRole=await Role.findById({_id:user.roles})
+
             if(!user) return {message:'userName not found'}
     
             const isValid=await bcrypt.compare(password , user.password )
@@ -29,8 +32,7 @@ export class LoginModel{
                 //del documento en mongose el cual contiene configuracion isNew etc
             const {password: _, ...publicUser}=user.toObject();
             const token=jwt.sign(publicUser,process.env.JWT_SECRET_KEY);
-            console.log(token);
-            return token;
+            return {token,foundRole:foundRole.role};
         }catch(err){
             return {message:err.message};
         }
