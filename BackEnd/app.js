@@ -17,6 +17,7 @@ import { roleRouter } from './src/routes/roleRouter.js';
 import cookieParser from 'cookie-parser'
 import {logoutRouter} from './src/routes/logoutRouter.js'
 import { authAcces } from './src/middlewares/authAcces.js';
+import {verifyRouter} from './src/routes/verifyRouter.js'
 
 dot.config();
 
@@ -33,6 +34,7 @@ app.use(cors({
     }));
 
 app.use('/login',LoginRouter);
+app.use('/verify',verifyRouter);
 
 app.use(authAcces);
 app.use('/logout',logoutRouter);

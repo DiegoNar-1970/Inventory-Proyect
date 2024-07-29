@@ -19,7 +19,7 @@ export class LoginController{
 
             return (
              res
-                 .cookie("JWT", token,{
+                 .cookie("token", token,{
                     httpOnly: true,
                     maxAge: 100 * 60 * 60
                  })

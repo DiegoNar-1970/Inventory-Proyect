@@ -1,5 +1,6 @@
-import { createContext,useState } from "react";
+import { createContext,useEffect,useState } from "react";
 import {login} from '../services/auth.js'
+import Cookies from 'js-cookie'
 
 export const AuthContext=createContext();
 
@@ -12,6 +13,7 @@ export function AuthProvider({children}){
     const fetchLogin=async(url,formLogin)=>{
         try{
             const result=await login(url,formLogin);
+            console.log(result)
             setUser(result.data);
             console.log(result)
             setIsAuthenticated(true);
@@ -21,6 +23,15 @@ export function AuthProvider({children}){
         }
         
     }
+
+    useEffect(()=>{
+        const cookie = Cookies.get();
+        console.log('cookie',cookie);
+        if(cookie.token){
+            console.log(cookie.token)
+        }
+    },[])
+
     return (
         <AuthContext.Provider value={{
             fetchLogin,

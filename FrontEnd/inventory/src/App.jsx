@@ -9,6 +9,7 @@ import { Link } from 'react-router-dom';
 import { IoIosArrowForward } from "react-icons/io";
 
 
+
 const Hours=lazy(()=>import('./components/hours/Hours.jsx'));
 const Paletizado=lazy(()=>import('./components/areas/Paletizado.jsx'));
 const Home=lazy(()=>import("./components/home/Home.jsx"));
@@ -20,8 +21,10 @@ const Maquina=lazy(()=>import("./components/areas/Maquina.jsx"))
 const Administracion=lazy(()=>import("./components/areas/Administracion.jsx"))
 const Login=lazy(()=>import("./components/user/Login.jsx"))
 const Logout=lazy(()=>import("./components/user/Logout.jsx"))
+const ProtectedRoute=lazy(()=>import('./components/protectedRouter/ProtectecRouter.jsx'))
 
 function App() {
+
   return (
     <Suspense fallback={'reljax'}>
     <div id="app" className=' h-screen p-2 gap-2'>
@@ -37,18 +40,21 @@ function App() {
           <Link to='/home' ><FaHome className='text-[25px] text-gray-500'/></Link>
         </div>
         <Routes>
-          <Route path='/home' element={<Home/>}/>
           <Route path='/login' element={<Login/>}/>
           <Route path='/logout' element={<Logout/>}/>
-          <Route path='/almacen' element={<Almacen/>}/>
-          <Route path='/paletizado' element={<Paletizado/>}/>
-          <Route path='/maquina' element={<Maquina/>}/>
-          <Route path='/frios' element={<Frios/>}/>
-          <Route path='/empaque' element={<Empaque/>}/>
-          <Route path='/admin' element={<Administracion/>}/>
-          <Route path='/employee/:area' element={<Employee/>}/>
-          <Route path='/workHour/:area' element={<Hours/>}/>
-          <Route path='/*' element={<Navigate to='/home'/>}/>
+          <Route element={<ProtectedRoute/>}>
+            <Route path='/home' element={<Home/>}/>
+            <Route path='/almacen' element={<Almacen/>}/>
+            <Route path='/paletizado' element={<Paletizado/>}/>
+            <Route path='/maquina' element={<Maquina/>}/>
+            <Route path='/frios' element={<Frios/>}/>
+            <Route path='/empaque' element={<Empaque/>}/>
+            <Route path='/admin' element={<Administracion/>}/>
+            <Route path='/employee/:area' element={<Employee/>}/>
+            <Route path='/workHour/:area' element={<Hours/>}/>
+            <Route path='/*' element={<Navigate to='/login'/>}/>
+          </Route>
+          
         </Routes>
       </section>
       <section className=' [grid-area:footer] min-h-[100px]'>

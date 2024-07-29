@@ -18,10 +18,10 @@ export class LoginModel{
     static async login({userName,password}){
        
             const user=await User.findOne({userName},{__v:0});
-            if(!user) throw new Error (['userName not found'])
+            if(!user) throw new Error ({message:'userName not found'})
 
             const isValid=await bcrypt.compare(password , user.password );
-            if(!isValid) throw new Error (['incorrect password']);
+            if(!isValid) throw new Error ({message:'incorrect password'});
         try{
                     //esta es una forma de evitar enviar datos sensibles 
                     //el toObject() es porque al usar el ... copia todos los datos
