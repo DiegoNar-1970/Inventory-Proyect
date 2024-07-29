@@ -1,5 +1,3 @@
-import axios from 'axios'
+import axios from './axios.js'
 
-export const login=(url,user)=>{
-    axios.post(url,user);           
-}
+export const login=(url,user)=> axios.post(url,user)        

@@ -1,25 +1,38 @@
 // import { useState } from "react";
 import { useForm } from "react-hook-form"
 import { Link } from "react-router-dom";
-// import { UseBodyFetch } from "../../services/UseBodyFetch";
-import {login} from '../../services/auth.js'
+import { useContext } from "react";
+import {useEffect} from 'react'
+import { AuthContext } from "../../context/AuthContext.jsx";
+import {useNavigate} from 'react-router-dom'
+const url='/login'
+
 
 const Login = () => {
+    const navigate = useNavigate()
+    const {fetchLogin,error,user,isAuthenticated}=useContext(AuthContext);
     const {register,handleSubmit,formState:{errors}}=useForm()
 
-    const url='http://localhost:3000/login'
-        const onSubmit = handleSubmit ( async (user) => {
-            console.log(user)
-            const response = await login(url,user);
-            console.log(response);
+    useEffect(()=>{
+        if(isAuthenticated) navigate(`employee/${user.redirection}`)
+    },[isAuthenticated])
+    
+        const onSubmit = handleSubmit ( (userForm) => {
+            fetchLogin(url,userForm)
         });
-
+        
   return (
     <div className="fixed top-0 left-0 h-screen w-screen bg-[#202124] z-10 flex flex-col items-center justify-start  ">
             <form onSubmit={onSubmit} className="m-auto p-auto flex flex-col gap-[20px] bg-[#1b1b1b] p-[10px] shadow-shadow1
             rounded-[1em] w-[300px] outline outline-[#1b1b1bf7]">
-                <div className="m-auto p-auto flex flex-col">
-                   <h1>Inicion de sesion </h1>
+                <div className="text-center">
+                   <h1 className= 'mb-2 text-white' >Inicion de sesion </h1>
+                   {error ?
+                        <div className="rounded-[1em] bg-red-700 text-white p-2 w-[100%]">
+                            <p>{error}</p>
+                        </div>
+                        :''
+                    }
                 </div>
                 <div>
                     <span className=' mb-2 text-green-500 text-xl'>Fruty</span><span className='text-xl mb-2 text-orange-300'>Green</span>

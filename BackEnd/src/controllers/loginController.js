@@ -4,7 +4,9 @@ export class LoginController{
 
     static async login(req,res){
         try{
-            const {foundRole,token}= await LoginModel.login(req.body);      
+            const {foundRole,token}= await LoginModel.login(req.body);  
+            console.log(token);    
+            
             if(token.message) return res.status(401).json({message:token.message})
 
             // return (
