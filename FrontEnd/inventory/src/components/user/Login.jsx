@@ -14,7 +14,9 @@ const Login = () => {
     const {register,handleSubmit,formState:{errors}}=useForm()
 
     useEffect(()=>{
-        if(isAuthenticated) navigate(`employee/${user.redirection}`)
+        console.log('usuario',user)
+        if(isAuthenticated) navigate(`/employee/${user.redirection}`)
+        
     },[isAuthenticated])
     
         const onSubmit = handleSubmit ( (userForm) => {

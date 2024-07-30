@@ -36,7 +36,7 @@ app.use(cors({
 app.use('/login',LoginRouter);
 app.use('/verify',verifyRouter);
 
-app.use(authAcces);
+// app.use(authAcces);
 app.use('/logout',logoutRouter);
 app.use('/profile',profileRouter);
 app.use('/role',roleRouter);

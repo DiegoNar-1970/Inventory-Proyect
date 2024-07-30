@@ -2,11 +2,12 @@ import jwt from 'jsonwebtoken'
 
 export const authAcces=(req,res,next)=>{
     try{
+        const token=req.cookies.token;
 
-        const token=req.cookies.JWT;
         if(!token)return res.status(401).json({message:'No token, authorization denied'});
 
         const validatePayload=jwt.verify(token, process.env.JWT_SECRET_KEY);
+        
         req.user=validatePayload
         next();
         

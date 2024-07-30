@@ -8,6 +8,7 @@ import { CiSettings } from "react-icons/ci";
 import { IoIosPeople } from "react-icons/io";
 import img from '../../media/img/img.png'
 import Links from '../menu/Links.jsx'
+import Logout from '../user/Logout.jsx'
 
  const Menu = () => {
   return (
@@ -21,7 +22,7 @@ import Links from '../menu/Links.jsx'
           </div>
           
           <nav className='flex-1 mt-2 bg-fondo-menu  rounded-[1em] p-2 text-text-menu '>
-            <ul className='flex flex-col p-1 gap-5'>
+            <ul className='flex flex-col p-1 gap-5 flex-1 h-[95%] justify-center'>
               <Links icon={FaWarehouse} href={"almacen"} area={"Almacén"}></Links>
               <Links icon={LiaSnowflakeSolid} href={"frios"} area={"Fríos"}></Links>
               <Links icon={FaBoxes} href={"paletizado"} area={"Paletizado"}></Links>
@@ -36,7 +37,8 @@ import Links from '../menu/Links.jsx'
             <picture className='rounded-[1em] items-center w-[40px] h-[40px] '>
                 <img src={img} alt="avatar" className='object-contain rounded-[1em]' />
             </picture>
-            <span className='cursor-pointer'>Cerrar Sesion</span>
+            <Logout></Logout>
+
           </div>
     </div>
   )

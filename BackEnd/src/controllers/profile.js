@@ -31,9 +31,6 @@ export class profileController{
 
     static async getAll(req,res){
         const {id} =req.query ;
-
-        console.log('llego en profile',req.user,'..................')
-        console.log('headers',req.headers,'..................')
         if(id)
             try{
                 const profileFind = await Profile.findById(id, {__v:0});

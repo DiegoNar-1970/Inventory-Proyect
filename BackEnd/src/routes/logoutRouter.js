@@ -3,4 +3,4 @@ import { logoutController } from "../controllers/logoutController.js";
 
 export const logoutRouter=Router();
 
-logoutRouter.post('/',logoutController.logOut)
+logoutRouter.get('/',logoutController.logOut)
