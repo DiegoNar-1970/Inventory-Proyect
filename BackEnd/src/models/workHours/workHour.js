@@ -47,6 +47,7 @@ const workHourSchema = new Schema({
           await newWorkH.save();
           return newWorkH;
         }
+
         const employee = await Employee.findById(id);
         const newWorkH = new WorkHour({employee,...result.data});
         await newWorkH.save();
@@ -55,6 +56,7 @@ const workHourSchema = new Schema({
         return { message: err.message };
       }
     }
+    
     static async getAll(id=0){
       if(id!=0){
         try{

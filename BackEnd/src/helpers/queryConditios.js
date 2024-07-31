@@ -7,8 +7,8 @@ export function queryCond({startDate,endDate,startWeek,endWeek}){
         conditions.push({date:{$gte:newStartDate,$lte:newsEndDate}});
     }
     if(startWeek&&endWeek){
-        conditions.push({week:{$in:[startWeek,endWeek]}})
+        conditions.push({week:{$gte:startWeek,$lte:endWeek}})
     }
-    const query= conditions.length ? {$or:conditions} : {};
+    const query= conditions.length ? {$and:conditions} : {};
     return query;
 }
