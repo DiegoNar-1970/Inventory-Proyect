@@ -40,12 +40,12 @@ const CreateEmployee = () => {
                 </div>
             </div>
         </form>
-        <form action=""> 
+        <form className="gap-2 "> 
                 <h1 className='font-sans'>Asignacion</h1>
-                <di className='flex flex-wrap gap-1'>
-                    <di className="flex flex-col">
+                <di className='flex flex-wrap gap-3'>
+                    <di className="flex flex-col ">
                         <label htmlFor="">Cargo</label>
-                        <input type="text" />
+                        <input className="rounded-[1em]" type="text" />
                     </di>
                     <di className="flex flex-col">
                         <label htmlFor="">Area</label>

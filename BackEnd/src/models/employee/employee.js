@@ -20,6 +20,7 @@ export class EmployeeModel{
         if(!result.success){
             return { message: JSON.parse(result.error.message) };
         }
+    
         try{
             const employeeUpd= await Employee.findByIdAndUpdate(id,result.data,{new:true});
             return employeeUpd;
