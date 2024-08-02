@@ -1,23 +1,22 @@
-import express from 'express';
-import cron from 'node-cron'
-import mongoose from 'mongoose';
-import {notFound} from './src/middlewares/notFound.js'
+import cookieParser from 'cookie-parser';
+import cors from 'cors';
 import dot from 'dotenv';
-import cors from 'cors'; 
-import { profileRouter } from './src/routes/profileRouter.js';
+import express from 'express';
+import mongoose from 'mongoose';
+import cron from 'node-cron';
+import addAnnualVacation from './src/helpers/addForYear.js';
+import { notFound } from './src/middlewares/notFound.js';
 import { employeeRouter } from './src/routes/employeeRouter.js';
+import { infoPaimentRouter } from './src/routes/infoPaimentRouter.js';
+import { LoginRouter } from './src/routes/loginRouter.js';
+import { logoutRouter } from './src/routes/logoutRouter.js';
 import { newsRouter } from './src/routes/news.js';
-import  {workHourRouter} from './src/routes/worHours.js'
-import {paiRouter} from './src/routes/pai.js'
-import {infoPaimentRouter} from './src/routes/infoPaimentRouter.js'
-import { UserRouter } from './src/routes/userRouter.js';
-import {LoginRouter} from './src/routes/loginRouter.js'
-import addAnnualVacation  from './src/helpers/addForYear.js';
+import { paiRouter } from './src/routes/pai.js';
+import { profileRouter } from './src/routes/profileRouter.js';
 import { roleRouter } from './src/routes/roleRouter.js';
-import cookieParser from 'cookie-parser'
-import {logoutRouter} from './src/routes/logoutRouter.js'
-import { authAcces } from './src/middlewares/authAcces.js';
-import {verifyRouter} from './src/routes/verifyRouter.js'
+import { UserRouter } from './src/routes/userRouter.js';
+import { verifyRouter } from './src/routes/verifyRouter.js';
+import { workHourRouter } from './src/routes/worHours.js';
 
 dot.config();
 
@@ -36,7 +35,9 @@ app.use(cors({
 app.use('/login',LoginRouter);
 app.use('/verify',verifyRouter);
 
-// app.use(authAcces);
+// app.use(authAcces );
+
+
 app.use('/logout',logoutRouter);
 app.use('/profile',profileRouter);
 app.use('/role',roleRouter);
