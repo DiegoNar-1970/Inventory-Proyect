@@ -9,13 +9,13 @@ const CreateEmployee = () => {
       })
 
   return (
-        <form className='flex flex-col gap-2' onSubmit={onSubmit}>
-            <div className='flex flex-col gap-2'>
+        <form className='flex flex-col gap-2 max-w-[400px]'  onSubmit={onSubmit}>
+            <div className='flex flex-col gap-2 '>
                 <div>
                     <h1 className='text-[19px] font-medium font-sans'>Perfil del empleado</h1>
                 </div>
                 <div className='flex flex-wrap gap-2'>
-                    <div className='flex flex-col gap-2'>
+                    <div className='flex flex-col gap-2 '>
                     <label htmlFor="cc" className='font-sans '>Cedula</label>
                     <input type="text" className='border-[1px] rounded-lg p-[2px] border-gray-400 
                     text-gray-600'
@@ -29,7 +29,7 @@ const CreateEmployee = () => {
                     })} />
                     {errors.cc && <span className='text-red-600'>{errors.cc.message}</span>}
                 </div>
-                <div className='flex flex-col gap-2'>
+                <div className='flex flex-col gap-2 '>
                     <label htmlFor="name" className='font-sans'>Nombre</label>
                     <input type="text" {...register('name',{
                     required:{
@@ -40,7 +40,7 @@ const CreateEmployee = () => {
                     border-gray-400"/>
                     {errors.name && <span className='text-red-600'>{errors.name.message}</span>}
                 </div>
-                <div className='flex flex-col gap-2'> 
+                <div className='flex flex-col gap-2 '> 
                     <label htmlFor="lastName" className=' font-sans '>Apellido</label>
                     <input type="text" {...register('lastName',{required:{
                     value:true,
@@ -49,7 +49,7 @@ const CreateEmployee = () => {
                 border-gray-400"  />
                     {errors.lastName && <span className='text-red-600'>{errors.lastName.message}</span>} 
                 </div>
-                <div className='flex flex-col gap-2'> 
+                <div className='flex flex-col gap-2 '> 
                     <label htmlFor="birthdate" className=' font-sans '>Fecha de nacimiento</label>
                     <input type="text" {...register('birthdate',{required:{
                     value:true,
@@ -58,7 +58,7 @@ const CreateEmployee = () => {
                 border-gray-400"  />
                     {errors.birthdate && <span className='text-red-600'>{errors.birthdate.message}</span>} 
                 </div>
-                <div className='flex flex-col gap-2'> 
+                <div className='flex flex-col gap-2 '> 
                     <label htmlFor="sex" className=' font-sans '>Sexo</label>
                     <input type="text" {...register('sex',{required:{
                     value:true,
@@ -67,7 +67,7 @@ const CreateEmployee = () => {
                 border-gray-400"  />
                     {errors.sex && <span className='text-red-600'>{errors.sex.message}</span>} 
                 </div>
-                <div className='flex flex-col gap-2'> 
+                <div className='flex flex-col gap-2 '> 
                     <label htmlFor="phone" className=' font-sans '>Telefono</label>
                     <input type="text" {...register('phone',{required:{
                     value:true,
@@ -76,7 +76,7 @@ const CreateEmployee = () => {
                 border-gray-400"/>
                     {errors.phone && <span className='text-red-600'>{errors.phone.message}</span>} 
                 </div>
-                <div className='flex flex-col gap-2'> 
+                <div className='flex flex-col gap-2 '> 
                     <label htmlFor="email" className=' font-sans '>Correo</label>
                     <input type="text" {...register('email',{required:{
                     value:true,
@@ -85,7 +85,7 @@ const CreateEmployee = () => {
                 border-gray-400"/>
                     {errors.email && <span className='text-red-600'>{errors.email.message}</span>} 
                 </div>
-                <div className='flex flex-col gap-2'> 
+                <div className='flex flex-col gap-2 '> 
                     <label htmlFor="eps" className=' font-sans '>Eps</label>
                     <input type="text" {...register('eps',{required:{
                     value:true,
@@ -93,6 +93,7 @@ const CreateEmployee = () => {
                     }})} className="border-[1px] rounded-lg p-[2px]
                 border-gray-400"/>
                     {errors.eps && <span className='text-red-600'>{errors.eps.message}</span>} 
+                
                 </div>
                 </div>
             </div>
@@ -101,7 +102,7 @@ const CreateEmployee = () => {
                     <h1 className='text-[19px] font-medium font-sans'>Cargo y area</h1>
                 </div>
                 <div className='flex flex-wrap gap-2'>
-                <div className='flex flex-col gap-2'> 
+                <div className='flex flex-col gap-2  '> 
                     <label htmlFor="position" className=' font-sans '>Cargo</label>
                     <input type="text" {...register('position',{required:{
                     value:true,
@@ -110,7 +111,7 @@ const CreateEmployee = () => {
                 border-gray-400"/>
                     {errors.position && <span className='text-red-600'>{errors.position.message}</span>} 
                 </div>
-                <div className='flex flex-col gap-2'> 
+                <div className='flex flex-col gap-2 '> 
                     <label htmlFor="area" className=' font-sans '>Area</label>
                     <input type="text" {...register('area',{required:{
                     value:true,
@@ -130,8 +131,8 @@ const CreateEmployee = () => {
                 </div>
                 </div>
             </div>
-            <div>
-                <button className='bg-black text-white rounded-lg self p-1 mt-2'>Enviar</button>
+            <div >
+                <button className='bg-black text-white rounded-lg self p-1 mt-2 w-full'>Enviar</button> 
             </div>
             </form>
 

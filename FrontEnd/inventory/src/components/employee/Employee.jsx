@@ -1,13 +1,11 @@
 
 
 // import { FaHelmetSafety } from "react-icons/fa6";
-import Table from "../smallComponents/Table.jsx";
+import { useEffect, useState } from "react";
+import { IoCloseOutline, IoPersonAddOutline, IoSearch } from "react-icons/io5";
 import { useParams } from "react-router-dom";
-import  {fetchData} from '../../helpers/fetchData.js'
-import { useEffect,useState } from "react";
-import { IoPersonAddOutline } from "react-icons/io5";
-import { IoSearch } from "react-icons/io5";
-import { IoCloseOutline } from "react-icons/io5";
+import { fetchData } from '../../helpers/fetchData.js';
+import Table from "../smallComponents/Table.jsx";
 import CreateEmployee from "./CreateEmployee.jsx";
 
 
