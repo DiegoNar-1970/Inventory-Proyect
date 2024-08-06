@@ -1,12 +1,33 @@
 import { useForm } from 'react-hook-form';
-
+import { createEmployee, createProfile } from '../../services/auth.js';
 
 const CreateEmployee = () => {
     const {register,handleSubmit,formState:{errors}}=useForm();
+    
+    const urlProfile = "http://localhost:3000/profile";
+    const urlEmployee = "http://localhost:3000/employee";
 
-    const onSubmit=handleSubmit((data)=>{
-        console.log(data)
-      })
+    const onSubmit=handleSubmit(async(data)=>{
+        const profile = {
+            birthdate:data.birthdate,
+            cc:data.cc,
+            email:data.email,
+            eps:data.eps,
+            lastName:data.lastName,
+            name:data.name,
+            phone:data.phone,
+            sex:data.sex,
+        }
+            const profileResult= await createProfile(urlProfile,profile);
+            const employee = {
+                position:data.position,
+                area:data.area,
+                shift:data.shift,
+                profile: profileResult.data._id
+            }
+            const employeeResult= await createEmployee(urlEmployee,employee);
+            console.log(employeeResult)
+    })
 
   return (
         <form className='flex flex-col gap-2 max-w-[400px]'  onSubmit={onSubmit}>
@@ -17,15 +38,16 @@ const CreateEmployee = () => {
                 <div className='flex flex-wrap gap-2'>
                     <div className='flex flex-col gap-2 '>
                     <label htmlFor="cc" className='font-sans '>Cedula</label>
-                    <input type="text" className='border-[1px] rounded-lg p-[2px] border-gray-400 
+                    <input type="number" className='border-[1px] rounded-lg p-[2px] border-gray-400 
                     text-gray-600'
                     {...register('cc',{required:{
                     value:true,
                     message:'Campo Requerido'
-                    },minLength:{
+                    },
+                    minLength:{
                     value:1,
                     message:'identificacion invalida'
-                    }
+                    },valueAsNumber: true
                     })} />
                     {errors.cc && <span className='text-red-600'>{errors.cc.message}</span>}
                 </div>
@@ -51,7 +73,7 @@ const CreateEmployee = () => {
                 </div>
                 <div className='flex flex-col gap-2 '> 
                     <label htmlFor="birthdate" className=' font-sans '>Fecha de nacimiento</label>
-                    <input type="text" {...register('birthdate',{required:{
+                    <input type="date" {...register('birthdate',{required:{
                     value:true,
                     message:'Campo Requerido'
                     }})} className="border-[1px] rounded-lg p-[2px]
@@ -69,10 +91,12 @@ const CreateEmployee = () => {
                 </div>
                 <div className='flex flex-col gap-2 '> 
                     <label htmlFor="phone" className=' font-sans '>Telefono</label>
-                    <input type="text" {...register('phone',{required:{
+                    <input type="number" {...register('phone',{required:{
                     value:true,
                     message:'Campo Requerido'
-                    }})} className="border-[1px] rounded-lg p-[2px]
+                    }
+                    ,valueAsNumber: true
+                })} className="border-[1px] rounded-lg p-[2px]
                 border-gray-400"/>
                     {errors.phone && <span className='text-red-600'>{errors.phone.message}</span>} 
                 </div>
