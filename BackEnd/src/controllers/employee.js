@@ -1,6 +1,5 @@
 
-import Employee from '../models/employee/employee.js'
-import {EmployeeModel} from '../models/employee/employee.js'
+import Employee, { EmployeeModel } from '../models/employee/employee.js';
 
 export class employeeController{
 
@@ -33,7 +32,7 @@ export class employeeController{
     }
     static async create (req,res){
        const {id}=req.query;
-       if(!id || id===undefined || id===null){
+       if(!id){
         return res.status(400).json({message:'profile required'})
        }
        try{

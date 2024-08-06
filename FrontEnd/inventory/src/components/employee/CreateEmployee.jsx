@@ -5,7 +5,7 @@ const CreateEmployee = () => {
     const {register,handleSubmit,formState:{errors}}=useForm();
     
     const urlProfile = "http://localhost:3000/profile";
-    const urlEmployee = "http://localhost:3000/employee";
+    const urlEmployee = (id)=>`http://localhost:3000/employee/?id=${id}`;
 
     const onSubmit=handleSubmit(async(data)=>{
         const profile = {
@@ -18,15 +18,24 @@ const CreateEmployee = () => {
             phone:data.phone,
             sex:data.sex,
         }
+        try{
             const profileResult= await createProfile(urlProfile,profile);
+
+            console.log(profileResult);
             const employee = {
                 position:data.position,
                 area:data.area,
-                shift:data.shift,
-                profile: profileResult.data._id
-            }
-            const employeeResult= await createEmployee(urlEmployee,employee);
-            console.log(employeeResult)
+                shift:data.shift
+            };
+
+            const id=profileResult.data._id;
+            const employeeResult= await createEmployee(urlEmployee(id),employee);
+            return ''
+        }catch(err){
+            return console.log(err)
+        }
+            
+            
     })
 
   return (

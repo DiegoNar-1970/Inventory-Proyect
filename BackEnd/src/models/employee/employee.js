@@ -1,7 +1,7 @@
 import mongoose from "mongoose";
+import { validatePartialEmployee } from '../employee/employeeZod.js';
+import Profile from '../profile/profile.js';
 const {Schema}=mongoose;
-import {validatePartialEmployee} from '../employee/employeeZod.js'
-import Profile from '../profile/profile.js'
 
 const employeeSchema = new Schema({
     admissionDate:{type:Date, default:Date.now()},
