@@ -52,8 +52,6 @@ export class EmployeeModel{
             if(!profile || profile===undefined || profile===null){
                 return {message:'profile not found'};       
             }
-
-
             const employee= new Employee({...result.data,profile});
             await employee.save();
             return employee;
