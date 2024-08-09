@@ -9,3 +9,5 @@
     export const createProfile=(url,profile)=> axios.post(url,profile);
     
     export const createEmployee=(url,employee)=> axios.post(url,employee);
+
+    export const getEmployees= (url) => axios.get(url);

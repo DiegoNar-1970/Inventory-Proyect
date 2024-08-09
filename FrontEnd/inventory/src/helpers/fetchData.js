@@ -27,9 +27,14 @@ const getSuspender = (promise) => {
   
     return { read };
   };
-  export function fetchData(url, options = {}) {
+  export function fetchGetSuspended(url, options = {}) {
     const promise = fetch(url, options)
       .then((response) => response.json())
       .then((data) => data);
     return getSuspender(promise);
+  }
+
+  export function fetchData(url, options = {}) {
+    return fetch(url, options)
+      .then((response) => response.json());
   }

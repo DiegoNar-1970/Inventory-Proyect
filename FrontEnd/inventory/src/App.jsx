@@ -1,12 +1,11 @@
 
-import { Navigate, Route, Routes } from 'react-router'
-import './App.css'
-import Menu  from './components/menu/Menu.jsx'
-import { lazy, Suspense } from 'react'
+import { lazy, Suspense } from 'react';
 import { FaHome } from "react-icons/fa";
-import { IoIosArrowBack } from "react-icons/io";
+import { IoIosArrowBack, IoIosArrowForward } from "react-icons/io";
+import { Navigate, Route, Routes } from 'react-router';
 import { Link } from 'react-router-dom';
-import { IoIosArrowForward } from "react-icons/io";
+import './App.css';
+import Menu from './components/menu/Menu.jsx';
 
 
 
@@ -26,7 +25,8 @@ const ProtectedRoute=lazy(()=>import('./components/protectedRouter/ProtectecRout
 function App() {
 
   return (
-    <Suspense fallback={'reljax'}>
+    <Suspense fallback={
+      <div className='loader'></div>}>
     <div id="app" className=' h-screen p-2 gap-2'>
       <section className='[grid-area:aside] flex flex-col rounded-lg bg-[#202124]'>
         <Menu className=''/>

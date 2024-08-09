@@ -1,12 +1,11 @@
 
 import { useParams } from "react-router-dom";
 
-import { useForm } from "react-hook-form";
 import { useState } from "react";
-import  {UseBodyFetch} from '../../services/UseBodyFetch.jsx'
+import { useForm } from "react-hook-form";
+import { IoPersonAddOutline, IoSearch } from "react-icons/io5";
+import { UseBodyFetch } from '../../services/UseBodyFetch.jsx';
 import HoursTable from "./HoursTable.jsx";
-import { IoPersonAddOutline } from "react-icons/io5";
-import { IoSearch } from "react-icons/io5";
 
 
   const Hours = () => {
@@ -159,7 +158,7 @@ import { IoSearch } from "react-icons/io5";
                 </div>
                 <button className="flex-1 bg-[#22c55e] text-black p-1 rounded-[.80em] mt-[50px]">Consultar</button>
               </form> : '' }
-           {formData ? loading ? <span>Loading...</span> 
+           {formData ? loading ? <div className="loader"></div> 
            : 
             <>
               <button onClick={()=>{

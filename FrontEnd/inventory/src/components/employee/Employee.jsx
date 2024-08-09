@@ -4,24 +4,30 @@
 import { useEffect, useState } from "react";
 import { IoCloseOutline, IoPersonAddOutline, IoSearch } from "react-icons/io5";
 import { useParams } from "react-router-dom";
-import { fetchData } from '../../helpers/fetchData.js';
+import { fetchEmployees } from "../../helpers/fetchNative.js";
 import Table from "../smallComponents/Table.jsx";
 import CreateEmployee from "./CreateEmployee.jsx";
 
 
-const apiData=fetchData('http://localhost:3000/employee');
+
 const Employee = () => {
 
   let {area}=useParams();
-  const data= apiData.read();
   const [areaFilter,setAreaFilter]=useState();
   const [nameFilter,setNameFilter]=useState();
   const [see,setSee]=useState(false);
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState(null);
+  const [changue, setChangue] = useState(false);
 
-  useEffect(()=>{
-    let dataFilter=data.filter(employee=>employee.area===area);
-    setAreaFilter(dataFilter);
-  },[area,data])
+  const onChangue = (value,see)=>{
+    setChangue(value);
+    setSee(see);
+  }
+
+  useEffect(() => { 
+    fetchEmployees(setAreaFilter,setLoading,setError,area);
+  }, [area,changue]);
   
 
   const searchFilter=({target})=>{
@@ -30,6 +36,8 @@ const Employee = () => {
     :setNameFilter(areaFilter);
   }
 
+  if (loading) return <div className="loader"></div>;
+  if (error) return <p>Error: {error.message}</p>;
 
   return (
     <div className="flex flex-col flex-wrap flex-1 rounded-lg gap-3 text-white">
@@ -58,10 +66,12 @@ const Employee = () => {
                 <button onClick={()=>setSee(!see)}><IoCloseOutline /></button>
               </div>
               <div>
-                  <CreateEmployee/>
+                  <CreateEmployee onChangue={onChangue} changue={changue} see={see}/>
               </div>
               <div className='w-[100%] mt-[10px]'>
-                <button onClick={()=>setSee(!see)} className="mt-2 w-[100%] bg-red-500 text-white p-2 rounded">Cerrar</button>
+                <button className="mt-2 w-[100%]  p-2 rounded-[.7em] 
+                font-sans font-medium hover:bg-red-500 transition duration-300 ease-in-ou  hover:text-white  text-black "
+                onClick={()=>setSee(!see)} >Cerrar</button> 
               </div>
             </div>
            </div>
