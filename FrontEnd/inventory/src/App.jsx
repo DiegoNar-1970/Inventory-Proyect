@@ -49,7 +49,7 @@ function App() {
             <Route path='/maquina' element={<Maquina/>}/>
             <Route path='/frios' element={<Frios/>}/>
             <Route path='/empaque' element={<Empaque/>}/>
-            <Route path='/admin' element={<Administracion/>}/>
+            <Route path='/administracion' element={<Administracion/>}/>
             <Route path='/employee/:area' element={<Employee/>}/>
             <Route path='/workHour/:area' element={<Hours/>}/>
             <Route path='/*' element={<Navigate to='/login'/>}/>

@@ -1,7 +1,7 @@
 import mongoose from "mongoose";
-import {vWorkHourSchemaZod} from '../workHours/workHourZod.js'
-import Employee from "../employee/employee.js";
 import { queryCond } from '../../helpers/queryConditios.js';
+import Employee from "../employee/employee.js";
+import { vWorkHourSchemaZod } from '../workHours/workHourZod.js';
 const {Schema}=mongoose
 
 const workHourSchema = new Schema({
@@ -32,7 +32,6 @@ const workHourSchema = new Schema({
     static async create(id,data,date){
 
       const result = vWorkHourSchemaZod(data);
-      console.log(result)
       if (!result.success) {
         return { message: 'invalid type', error: result.error };
       }
@@ -109,7 +108,6 @@ const workHourSchema = new Schema({
               select:'cc lastName name '
           }
       }).exec();
-      console.log('esto empieza aqui',hours,'aqui termina')
       const filterHours=hours.filter(hour=>{
         return hour.employee?.area===area
       })

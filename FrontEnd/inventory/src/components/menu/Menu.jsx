@@ -1,14 +1,12 @@
 
-import { GiAvocado } from "react-icons/gi";
-import { FaBoxes } from "react-icons/fa";
-import { LiaSnowflakeSolid } from "react-icons/lia";
-import { GiCardboardBoxClosed } from "react-icons/gi";
-import { FaWarehouse } from "react-icons/fa";
 import { CiSettings } from "react-icons/ci";
+import { FaBoxes, FaWarehouse } from "react-icons/fa";
+import { GiAvocado, GiCardboardBoxClosed } from "react-icons/gi";
 import { IoIosPeople } from "react-icons/io";
-import img from '../../media/img/img.png'
-import Links from '../menu/Links.jsx'
-import Logout from '../user/Logout.jsx'
+import { LiaSnowflakeSolid } from "react-icons/lia";
+import img from '../../media/img/img.png';
+import Links from '../menu/Links.jsx';
+import Logout from '../user/Logout.jsx';
 
  const Menu = () => {
   return (
@@ -26,7 +24,7 @@ import Logout from '../user/Logout.jsx'
               <Links icon={FaWarehouse} href={"almacen"} area={"Almacén"}></Links>
               <Links icon={LiaSnowflakeSolid} href={"frios"} area={"Fríos"}></Links>
               <Links icon={FaBoxes} href={"paletizado"} area={"Paletizado"}></Links>
-              <Links icon={IoIosPeople} href={"admin"} area={"administración"}></Links>
+              <Links icon={IoIosPeople} href={"administracion"} area={"administración"}></Links>
               <Links icon={GiCardboardBoxClosed} href={"empaque"} area={"Empaque"}></Links>
               <Links icon={CiSettings} href={"maquina"} area={"Máquina"}></Links>
             </ul>

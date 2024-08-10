@@ -1,10 +1,9 @@
-import Profile  from '../models/profile/profile.js'
-import {validateProfile,validatePartialProfile} from '../models/profile/profileZod.js'
+import Profile from '../models/profile/profile.js';
+import { validatePartialProfile, validateProfile } from '../models/profile/profileZod.js';
 
 export class profileController{
     static async create (req,res) {
         const result = validateProfile(req.body)
-        console.log(req.body);
         if(!result.success){
             return res.status(400).json({error:JSON.parse(result.error.message)})
         }
