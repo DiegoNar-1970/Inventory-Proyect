@@ -1,8 +1,9 @@
 import { useState } from "react";
 import { useForm } from "react-hook-form";
+import { IoCloseOutline } from "react-icons/io5";
 import { createEmployee, createProfile } from "../../services/auth.js";
 
-const CreateEmployee = ({onChangue,changue,see}) => {
+const CreateEmployee = ({onChangue,changue,see,closePop}) => {
   const {
     register,
     handleSubmit,
@@ -76,26 +77,33 @@ const CreateEmployee = ({onChangue,changue,see}) => {
       {loading ? (
         <div className="loader"></div>
       ) : errorReq.length != 0 ? (
-        <div className="flex flex-col gap-4 ">
-            <div className='flex gap-4 justify-center'>
+        <div className="flex flex-col gap-4 w-full ">
+            <div className='flex gap-4 justify-between items-center w-full mb-[15px] '>
                 <h1
-                    className="font-sans  text-center font-medium text-black p-1  rounded-[0.7em]">
-                    Upss.... Algo salio mal
+                    className="font-sans  font-medium text-red-700 text-[1.3em]  rounded-[0.7em]">
+                     ERROR!! 
                 </h1>
+                <button className=" text-[40px] text-black " onClick={()=>closePop(!see)}><IoCloseOutline /></button>
             </div>
-            {errorReq.map((e)=>{
+            {errorReq.map((e,i)=>{
+              
                 return(
-                    <div key={e.key} className="flex gap-2 font-sans">
-                        <h1>{e.value.path?e.value.path:'error'}:</h1>
-                        <p className=" text-red-600">{e.value.message}</p>
+                    <div key={e.key} className="flex flex-col gap-2 font-sans m-1 pl-4 pr-4 ">
+                        <div className="flex gap-2 ">
+                          <span className="w-[25px] rounded-md bg-red-700 text-center text-white">{i+=1}</span>
+                          <p className=" text-black">{e.value.message}</p>
+                        </div>
                     </div>
                 )
             })}
-          <button className="hover:bg-green-600 transition duration-300 ease-in-ou font-sans
-           font-medium bg-green-500 p-2 rounded-[.7em] text-white"
-            onClick={() => {setErrorReq([]);}}>
-            regresar
-          </button>
+            <div className=" flex mt-[20px]" >
+              <button className=" font-sans flex-1 
+                font-medium bg-green-700 text-white p-2 rounded-[.7em] "
+                onClick={() => {setErrorReq([]);}}>
+                regresar
+                </button>
+            </div>
+         
         </div>
         ) 
       : resOk ? (
@@ -109,7 +117,7 @@ const CreateEmployee = ({onChangue,changue,see}) => {
             </button>
             <button
               className="flex-1 hover:bg-gray-600 hover:text-white transition duration-300 ease-in-ou font-sans font-medium  p-2 rounded-[.7em] text-black"
-              onClick={() => { onChangue(!changue,!see)}}>
+              onClick={() => { onChangue(changue,!see)}}>
               ver tabla
             </button>
           </div>
@@ -117,17 +125,20 @@ const CreateEmployee = ({onChangue,changue,see}) => {
       ) : (
         <form className="flex flex-col gap-2 max-w-[400px]" onSubmit={onSubmit}>
           <div className="flex flex-col gap-2 ">
-            <div>
-              <h1 className="text-[19px] font-medium font-sans">
-                Perfil del empleado
+            <div className="flex flex-col text-center gap-1 mb-[20px]">
+              <h1 className="text-[20px] font-medium font-sans">
+                Formulario 
+              </h1>
+              <h1 className="text-[20px] font-medium font-sans">
+               Registro de empleado
               </h1>
             </div>
-            <div className="flex flex-wrap gap-2">
+            <div className="flex flex-wrap gap-2 justify-between">
               <div className="flex flex-col gap-2 ">
                 <label htmlFor="cc" className="font-sans ">
                   Cedula
                 </label>
-                <input
+                <input placeholder="Identificacion"
                   type="number"
                   className="border-[1px] rounded-lg p-[2px] border-gray-400 
                 text-gray-600"
@@ -151,7 +162,7 @@ const CreateEmployee = ({onChangue,changue,see}) => {
                 <label htmlFor="name" className="font-sans">
                   Nombre
                 </label>
-                <input
+                <input placeholder="Nombre"
                   type="text"
                   {...register("name", {
                     required: {
@@ -170,7 +181,7 @@ const CreateEmployee = ({onChangue,changue,see}) => {
                 <label htmlFor="lastName" className=" font-sans ">
                   Apellido
                 </label>
-                <input
+                <input placeholder="Segundo Nombre"
                   type="text"
                   {...register("lastName", {
                     required: {
@@ -187,7 +198,7 @@ const CreateEmployee = ({onChangue,changue,see}) => {
                   </span>
                 )}
               </div>
-              <div className="flex flex-col gap-2 ">
+              <div className="flex flex-col gap-2 w-[183px]">
                 <label htmlFor="birthdate" className=" font-sans ">
                   Fecha de nacimiento
                 </label>
@@ -212,7 +223,7 @@ const CreateEmployee = ({onChangue,changue,see}) => {
                 <label htmlFor="sex" className=" font-sans ">
                   Sexo
                 </label>
-                <input
+                <input placeholder="Tipo de Sexo"
                   type="text"
                   {...register("sex", {
                     required: {
@@ -231,7 +242,7 @@ const CreateEmployee = ({onChangue,changue,see}) => {
                 <label htmlFor="phone" className=" font-sans ">
                   Telefono
                 </label>
-                <input
+                <input placeholder="#Telefonico"
                   type="number"
                   {...register("phone", {
                     required: {
@@ -251,7 +262,7 @@ const CreateEmployee = ({onChangue,changue,see}) => {
                 <label htmlFor="email" className=" font-sans ">
                   Correo
                 </label>
-                <input
+                <input placeholder="example@gmail.com"
                   type="email"
                   {...register("email", {
                     required: {
@@ -270,8 +281,8 @@ const CreateEmployee = ({onChangue,changue,see}) => {
                 <label htmlFor="eps" className=" font-sans ">
                   Eps
                 </label>
-                <input
-                  type="text"
+                <input placeholder="EPS"
+                  type="text" 
                   {...register("eps", {
                     required: {
                       value: true,
@@ -288,17 +299,12 @@ const CreateEmployee = ({onChangue,changue,see}) => {
             </div>
           </div>
           <div>
-            <div>
-              <h1 className="text-[19px] font-medium font-sans">
-                Cargo y area
-              </h1>
-            </div>
-            <div className="flex flex-wrap gap-2">
+            <div className="flex flex-wrap gap-2 justify-between">
               <div className="flex flex-col gap-2  ">
                 <label htmlFor="position" className=" font-sans ">
                   Cargo
                 </label>
-                <input
+                <input placeholder="Cargo"
                   type="text"
                   {...register("position", {
                     required: {
@@ -319,7 +325,7 @@ const CreateEmployee = ({onChangue,changue,see}) => {
                 <label htmlFor="area" className=" font-sans ">
                   Area
                 </label>
-                <input
+                <input placeholder="Area"
                   type="text"
                   {...register("area", {
                     required: {
@@ -334,11 +340,11 @@ const CreateEmployee = ({onChangue,changue,see}) => {
                   <span className="text-red-600">{errors.area.message}</span>
                 )}
               </div>
-              <div className="flex flex-col gap-2">
+              <div className="flex flex-col gap-2 flex-1">
                 <label htmlFor="shift" className=" font-sans ">
                   Turno
                 </label>
-                <input
+                <input placeholder="Turno"
                   type="text"
                   {...register("shift", {
                     required: {
@@ -346,8 +352,7 @@ const CreateEmployee = ({onChangue,changue,see}) => {
                       message: "Campo Requerido",
                     },
                   })}
-                  className="border-[1px] rounded-lg p-[2px]
-            border-gray-400"
+                  className="border-[1px] rounded-lg p-[2px] border-gray-400 "
                 />
                 {errors.shift && (
                   <span className="text-red-600">{errors.shift.message}</span>
@@ -356,7 +361,7 @@ const CreateEmployee = ({onChangue,changue,see}) => {
             </div>
           </div>
           <div>
-            <button className="bg-green-500 text-white rounded-lg self p-1 mt-2 w-full hover:bg-green-600 transition-all ">
+            <button className=" bg-green-500 text-white rounded-lg self p-2 mt-2 w-full hover:bg-green-600 transition-all ">
               Enviar
             </button>
           </div>

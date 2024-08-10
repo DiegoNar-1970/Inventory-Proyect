@@ -2,7 +2,7 @@
 
 // import { FaHelmetSafety } from "react-icons/fa6";
 import { useEffect, useState } from "react";
-import { IoCloseOutline, IoPersonAddOutline, IoSearch } from "react-icons/io5";
+import { IoPersonAddOutline, IoSearch } from "react-icons/io5";
 import { useParams } from "react-router-dom";
 import { fetchEmployees } from "../../helpers/fetchNative.js";
 import Table from "../smallComponents/Table.jsx";
@@ -18,11 +18,15 @@ const Employee = () => {
   const [see,setSee]=useState(false);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
-  const [changue, setChangue] = useState(false);
+  const [changue, setChangue] = useState(0);
 
-  const onChangue = (value,see)=>{
-    setChangue(value);
+  const onChangue = (change,see)=>{
+    setChangue(change=>change+1);
     setSee(see);
+  }
+
+  const closePop=(value)=>{
+    setSee(value)
   }
 
   useEffect(() => { 
@@ -61,16 +65,13 @@ const Employee = () => {
       </article>
       {see ? 
            <div className="fixed top-0 left-0 h-screen w-screen bg-[#ffffff41] z-10 flex items-center justify-start ">
-            <div className=" m-auto p-auto bg-gray-200  p-4 rounded-lg flex flex-col  text-black min-w-[400px] max-w-[600px] ">
-              <div className='self-end text-[30px]'>
-                <button onClick={()=>setSee(!see)}><IoCloseOutline /></button>
-              </div>
-              <div>
-                  <CreateEmployee onChangue={onChangue} changue={changue} see={see}/>
-              </div>
-              <div className='w-[100%] mt-[10px]'>
-                <button className="mt-2 w-[100%]  p-2 rounded-[.7em] 
-                font-sans font-medium hover:bg-red-500 transition duration-300 ease-in-ou  hover:text-white  text-black "
+            <div className=" m-auto p-auto bg-gray-200   rounded-[.7em] flex flex-col  text-black min-w-[400px] max-w-[600px] p-5 ">
+              
+                <CreateEmployee onChangue={onChangue} changue={changue} see={see} closePop={closePop}/>
+              
+              <div className='w-[100%] mt-[.7em]'>
+                <button className="w-[100%] p-2 rounded-[.5em] 
+                font-sans font-medium hover:bg-black transition duration-300 ease-in-ou  hover:text-white  text-black "
                 onClick={()=>setSee(!see)} >Cerrar</button> 
               </div>
             </div>
