@@ -1,10 +1,10 @@
 
-import { useState } from 'react'
-import img from '../../media/img/img.png'
+import { useState } from 'react';
 import { IoCloseOutline } from "react-icons/io5";
+import img from '../../media/img/img.png';
+import FormHour from '../Forms/FormHour.jsx';
 import FormUpEmployee from '../Forms/FormUpEmployee.jsx';
 import Profile from '../Forms/Profile.jsx';
-import FormHour from '../Forms/FormHour.jsx';
 
   const Table = ({data}) => {
   const [see,setSee]=useState({
@@ -102,7 +102,7 @@ import FormHour from '../Forms/FormHour.jsx';
           )}
           {see.component === 'hour' && see.isTrue===true && (
            <div className="fixed top-0 left-0 h-screen w-screen bg-[#ffffff41] z-10 flex items-center justify-start ">
-            <div className=" m-auto p-auto bg-white p-4 rounded-lg flex flex-col  text-black min-w-[300px] max-w-[500px] ">
+            <div className=" m-auto p-auto bg-white p-4 rounded-lg flex flex-col  text-black min-w-[300px]  ">
               <div className='self-end text-[30px]'>
                 <button onClick={()=>setSee(!see)}><IoCloseOutline /></button>
               </div>

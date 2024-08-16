@@ -14,6 +14,7 @@ const Hours = () => {
   } = useForm();
   const [formData, setFormData] = useState(null);
   const [nameFilter, setNameFilter] = useState();
+  
 
   let style = "items-center justify-center";
   const [view, setView] = useState(style);
@@ -79,12 +80,18 @@ const Hours = () => {
 
             <IoSearch className="text-[30px]" />
           </div>
-          <div className="flex gap-2 ">
+          <div className="flex gap-2 p-2 hover:rounded-[.7em] hover:bg-gray-700 ">
             <button
             onClick={() => {
               setFormData(null), setView(style);
             }}
             >Volver a filtrar por fechas</button>
+            <IoCalendarNumber className="text-[30px] text-green-600" />
+          </div>
+          <div className="flex gap-2 p-2 hover:rounded-[.7em] hover:bg-gray-700 ">
+            <button>
+                Agregar nueva hora
+            </button>
             <IoCalendarNumber className="text-[30px] text-green-600" />
           </div>
         </article>
@@ -185,7 +192,7 @@ const Hours = () => {
                   Fecha inicial
                 </label>
                 <input
-                  placeholder={"semana"}
+                  placeholder="Fecha"
                   className=" max-w-[145px] rounded-lg p-[2px] border-gray-400
                      text-white border-t-[0px] bg-[#393a3c] placeholder-white
                     focus:outline-none border-none "

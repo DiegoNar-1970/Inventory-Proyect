@@ -1,10 +1,10 @@
 
-import React, { useState } from 'react'
-import img from '../../media/img/img.png'
+import React, { useState } from 'react';
 import { IoCloseOutline } from "react-icons/io5";
-import FormUpHour from '../Forms/FormUpHour.jsx'
-import FormSeeHour from '../Forms/FormSeeHours.jsx'
 import { formatedDate } from '../../helpers/formateDate.js';
+import img from '../../media/img/img.png';
+import FormSeeHour from '../Forms/FormSeeHours.jsx';
+import FormUpHour from '../Forms/FormUpHour.jsx';
 import SeeTotalHours from '../Forms/SeeTotalHours.jsx';
 
 
@@ -43,7 +43,6 @@ const HoursTable = ({datos}) => {
           <React.Fragment key={key}>
           {info.data.map((result)=>(
             <tr key={result._id}>
-              {console.log('info',info)}
              <td>
               <div className="flex gap-2 results-center box-border mt-1">
                <img className="min-w-[30px] max-w-[30px] h-full rounded-[2em] overflow-hidden text-ellipsis"src={img} alt="" />

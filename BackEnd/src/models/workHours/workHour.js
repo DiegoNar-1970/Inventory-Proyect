@@ -86,6 +86,10 @@ const workHourSchema = new Schema({
 
     static async calcHours(area,data){
       try{
+          console.log('calcular horas',data)
+          console.log(new Date(data.startDate).getHours())
+          console.log(new Date(data.startDate).getMinutes())
+
           const query=await queryCond(data);
           const hours=await this.getHours(area,query)
           if(hours.message){

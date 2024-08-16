@@ -18,6 +18,7 @@ export class WorkHourController{
         const worHours= await WorkHourModel.getAll();
         return res.send(worHours);
     }
+
     static async create(req,res){
         const { id } = req.params;
         const result = req.body;
@@ -37,6 +38,7 @@ export class WorkHourController{
       return res.status(400).json({ message: err.message });
     }
     }
+    
     static async calcHours(req,res){
       const {area}=req.query
       if(!area){
