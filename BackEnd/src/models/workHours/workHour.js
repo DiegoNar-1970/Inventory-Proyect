@@ -14,25 +14,13 @@ const workHourSchema = new Schema({
       hours:{type:Number, default:0},
       minutes:{type:Number, default:0},
      },
-    creationDate: { type: Date, default:Date.now() },
+    creationDate: { type: Date },
     isHoliday: { type: Boolean, default:false },
     leaveWork: {type : Date},
     checkTime:{type:Date},
     lunch:{type:Boolean,default:false},
     breakfast:{type:Boolean,default:false},
-    // leavework: { type: String, enum: ['Morning', 'Afternoon', 'Full Day'] },
-    // holiday:{
-    //     isHoliday: { type: Boolean, default:false },
-    //     hrsHoliday: { type: Number, default:0}
-    //  }
-        // {
-    //   type: [{
-    //       isHoliday: { type: Boolean },
-    //       hrsHoliday: { type: Number }
-    //   }], default: function() {
-    //     return this.isNew ? null : undefined;
-    //   }}
-      //es mejor tratar con objetos y no arrays
+
   });
   
   const WorkHour = mongoose.model('WorkHour', workHourSchema);
@@ -43,6 +31,7 @@ const workHourSchema = new Schema({
     static async create(id,data){
 
       const result = vWorkHourSchemaZod({...data,employee:id});
+
       if (!result.success) {
         return { message: 'invalid type', error: result.error };
       }
@@ -53,26 +42,29 @@ const workHourSchema = new Schema({
           if(!employee){
             return { message: 'El empleado no existe' };
           }
-          const {checkTime,leaveWork,hours,minutes}=calcTime(
+
+          const {checkTime,leaveWork,hours,minutes,creationDate}=calcTime(
             result.data.checkTime,
             result.data.leaveWork,
             result.data.breakfast,
-            result.data.lunch
+            result.data.lunch,
+            result.data.creationDate
           )
+
 
         const {checkTime: _,leaveWork: __, ...rest}=result.data;
 
         const newWorkH = new WorkHour({
-          checkTime,
-          leaveWork,
+          checkTime:checkTime,
+          leaveWork:leaveWork,
           dayHour:{
             hours:hours,
             minutes:minutes, 
           },
+          creationDate:creationDate,
           ...rest,
         });
-      
-
+       
         await newWorkH.save();
         return newWorkH;
       } catch (err) {
@@ -110,21 +102,18 @@ const workHourSchema = new Schema({
 
     static async calcHours(area,data){
       try{
-          console.log('calcular horas',data)
-          console.log(new Date(data.startDate).getHours())
-          console.log(new Date(data.startDate).getMinutes())
-
-          const query=await queryCond(data);
+          const query=queryCond(data);
           const hours=await this.getHours(area,query)
           if(hours.message){
             return{message:hours.message}
           }
+          console.log('calc',hours);
           return hours;
       }catch(err){
         return {message:err}
       }
-
     }
+
     static async getHours(area,query){
       try{ 
         const hours =await WorkHour.find(query,{__v:0}).populate({
@@ -136,40 +125,14 @@ const workHourSchema = new Schema({
               select:'cc lastName name '
           }
       }).exec();
+      
       const filterHours=hours.filter(hour=>{
         return hour.employee?.area===area
       })
-
-      const reduce=filterHours.reduce((acc,hora)=>{
-        //necesitamos crear la llave para tener una referencia
-        const cc=hora.employee.profile.cc
-        //como acc no es de ningun tipo hay que crearle
-        //manualmente la estructura que tendra 
-        if(!acc[cc]){
-          acc[cc]={
-            cc:0,
-            name:'',
-            horasTotales:0,
-            horasExtras:0,
-            data:[]
-          }
-        }
-        
-        //logica
-        if(!acc[cc].name || !acc[cc].cc ){
-          acc[cc].name=hora.employee.profile.name;
-          acc[cc].cc=hora.employee.profile.cc;
-        }
-        acc[cc].horasTotales+=hora.dayHour;
-        acc[cc].horasExtras+=hora.holiday.hrsHoliday
-        acc[cc].data.push(hora);
-        return acc;
-      },{})
-
-      return reduce;
+       console.log('filter',filterHours);
+      return filterHours;
       }catch(err){
         return {message:err.message}
       }
-
     }
     }

@@ -327,3 +327,167 @@ uso de groupby
     delete formattedData.isHoliday;
     delete formattedData.hrsHoliday;
     console.log("despues:", formattedData);
+
+    const reduce=filterHours.reduce((acc,hora)=>{
+        //necesitamos crear la llave para tener una referencia
+        const cc=hora.employee.profile.cc
+        //como acc no es de ningun tipo hay que crearle
+        //manualmente la estructura que tendra 
+        if(!acc[cc]){
+          acc[cc]={
+            cc:0,
+            name:'',
+            horasTotales:0,
+            horasExtras:0,
+            data:[]
+          }
+        }
+        
+        //logica
+        if(!acc[cc].name || !acc[cc].cc ){
+          acc[cc].name=hora.employee.profile.name;
+          acc[cc].cc=hora.employee.profile.cc;
+        }
+        acc[cc].horasTotales+=hora.dayHour;
+        acc[cc].horasExtras+=hora.holiday.hrsHoliday
+        acc[cc].data.push(hora);
+        return acc;
+      },{})
+        const reduce=filterHours.reduce((acc,hora,i)=>{
+        let name=hora.employee.profile.name;
+        if(!acc[name]){
+          acc[name]={
+            cc:0,
+            name:'',
+            lastName:'',
+            horasTotales:0,
+            minutes:0,
+            data:[]
+          }
+        }
+        if(!acc[name].name || !acc[name].cc || !acc[name].lastName){
+          acc[name].name=hora.employee.profile.name;
+          acc[name].cc=hora.employee.profile.cc;
+          acc[name].lastName=hora.employee.profile.lastName;
+
+        }
+        acc[name].horasTotales+=hora.dayHour.hours;
+        acc[name].minutes+=hora.dayHour.minutes
+        acc[name].data.push(hora);
+        return acc;
+      },{})
+      console.log('groups',reduce);
+      // {!watch('isHoliday') && (
+//   <div className="flex flex-col gap-2">
+//     <label htmlFor="dayHour" className="font-medium font-sans">Horas</label>
+//     <input type="number" {...register('dayHour', {
+//       required: {
+//         value: true,
+//         message: 'Se necesita el total de horas'
+//       },
+//       max: {
+//         value: 24,
+//         message: 'Debe ser menor de 24 horas'
+//       },
+//       min: {
+//         value: 0,
+//         message: 'Solo horas mayores a 0'
+//       },
+//       pattern: {
+//         value: /^(0?[0-9]|1[0-2])$/,
+//         message: 'Ingrese un número válido del 0 al 12'
+//       },valueAsNumber: true
+//     })} defaultValue={0} className="border-[1px] rounded-lg p-[2px] border-gray-400" />
+//     {errors.dayHour && <span className="text-red-600">{errors.dayHour.message}</span>}
+//   </div>
+// )}
+
+// {watch('isHoliday') && (
+//   <div className="flex flex-col gap-2">
+//     <label htmlFor="hrsHoliday" className="font-medium font-sans">Horas festivas</label>
+//     <input type="number" {...register('hrsHoliday', {
+//       required: {
+//         value: true,
+//         message: 'Se necesitan las horas festivas'
+//       },valueAsNumber: true,
+//       max: {
+//         value: 24,
+//         message: 'Debe ser menor de 24 horas'
+//       },
+//       min: {
+//         value: 0,
+//         message: 'Solo horas mayores a 0'
+//       },
+//       pattern: {
+//         value: /^(0?[0-9]|1[0-2])$/,
+//         message: 'Ingrese un número válido del 0 al 12'
+//       }})}
+//       defaultValue={0} className="border-[1px] rounded-lg p-[2px] border-gray-400" />
+//     {errors.hrsHoliday && <span className="text-red-600">{errors.hrsHoliday.message}</span>}
+//   </div>
+// )}
+
+// <div className='flex gap-2'>
+// <div className='flex flex-col'>
+// <label htmlFor='--' className='font-medium font-sans '>Hora de entrada</label>
+//   <input type="datetime-local" {...register('--',{
+//   require:{
+//     value:true,
+//     message:'se requieren horas'
+//   }
+//   })} defaultChecked='' className="border-[1px] rounded-lg p-[2px] border-gray-400 max-w-[180px]"/>
+// </div>
+// <div>
+// <label htmlFor='--' className='font-medium font-sans '>Hora de salida</label>
+//   <input type="datetime-local" {...register('--',{
+//   require:{
+//     value:true,
+//     message:'se requieren horas'
+//   }
+//   })} defaultChecked='' className="border-[1px] rounded-lg p-[2px] border-gray-400 max-w-[180px]"/>
+// </div>
+// </div>
+    // leavework: { type: String, enum: ['Morning', 'Afternoon', 'Full Day'] },
+    // holiday:{
+    //     isHoliday: { type: Boolean, default:false },
+    //     hrsHoliday: { type: Number, default:0}
+    //  }
+        // {
+    //   type: [{
+    //       isHoliday: { type: Boolean },
+    //       hrsHoliday: { type: Number }
+    //   }], default: function() {
+    //     return this.isNew ? null : undefined;
+    //   }}
+      //es mejor tratar con objetos y no arrays
+        // console.log(Object.keys(datos).forEach((key)=>{
+  //   //aqui se usa employee para que sea igual a el objeto especificado con [key]
+  //   const employee = datos[key];
+  // //como es un forEach accede a ese empleado y puede acceder a la informacion
+  //   console.log(employee.data.map(result=>{return result.employee.profile.cc}))
+  // }))
+  const searchFilter = ({ target }) => {
+    const dataArray = [];
+    //entries da la llave y el valor de cada objeto que tengamos en un array
+    //forEach ejecuta por cada objeto que tengamos [{},{}...]
+    Object.entries(data).forEach(([key, hours]) => {
+      //asignamos una variable para poder guardar los datos filtrados
+      const filteredData = hours.data.filter((hora) =>
+        //filtramos por nombre
+        hora.employee.profile.name
+          .toLowerCase()
+          .includes(target.value.toLowerCase())
+      );
+
+      if (filteredData.length > 0) {
+        //hacemos Push para guardar la nueva informacion en un nuevo array dataArray
+        dataArray.push({
+          //esto es porque hours mantenga toda su informacion y no solo se guarde el array filtrado
+          ...hours,
+          //en hours el contenido de data se cambia por el nuevo contenido filtrado
+          data: filteredData,
+        });
+      }
+    });
+    setNameFilter(dataArray);
+  };

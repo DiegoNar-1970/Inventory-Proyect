@@ -1,6 +1,7 @@
-export const calcTime=(initialDate,endDate,breakfast,lunch)=>{
+export const calcTime=(initialDate,endDate,breakfast,lunch,inputDate)=>{
     const checkTime=new Date(initialDate);
     const leavework=new Date(endDate);
+    const creationDate=new Date(inputDate);
 
     let deadMin=0
     let totalMinHour=0
@@ -35,6 +36,7 @@ export const calcTime=(initialDate,endDate,breakfast,lunch)=>{
       hours,
       minutes,
       checkTime,
-      leavework
+      leavework,
+      creationDate
     }
 }

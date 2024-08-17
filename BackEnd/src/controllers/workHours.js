@@ -5,7 +5,7 @@ export class WorkHourController{
   static async create(req,res){
     const { id } = req.params;
     const result = req.body;
-
+    console.log(result)
 if (!result || !id) {
     return res.status(400).json({ message: 'insufficient params' });
 }

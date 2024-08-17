@@ -4,10 +4,12 @@ import { z } from "zod";
 const workHourSchemaZod = z.object({
   employee: z.string(),
   week: z.number(),
-  creationDate: z.string().optional(),
-  holiday: z.boolean().default(false),
+  creationDate: z.string(),
+  isHoliday: z.boolean().default(false),
   leaveWork: z.string(),
   checkTime: z.string(),
+  breakfast: z.boolean(),
+  lunch: z.boolean(),
 });
 
 export function vWorkHourSchemaZod(input) {

@@ -8,7 +8,7 @@ const FormHour = ({ item: { dataItem } }) => {
   } = useForm();
 
   const onSubmit = handleSubmit((data) => {
-
+    console.log(data);
   });
 
   return (
@@ -101,6 +101,25 @@ const FormHour = ({ item: { dataItem } }) => {
             <span className="text-red-600 max-w-[195px]">{errors.leavework.message}</span>
           )}
         </article>
+        <article className="flex flex-col gap-2 " >
+          <label htmlFor="creationDate" className="font-medium font-sans self-end">
+            Fecha de Creacion
+          </label>
+          <input
+            type="datetime-local"
+            {...register("creationDate", {
+              required: {
+                value: true,
+                message: "se requiere la hora de salida",
+              },
+            })}
+            defaultChecked=""
+            className="border-[1px] rounded-lg p-[2px] border-gray-400 max-w-[195px] "
+          />
+          {errors.creationDate && (
+            <span className="text-red-600 max-w-[195px]">{errors.creationDate.message}</span>
+          )}
+        </article>
       </section>
       <article>
           <div className=" flex gap-2 items-center justify-between ">
@@ -154,73 +173,3 @@ const FormHour = ({ item: { dataItem } }) => {
 };
 
 export default FormHour;
-// {!watch('isHoliday') && (
-//   <div className="flex flex-col gap-2">
-//     <label htmlFor="dayHour" className="font-medium font-sans">Horas</label>
-//     <input type="number" {...register('dayHour', {
-//       required: {
-//         value: true,
-//         message: 'Se necesita el total de horas'
-//       },
-//       max: {
-//         value: 24,
-//         message: 'Debe ser menor de 24 horas'
-//       },
-//       min: {
-//         value: 0,
-//         message: 'Solo horas mayores a 0'
-//       },
-//       pattern: {
-//         value: /^(0?[0-9]|1[0-2])$/,
-//         message: 'Ingrese un número válido del 0 al 12'
-//       },valueAsNumber: true
-//     })} defaultValue={0} className="border-[1px] rounded-lg p-[2px] border-gray-400" />
-//     {errors.dayHour && <span className="text-red-600">{errors.dayHour.message}</span>}
-//   </div>
-// )}
-
-// {watch('isHoliday') && (
-//   <div className="flex flex-col gap-2">
-//     <label htmlFor="hrsHoliday" className="font-medium font-sans">Horas festivas</label>
-//     <input type="number" {...register('hrsHoliday', {
-//       required: {
-//         value: true,
-//         message: 'Se necesitan las horas festivas'
-//       },valueAsNumber: true,
-//       max: {
-//         value: 24,
-//         message: 'Debe ser menor de 24 horas'
-//       },
-//       min: {
-//         value: 0,
-//         message: 'Solo horas mayores a 0'
-//       },
-//       pattern: {
-//         value: /^(0?[0-9]|1[0-2])$/,
-//         message: 'Ingrese un número válido del 0 al 12'
-//       }})}
-//       defaultValue={0} className="border-[1px] rounded-lg p-[2px] border-gray-400" />
-//     {errors.hrsHoliday && <span className="text-red-600">{errors.hrsHoliday.message}</span>}
-//   </div>
-// )}
-
-// <div className='flex gap-2'>
-// <div className='flex flex-col'>
-// <label htmlFor='--' className='font-medium font-sans '>Hora de entrada</label>
-//   <input type="datetime-local" {...register('--',{
-//   require:{
-//     value:true,
-//     message:'se requieren horas'
-//   }
-//   })} defaultChecked='' className="border-[1px] rounded-lg p-[2px] border-gray-400 max-w-[180px]"/>
-// </div>
-// <div>
-// <label htmlFor='--' className='font-medium font-sans '>Hora de salida</label>
-//   <input type="datetime-local" {...register('--',{
-//   require:{
-//     value:true,
-//     message:'se requieren horas'
-//   }
-//   })} defaultChecked='' className="border-[1px] rounded-lg p-[2px] border-gray-400 max-w-[180px]"/>
-// </div>
-// </div>

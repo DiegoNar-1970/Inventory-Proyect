@@ -6,23 +6,19 @@ import img from '../../media/img/img.png';
 import FormSeeHour from '../Forms/FormSeeHours.jsx';
 import FormUpHour from '../Forms/FormUpHour.jsx';
 import SeeTotalHours from '../Forms/SeeTotalHours.jsx';
+import { Popap } from '../smallComponents/Popap.jsx';
 
 
 const HoursTable = ({datos}) => {
-  console.log(datos)
+
   const [see,setSee]=useState({
     component:'',
     isTrue:false,
     dataResult:{}
   });
-
-  // console.log(Object.keys(datos).forEach((key)=>{
-    //aqui se usa employee para que sea igual a el objeto especificado con [key]
-  //   const employee = datos[key];
-  //como es un forEach accede a ese empleado y puede acceder a la informacion
-  //   console.log(employee.data.map(result=>{return result.employee.profile.cc}))
-  // }))
-
+  const changeSee=()=>{
+    setSee({component:'',isTrue:false,dataItem:{}});
+  }
   return (
     <>
     <h1 className=" ml-1 text-[17px] text-gray-500">Personal</h1>
@@ -32,33 +28,33 @@ const HoursTable = ({datos}) => {
            <th className="border-b-[1px] border-gray-500">nombre</th>
            <th className="border-b-[1px] border-gray-500">Cedula</th>
            <th className="border-b-[1px] border-gray-500">Horas</th>
-           <th className="border-b-[1px] border-gray-500">Horas Festivas</th>
+           <th className="border-b-[1px] border-gray-500">Festivo</th>
            <th className="border-b-[1px] border-gray-500">Semana</th>
            <th className="border-b-[1px] border-gray-500">Fecha</th>
            <th className="border-b-[1px] border-gray-500">Acciones</th>
          </tr>
        </thead>
        <tbody>
-         {datos && Object.entries(datos).map(([key,info])=> (
-          <React.Fragment key={key}>
-          {info.data.map((result)=>(
-            <tr key={result._id}>
+         {datos && datos.map((info)=> (
+            <tr key={info._id}>
              <td>
               <div className="flex gap-2 results-center box-border mt-1">
                <img className="min-w-[30px] max-w-[30px] h-full rounded-[2em] overflow-hidden text-ellipsis"src={img} alt="" />
-               <span>{result.employee.profile.name}</span>
+               <span>{info.employee.profile.name}</span>
              </div>
             </td>
-            <td className="text-gray-500">{result.employee.profile.cc}</td> 
-            <td >{result.dayHour}</td> 
-            <td >{result.holiday.hrsHoliday}</td> 
-            <td >{result.week}</td> 
-            <td className="text-gray-500">{formatedDate(result.date)}</td> 
+            <td className="text-gray-500">{info.employee.profile.cc}</td> 
+            <td >{info.dayHour.hours}</td> 
+            <td >
+              {info.isHoliday ? 'Si':'No'}
+            </td> 
+            <td >{info.week}</td> 
+            <td className="text-gray-500">{formatedDate(info.creationDate)}</td> 
            <td >
            <button onClick={()=>{setSee({
                  component:'update',
                  isTrue:true,
-                 dataResult:result
+                 dataResult:info
                })}}
            className="ml-[5px] bg-[##00800017] text-green-500 rounded-[1em] 
              border-[1px] border-green-500 hover:text-white hover:bg-[#52d9669b] p-[4px]">Actualizar</button>
@@ -66,7 +62,7 @@ const HoursTable = ({datos}) => {
                setSee({
                  component:'info',
                  isTrue:true,
-                 dataResult:result
+                 dataResult:info
                })
              }}  className="ml-[5px] bg-[##00800017] text-white rounded-[1em] 
              border-[1px] border-white hover:text-[#52d9669b] hover:border-[#52d9669b] p-[4px]">Informacion</button>
@@ -82,15 +78,14 @@ const HoursTable = ({datos}) => {
                setSee({
                  component:'delete',
                  isTrue:true,
-                 dataResult:result
+                 dataResult:info
                })
              }} className=" bg-[#ff969601] border-[1px] border-[#952c2c98] text-[#952c2c] hover:text-white
               hover:bg-[#952c2c98] ml-[5px] rounded-[1em] p-[4px]">Eliminar</button>
               
            </td>
            </tr>
-          ))}
-          </React.Fragment>
+          
         ))}
        </tbody>
      </table>
@@ -127,19 +122,13 @@ const HoursTable = ({datos}) => {
      )}
      
      {see.component === 'allHours' && see.isTrue===true && (
-      <div className="fixed top-0 left-0 h-screen w-screen bg-[#ffffff41] z-10 flex results-center justify-start ">
-       <section className=" m-auto p-auto bg-white p-4 rounded-lg flex flex-col  text-black min-w-[300px] max-w-[500px] ">
-         <article className='self-end text-[30px]'>
-           <button onClick={()=>setSee(!see)}><IoCloseOutline /></button>
-         </article>
-         <article>
-                  <SeeTotalHours result={see}/>
-         </article>
-         <article className='w-[100%] mt-[10px]'>
-           <button onClick={()=>setSee(!see)} className="mt-2 w-[100%] bg-red-500 text-white p-2 rounded">Cerrar</button>
-         </article>
-       </section>
-      </div>
+      <Popap
+      see={see}
+      changeSee={changeSee}
+      component={SeeTotalHours} 
+      />
+                  
+         
      )}
 </>
 )

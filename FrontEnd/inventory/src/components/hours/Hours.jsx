@@ -20,6 +20,7 @@ const Hours = () => {
   const [view, setView] = useState(style);
 
   const url = `http://localhost:3000/workHour/?area=${area}`;
+  const transformDate = (date) => date.replace(/-/g, '/');
 
   const { data, loading } = UseBodyFetch(
     url,
@@ -35,34 +36,19 @@ const Hours = () => {
   );
 
   const onSubmit = handleSubmit((condiciones) => {
-    setFormData(condiciones);
-    setView("");
+     condiciones.startDate = transformDate(condiciones.startDate);
+     condiciones.endDate = transformDate(condiciones.endDate);
+     setFormData(condiciones);
+     setView("");
   });
 
   const searchFilter = ({ target }) => {
-    const dataArray = [];
-    //entries da la llave y el valor de cada objeto que tengamos en un array
-    //forEach ejecuta por cada objeto que tengamos [{},{}...]
-    Object.entries(data).forEach(([key, hours]) => {
-      //asignamos una variable para poder guardar los datos filtrados
-      const filteredData = hours.data.filter((hora) =>
-        //filtramos por nombre
-        hora.employee.profile.name
-          .toLowerCase()
-          .includes(target.value.toLowerCase())
-      );
+    target.value 
+    ? setNameFilter(data.filter(obj=>obj.employee.profile.name.toLowerCase()
+      .includes(target.value.toLowerCase()))) 
+    : setNameFilter();
+    
 
-      if (filteredData.length > 0) {
-        //hacemos Push para guardar la nueva informacion en un nuevo array dataArray
-        dataArray.push({
-          //esto es porque hours mantenga toda su informacion y no solo se guarde el array filtrado
-          ...hours,
-          //en hours el contenido de data se cambia por el nuevo contenido filtrado
-          data: filteredData,
-        });
-      }
-    });
-    setNameFilter(dataArray);
   };
 
   return (
