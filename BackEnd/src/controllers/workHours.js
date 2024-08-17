@@ -2,6 +2,26 @@
 import { WorkHourModel } from "../models/workHours/workHour.js";
 
 export class WorkHourController{
+  static async create(req,res){
+    const { id } = req.params;
+    const result = req.body;
+
+if (!result || !id) {
+    return res.status(400).json({ message: 'insufficient params' });
+}
+
+try {
+  const newWorkH = await WorkHourModel.create(id, result);
+  if (newWorkH.message) {
+    return res.status(400).json({ message: newWorkH.message,
+        error:newWorkH.error
+     });
+  }
+  return res.status(201).json(newWorkH);
+} catch (err) {
+  return res.status(400).json({ message: err.message });
+}
+}
     static async getAll(req,res){
         const {id}=req.query;
         if(id){
@@ -17,26 +37,6 @@ export class WorkHourController{
         }
         const worHours= await WorkHourModel.getAll();
         return res.send(worHours);
-    }
-
-    static async create(req,res){
-        const { id } = req.params;
-        const result = req.body;
-    if (!result || !id) {
-        return res.status(400).json({ message: 'insufficient params' });
-    }
-    try {
-      const {date}=req.body;
-      const newWorkH = await WorkHourModel.create(id, result,date);
-      if (newWorkH.message) {
-        return res.status(400).json({ message: newWorkH.message,
-            error:newWorkH.error
-         });
-      }
-      return res.status(201).json(newWorkH);
-    } catch (err) {
-      return res.status(400).json({ message: err.message });
-    }
     }
     
     static async calcHours(req,res){

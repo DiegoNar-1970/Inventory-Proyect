@@ -1,20 +1,24 @@
 import mongoose from "mongoose";
 import { queryCond } from '../../helpers/queryConditios.js';
-import Employee from "../employee/employee.js";
+import Employee from '../employee/employee.js';
 import { vWorkHourSchemaZod } from '../workHours/workHourZod.js';
-const {Schema}=mongoose
 
+const {Schema}=mongoose
 const workHourSchema = new Schema({
     employee: { 
       type: Schema.Types.ObjectId, ref: 'Employee'
     },
     week: { type: Number },
     dayHour: { type: Number},
-    date: { type: Date, default:Date.now() },
-    holiday:{
-        isHoliday: { type: Boolean, default:false },
-        hrsHoliday: { type: Number, default:0}
-     }
+    creationDate: { type: Date, default:Date.now() },
+    isHoliday: { type: Boolean, default:false },
+    leaveWork: {type : Date },
+    checkTime:{type:Date}
+    // leavework: { type: String, enum: ['Morning', 'Afternoon', 'Full Day'] },
+    // holiday:{
+    //     isHoliday: { type: Boolean, default:false },
+    //     hrsHoliday: { type: Number, default:0}
+    //  }
         // {
     //   type: [{
     //       isHoliday: { type: Boolean },
@@ -29,26 +33,33 @@ const workHourSchema = new Schema({
   export default WorkHour;
 
   export class WorkHourModel{
-    static async create(id,data,date){
 
-      const result = vWorkHourSchemaZod(data);
+    static async create(id,data){
+
+      const result = vWorkHourSchemaZod({...data,employee:id});
       if (!result.success) {
         return { message: 'invalid type', error: result.error };
       }
       try {
 
-        if(date){
-          //usar la funcion de query 
-          const newDate=new Date(date.trim())
-          const newWorkH = new WorkHour({newDate,...result.data});
-          const employee = await Employee.findById(id);
-          newWorkH.employee = employee;
-          await newWorkH.save();
-          return newWorkH;
-        }
-
         const employee = await Employee.findById(id);
-        const newWorkH = new WorkHour({employee,...result.data});
+
+          if(!employee){
+            return { message: 'El empleado no existe' };
+          }
+
+        const checkTime=new Date(result.data.checkTime)
+        const  leaveWork=new Date(result.data.leaveWork)
+
+        const {checkTime: _,leaveWork: __, ...rest}=result.data;
+
+        const newWorkH = new WorkHour({
+          checkTime,
+          leaveWork,
+          ...rest,
+        });
+      
+
         await newWorkH.save();
         return newWorkH;
       } catch (err) {

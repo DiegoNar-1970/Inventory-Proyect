@@ -1,10 +1,10 @@
 
 import { useState } from 'react';
-import { IoCloseOutline } from "react-icons/io5";
 import img from '../../media/img/img.png';
 import FormHour from '../Forms/FormHour.jsx';
 import FormUpEmployee from '../Forms/FormUpEmployee.jsx';
 import Profile from '../Forms/Profile.jsx';
+import { Popap } from './Popap.jsx';
 
   const Table = ({data}) => {
   const [see,setSee]=useState({
@@ -13,7 +13,9 @@ import Profile from '../Forms/Profile.jsx';
     dataItem:{}
   });
 
-  const [profile,setProfile]=useState(false);
+  const changeSee=()=>{
+    setSee({component:'',isTrue:false,dataItem:{}});
+  }
   return (
     <>
          <h1 className=" ml-1 text-[17px] text-gray-500">Personal</h1>
@@ -71,49 +73,25 @@ import Profile from '../Forms/Profile.jsx';
             </tbody>
           </table>
           {see.component === 'update' && see.isTrue===true && (
-           <div className="fixed top-0 left-0 h-screen w-screen bg-[#ffffff41] z-10 flex items-center justify-start ">
-            <div className=" m-auto p-auto bg-white p-4 rounded-lg flex flex-col gap-2 text-black min-w-[300px]">
-              <div className='self-end text-[30px]'>
-                <button onClick={()=>setSee(!see)}><IoCloseOutline /></button>
-              </div>
-              <div>
-                <FormUpEmployee item={see}></FormUpEmployee>
-              </div>
-              <div className='self-center w-[100%]' >
-                <button onClick={()=>setSee(!see)} className="mt-1 bg-red-500 w-[100%] text-white p-2 rounded">Cerrar</button>
-              </div>
-            </div>
-           </div>
+          <Popap
+          see={see}
+          changeSee={changeSee}
+          component={FormUpEmployee}/>
           )}
           {see.component === 'profile' && see.isTrue===true && (
-           <div className="fixed top-0 left-0 h-screen w-screen bg-[#ffffff41] z-10 flex items-center justify-start ">
-            <div className=" m-auto p-auto bg-gray-200  p-4 rounded-lg flex flex-col  text-black min-w-[300px] max-w-[500px] ">
-              <div className='self-end text-[30px]'>
-                <button onClick={()=>setSee(!see)}><IoCloseOutline /></button>
-              </div>
-              <div>
-                  <Profile item={see}></Profile>
-              </div>
-              <div className='w-[100%] mt-[10px]'>
-                <button onClick={()=>setSee(!see)} className="mt-2 w-[100%] bg-red-500 text-white p-2 rounded">Cerrar</button>
-              </div>
-            </div>
-           </div>
+           <Popap
+           see={see}
+           changeSee={changeSee}
+           component={Profile} 
+           />
           )}
           {see.component === 'hour' && see.isTrue===true && (
-           <div className="fixed top-0 left-0 h-screen w-screen bg-[#ffffff41] z-10 flex items-center justify-start ">
-            <div className=" m-auto p-auto bg-white p-4 rounded-lg flex flex-col  text-black min-w-[300px]  ">
-              <div className='self-end text-[30px]'>
-                <button onClick={()=>setSee(!see)}><IoCloseOutline /></button>
-              </div>
-              <div>
-                  <FormHour item={see}></FormHour>
-              </div>
-              <div className='w-[100%] mt-[10px]'>
-                <button onClick={()=>setSee(!see)} className="mt-2 w-[100%] bg-red-500 text-white p-2 rounded">Cerrar</button>
-              </div>
-            </div>
-           </div>
+           <Popap
+            see={see}
+            changeSee={changeSee}
+            component={FormHour}
+
+           />
           )}
     </>
   )

@@ -308,3 +308,22 @@ uso de groupby
     })
 
         console.log('result',result)
+
+    //de esta forma se controls como quiero que modifico los datos antes de enviarlos
+    const formattedData = {
+      ...data,
+      holiday: {
+        isHoliday: data.isHoliday || false,
+        hrsHoliday: data.hrsHoliday || 0,
+      },
+    };
+    console.log("antes de enviar:", formattedData);  
+    //el delete es porque el json se envia asi 
+    //{...data, 
+  //   isHoliday: true, 
+  //   hrsHoliday: 8,
+  //   holiday: {isHoliday: true, hrsHoliday: 8}
+  // } o sea que se repite la información dos veces por eso se hace el delete
+    delete formattedData.isHoliday;
+    delete formattedData.hrsHoliday;
+    console.log("despues:", formattedData);
