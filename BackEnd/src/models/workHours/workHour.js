@@ -1,4 +1,5 @@
 import mongoose from "mongoose";
+import { calcTime } from '../../helpers/calcTime.js';
 import { queryCond } from '../../helpers/queryConditios.js';
 import Employee from '../employee/employee.js';
 import { vWorkHourSchemaZod } from '../workHours/workHourZod.js';
@@ -9,11 +10,16 @@ const workHourSchema = new Schema({
       type: Schema.Types.ObjectId, ref: 'Employee'
     },
     week: { type: Number },
-    dayHour: { type: Number},
+    dayHour: {
+      hours:{type:Number, default:0},
+      minutes:{type:Number, default:0},
+     },
     creationDate: { type: Date, default:Date.now() },
     isHoliday: { type: Boolean, default:false },
-    leaveWork: {type : Date },
-    checkTime:{type:Date}
+    leaveWork: {type : Date},
+    checkTime:{type:Date},
+    lunch:{type:Boolean,default:false},
+    breakfast:{type:Boolean,default:false},
     // leavework: { type: String, enum: ['Morning', 'Afternoon', 'Full Day'] },
     // holiday:{
     //     isHoliday: { type: Boolean, default:false },
@@ -47,15 +53,22 @@ const workHourSchema = new Schema({
           if(!employee){
             return { message: 'El empleado no existe' };
           }
-
-        const checkTime=new Date(result.data.checkTime)
-        const  leaveWork=new Date(result.data.leaveWork)
+          const {checkTime,leaveWork,hours,minutes}=calcTime(
+            result.data.checkTime,
+            result.data.leaveWork,
+            result.data.breakfast,
+            result.data.lunch
+          )
 
         const {checkTime: _,leaveWork: __, ...rest}=result.data;
 
         const newWorkH = new WorkHour({
           checkTime,
           leaveWork,
+          dayHour:{
+            hours:hours,
+            minutes:minutes, 
+          },
           ...rest,
         });
       

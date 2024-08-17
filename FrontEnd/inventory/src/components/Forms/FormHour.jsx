@@ -8,13 +8,7 @@ const FormHour = ({ item: { dataItem } }) => {
   } = useForm();
 
   const onSubmit = handleSubmit((data) => {
-    console.log(data);
-    const checkTime=new Date(data.checkTime);
-    const leavework=new Date(data.leavework);
 
-    console.log('data', Math.abs(checkTime.getHours() - leavework.getHours()));
-    console.log('data', checkTime.getMinutes(), leavework.getMinutes());
-    
   });
 
   return (
@@ -108,7 +102,33 @@ const FormHour = ({ item: { dataItem } }) => {
           )}
         </article>
       </section>
-      <section>
+      <article>
+          <div className=" flex gap-2 items-center justify-between ">
+            <label htmlFor="breakfast" className="font-medium font-sans ">
+             Desayuno
+            </label>
+            <input
+              type="checkbox"
+              {...register("breakfast")}
+              defaultChecked=""
+              className="border-[1px] rounded-lg p-[2px] border-gray-400 w-[20px] h-[20px]  "
+            />
+          </div>
+      </article>
+      <article>
+          <div className=" flex gap-2 items-center justify-between ">
+            <label htmlFor="lunch" className="font-medium font-sans ">
+              Almuerzo
+            </label>
+            <input
+              type="checkbox"
+              {...register("lunch")}
+              defaultChecked=""
+              className="border-[1px] rounded-lg p-[2px] border-gray-400 w-[20px] h-[20px]  "
+            />
+          </div>
+      </article>
+      <article>
           <div className=" flex gap-2 items-center justify-between ">
             <label htmlFor="isHoliday" className="font-medium font-sans ">
              Marcar solo si es festivo
@@ -119,13 +139,13 @@ const FormHour = ({ item: { dataItem } }) => {
                 require: {
                   value: true,
                   message: "se requieren horas",
-                },
+                },defaultChecked: false
               })}
               defaultChecked=""
               className="border-[1px] rounded-lg p-[2px] border-gray-400 w-[20px] h-[20px]  "
             />
           </div>
-      </section>
+      </article>
       <button className="bg-black text-white rounded-lg self p-1 mt-2">
           Enviar
         </button>
