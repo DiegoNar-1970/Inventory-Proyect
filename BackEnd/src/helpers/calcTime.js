@@ -1,6 +1,6 @@
 export const calcTime=(initialDate,endDate,breakfast,lunch,inputDate)=>{
     const checkTime=new Date(initialDate);
-    const leavework=new Date(endDate);
+    const leaveWork=new Date(endDate);
     const creationDate=new Date(inputDate);
 
     let deadMin=0
@@ -9,19 +9,19 @@ export const calcTime=(initialDate,endDate,breakfast,lunch,inputDate)=>{
     let minutes=0
 
     if(checkTime.getMinutes() >= 45 && checkTime.getMinutes() <= 59){
-       totalMinHour=Math.abs(checkTime.getHours()-leavework.getHours())-1;
+       totalMinHour=Math.abs(checkTime.getHours()-leaveWork.getHours())-1;
        deadMin=60-checkTime.getMinutes()
        totalMinHour=totalMinHour*60
        totalMinHour=totalMinHour+deadMin;
     }
     else{
-      totalMinHour=Math.abs(checkTime.getHours()-leavework.getHours());
+      totalMinHour=Math.abs(checkTime.getHours()-leaveWork.getHours());
       deadMin=checkTime.getMinutes();
       totalMinHour=totalMinHour*60;
       totalMinHour=totalMinHour-deadMin;
     }
 
-    totalMinHour=totalMinHour+leavework.getMinutes();
+    totalMinHour=totalMinHour+leaveWork.getMinutes();
 
     if(breakfast)totalMinHour=totalMinHour-30;
     
@@ -36,7 +36,7 @@ export const calcTime=(initialDate,endDate,breakfast,lunch,inputDate)=>{
       hours,
       minutes,
       checkTime,
-      leavework,
+      leaveWork,
       creationDate
     }
 }

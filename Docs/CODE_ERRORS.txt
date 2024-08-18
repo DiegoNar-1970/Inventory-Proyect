@@ -491,3 +491,26 @@ uso de groupby
     });
     setNameFilter(dataArray);
   };
+    const {register,handleSubmit,formState:{errors},watch}=useForm({
+
+    defaultValues: {
+      isHoliday: dataResult.holiday.isHoliday,
+      hrsHoliday: dataResult.holiday.hrsHoliday,
+      dayHour:dataResult.dayHour,
+    
+    }});
+
+    const onSubmit = handleSubmit((data) => {
+
+      const formattedData = {
+        ...data,
+        holiday: {
+          isHoliday:data.isHoliday || false,
+          hrsHoliday:data.hrsHoliday || 0
+        } 
+      };
+      //se accede a los datos isHoliDay de data no de holiday
+      delete formattedData.isHoliday;
+      delete formattedData.hrsHoliday;
+      console.log('Datos enviados:', formattedData);
+    });

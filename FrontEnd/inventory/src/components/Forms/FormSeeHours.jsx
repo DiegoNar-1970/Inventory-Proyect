@@ -1,8 +1,9 @@
 import { formatedDate } from "../../helpers/formateDate"
 import img from '../../media/img/img.png'
 
-const FormSeeHours = ({result:{dataResult}}) => {
-
+const FormSeeHours = ({item}) => {
+  console.log(item)
+  const {dataResult}=item
   return (
     <section className="flex flex-col gap-2">
       <article className="flex justify-center">
@@ -26,15 +27,11 @@ const FormSeeHours = ({result:{dataResult}}) => {
       </article>
       <article className=" flex gap-2 text-[18px] ">
         <h2 className="font-sans font-medium">Fecha:</h2>
-        <span className="font-sans font-normal">{formatedDate(dataResult.date)}</span>
+        <span className="font-sans font-normal">{formatedDate(dataResult.creationDate)}</span>
       </article>
       <article className=" flex gap-2 text-[18px] ">
         <h2 className="font-sans font-medium">Horas:</h2>
-        <span className="font-sans font-normal">{dataResult.dayHour}</span>
-      </article>
-      <article className=" flex gap-2 text-[18px] ">
-        <h2 className="font-sans font-medium">Horas Festivas:</h2>
-        <span className="font-sans font-normal">{dataResult.holiday.hrsHoliday}</span>
+        <span className="font-sans font-normal">{dataResult.dayHour.hours}:{dataResult.dayHour.minutes}</span>
       </article>
       <article className=" flex gap-2 text-[18px] ">
         <h2 className="font-sans font-medium">Semana:</h2>

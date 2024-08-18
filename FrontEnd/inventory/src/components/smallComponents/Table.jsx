@@ -80,9 +80,9 @@ import { Popap } from './Popap.jsx';
           )}
           {see.component === 'profile' && see.isTrue===true && (
            <Popap
-           see={see}
-           changeSee={changeSee}
-           component={Profile} 
+            see={see}
+            changeSee={changeSee}
+            component={Profile} 
            />
           )}
           {see.component === 'hour' && see.isTrue===true && (

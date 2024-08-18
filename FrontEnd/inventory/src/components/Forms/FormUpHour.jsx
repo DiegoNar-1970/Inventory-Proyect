@@ -1,125 +1,156 @@
-import {useForm} from 'react-hook-form'
+import { useForm } from "react-hook-form";
+import { formatedDateLocal } from "../../helpers/formateDate.js";
 
-const FormUpHour = ({result}) => {
- const {dataResult}=result
-  const {register,handleSubmit,formState:{errors},watch}=useForm({
-
+const FormUpHour = ({ item }) => {
+  const { dataResult } = item;
+  console.log(dataResult);
+  const {
+    register,
+    handleSubmit,
+    formState: { errors },
+  } = useForm({
     defaultValues: {
-      isHoliday: dataResult.holiday.isHoliday,
-      hrsHoliday: dataResult.holiday.hrsHoliday,
-      dayHour:dataResult.dayHour,
-    
-    }});
+      
+    },
+  });
 
-    const onSubmit = handleSubmit((data) => {
-
-      const formattedData = {
-        ...data,
-        holiday: {
-          isHoliday:data.isHoliday || false,
-          hrsHoliday:data.hrsHoliday || 0
-        } 
-      };
-      //se accede a los datos isHoliDay de data no de holiday
-      delete formattedData.isHoliday;
-      delete formattedData.hrsHoliday;
-      console.log('Datos enviados:', formattedData);
-    });
-
+  const onSubmit = handleSubmit((data) => {
+    console.log(data);
+  });
 
   return (
-    <form className='flex flex-col gap-2' onSubmit={onSubmit}>
-      <div className='flex flex-col gap-2'>
-        <label htmlFor="cc" className='font-medium font-sans '>Identificacion</label>
-        <input type="text"
-        defaultValue={dataResult.employee.profile.cc}
-        readOnly
-        className="border-[1px] rounded-lg p-[2px]
-        border-gray-400" />
-      </div>
-      <div className='flex flex-col gap-2'>
-        <label htmlFor="cc" className='font-medium font-sans '>Nombre</label>
-        <input type="text"
-        defaultValue={dataResult.employee.profile.name}
-        readOnly
-        className="border-[1px] rounded-lg p-[2px]
-        border-gray-400" />
-      </div>
-      {!watch('isHoliday') && (
-        <div className="flex flex-col gap-2">
-          <label htmlFor="dayHour" className="font-medium font-sans">Horas</label>
-          <input type="number" {...register('dayHour', {
-            required: {
-              value: true,
-              message: 'Se necesita el total de horas'
-            },
-            max: {
-              value: 24,
-              message: 'Debe ser menor de 24 horas'
-            },
-            min: {
-              value: 0,
-              message: 'Solo horas mayores a 0'
-            },
-            pattern: {
-              value: /^(0?[0-9]|1[0-2])$/, 
-              message: 'Ingrese un número válido del 0 al 12'
-            },valueAsNumber: true
-          })} defaultValue={0} className="border-[1px] rounded-lg p-[2px] border-gray-400" />
-          {errors.dayHour && <span className="text-red-600">{errors.dayHour.message}</span>}
-        </div>
-      )}
-
-      {watch('isHoliday') && (
-        <div className="flex flex-col gap-2">
-          <label htmlFor="hrsHoliday" className="font-medium font-sans">Horas festivas</label>
-          <input type="number" {...register('hrsHoliday', {
-            required: {
-              value: true,
-              message: 'Se necesitan las horas festivas'
-            },valueAsNumber: true,
-            max: {
-              value: 24,
-              message: 'Debe ser menor de 24 horas'
-            },
-            min: {
-              value: 0,
-              message: 'Solo horas mayores a 0'
-            },
-            pattern: {
-              value: /^(0?[0-9]|1[0-2])$/, 
-              message: 'Ingrese un número válido del 0 al 12'
-            }})} 
-            defaultValue={dataResult.holiday.hrsHoliday} className="border-[1px] rounded-lg p-[2px] border-gray-400" />
-          {errors.hrsHoliday && <span className="text-red-600">{errors.hrsHoliday.message}</span>}
-        </div>
-      )}
-      <div className='flex flex-col gap-2'>
-        <label htmlFor="week" className='font-medium font-sans '>Semana</label>
-        <input type="text" {...register('week',{
-          required:{
-            value:true,
-            message:'Se necesita la Semana'
-        }})
-        } className="border-[1px] rounded-lg p-[2px] 
+    <form className="flex gap-2 flex-wrap" onSubmit={onSubmit}>
+      <div className="flex flex-col gap-2 max-sm:flex-1 ">
+        <label htmlFor="cc" className="font-medium font-sans ">
+          Identificacion
+        </label>
+        <input
+          type="text"
+          defaultValue={dataResult.employee.profile.cc}
+          readOnly
+          className="border-[1px] rounded-lg p-[2px]
         border-gray-400"
-        defaultValue={dataResult.week}/>
-        {errors.position && <span className='text-red-600'>{errors.position.message}</span>}
+        />
+      </div>
+      <div className="flex flex-col gap-2 max-sm:flex-1">
+        <label htmlFor="cc" className="font-medium font-sans ">
+          Nombre
+        </label>
+        <input
+          type="text"
+          defaultValue={dataResult.employee.profile.name}
+          readOnly
+          className="border-[1px] rounded-lg p-[2px]
+        border-gray-400"
+        />
       </div>
 
-      <button className='bg-black text-white rounded-lg self p-1 mt-2'>Enviar</button>
-
-      <div className=' flex gap-2 items-center justify-between'>
-            <label htmlFor='isHoliday' className='font-medium font-sans '>Hoy es festivo?</label>
-            <input type="checkbox" {...register('isHoliday',{
-              require:{
-                value:true,
-                message:'se requieren horas'
-              }
-              })} defaultChecked={dataResult.holiday.isHoliday} className="border-[1px] rounded-lg p-[2px] border-gray-400"/>
+      <div className="flex flex-col gap-2 max-sm:flex-1">
+        <label htmlFor="week" className="font-medium font-sans ">
+          Semana
+        </label>
+        <input
+          type="number"
+          {...register("week", {
+            required: {
+              value: true,
+              message: "Se necesita la Semana",
+            },
+          })}
+          className="border-[1px] rounded-lg p-[2px] 
+        border-gray-400"
+          defaultValue={dataResult.week}
+        />
+        {errors.position && (
+          <span className="text-red-600">{errors.position.message}</span>
+        )}
+      </div>
+      <div className="flex flex-col gap-2 max-sm:flex-1">
+        <label htmlFor="checkTime" className="font-medium font-sans ">
+          Hora de entrada
+        </label>
+        <input
+          type="datetime-local"
+          {...register("checkTime")}
+          className="border-[1px] rounded-lg p-[2px] 
+        border-gray-400 max-w-[180px] max-sm:flex-1"
+          defaultValue={formatedDateLocal(dataResult.checkTime)}
+        />
+        {errors.checkTime && (
+          <span className="text-red-600">{errors.checkTime.message}</span>
+        )}
+      </div>
+      <div className="flex flex-col gap-2 max-sm:flex-1">
+        <label htmlFor="leaveWork" className="font-medium font-sans ">
+          Hora de salida
+        </label>
+        <input
+          type="datetime-local"
+          {...register("leaveWork")}
+          className="border-[1px] rounded-lg p-[2px] 
+        border-gray-400 max-sm:min-w-[180px] max-sm:max-w-[70px] max-xl:min-w-[370px] max-2xl:min-w-[370px]"
+          defaultValue={formatedDateLocal(dataResult.leaveWork)}
+        />
+        {errors.checkTime && (
+          <span className="text-red-600">{errors.checkTime.message}</span>
+        )}
+      </div>
+      
+      <div className="flex-1 flex gap-2 flex-col max-sm:min-w-[300px] max-sm:max-w-[70px] ">
+        <div className=" flex gap-2 items-center justify-between">
+          <label htmlFor="isHoliday" className="font-medium font-sans ">
+            Marcar solo si es festivo 
+          </label>
+          <input
+            type="checkbox"
+            {...register("isHoliday", {
+              require: {
+                value: true,
+                message: "se requieren horas",
+              },
+            })}
+            defaultChecked={dataResult.isHoliday}
+            className="border-[1px] rounded-lg p-[2px] border-gray-400"
+          />
         </div>
+        <div className=" flex fle-1 gap-2 items-center justify-between">
+          <label htmlFor="breakfast" className="font-medium font-sans ">
+            Desayuno 
+          </label>
+          <input
+            type="checkbox"
+            {...register("breakfast", {
+              require: {
+                value: true,
+                message: "se requieren horas",
+              },
+            })}
+            defaultChecked={dataResult.breakfast}
+            className="border-[1px] rounded-lg p-[2px] border-gray-400"
+          />
+        </div>
+        <div className=" flex fle-1 gap-2 items-center justify-between">
+          <label htmlFor="lunch" className="font-medium font-sans ">
+            Almuerzo 
+          </label>
+          <input
+            type="checkbox"
+            {...register("lunch", {
+              require: {
+                value: true,
+                message: "se requieren horas",
+              },
+            })}
+            defaultChecked={dataResult.lunch}
+            className="border-[1px] rounded-lg p-[2px] border-gray-400"
+          />
+        </div>
+        <button className="bg-black text-white rounded-lg self p-1 mt-2">
+          Enviar
+        </button>
+      </div>
     </form>
-  )
-}
+  );
+};
 
-export default FormUpHour
+export default FormUpHour;

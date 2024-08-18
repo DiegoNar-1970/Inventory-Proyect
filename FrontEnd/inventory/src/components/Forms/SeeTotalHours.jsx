@@ -22,7 +22,7 @@ const SeeTotalHours = ({item}) => {
         <span className="font-sans font-normal">{dataResult.isHoliday?'Si':'No'}</span>
       </article>
       <article className=" flex gap-2 text-[18px] ">
-        <h2 className="font-sans font-medium">Tiempo:</h2>
+        <h2 className="font-sans font-medium">Horas:</h2>
         <span className="font-sans font-normal">{dataResult.dayHour.hours}:{dataResult.dayHour.minutes}</span>
       </article>
     </section>

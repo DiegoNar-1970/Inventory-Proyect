@@ -1,6 +1,5 @@
 
-import React, { useState } from 'react';
-import { IoCloseOutline } from "react-icons/io5";
+import { useState } from 'react';
 import { formatedDate } from '../../helpers/formateDate.js';
 import img from '../../media/img/img.png';
 import FormSeeHour from '../Forms/FormSeeHours.jsx';
@@ -90,37 +89,19 @@ const HoursTable = ({datos}) => {
        </tbody>
      </table>
      {see.component === 'update' && see.isTrue===true && (
-      <div className="fixed top-0 left-0 h-screen w-screen bg-[#ffffff41] z-10 flex results-center justify-start ">
-       <div className=" m-auto p-auto bg-white p-4 rounded-lg flex flex-col gap-2 text-black min-w-[300px]">
-         <div className='self-end text-[30px]'>
-           <button onClick={()=>setSee(!see)}><IoCloseOutline /></button>
-         </div>
-         <div>
-          {console.log('se manda',see)}
-           <FormUpHour result={see}></FormUpHour>
-         </div>
-         <div className='self-center w-[100%]' >
-           <button onClick={()=>setSee(!see)} className="mt-1 bg-red-500 w-[100%] text-white p-2 rounded">Cerrar</button>
-         </div>
-       </div>
-      </div>
+      <Popap
+        see={see}
+        changeSee={changeSee}
+        component={FormUpHour} 
+      />      
      )}
      {see.component === 'info' && see.isTrue===true && (
-      <div className="fixed top-0 left-0 h-screen w-screen bg-[#ffffff41] z-10 flex results-center justify-start ">
-       <div className=" m-auto p-auto bg-white p-4 rounded-lg flex flex-col  text-black min-w-[300px] max-w-[500px] ">
-         <div className='self-end text-[30px]'>
-           <button onClick={()=>setSee(!see)}><IoCloseOutline /></button>
-         </div>
-         <div>
-             <FormSeeHour result={see}></FormSeeHour>
-         </div>
-         <div className='w-[100%] mt-[10px]'>
-           <button onClick={()=>setSee(!see)} className="mt-2 w-[100%] bg-red-500 text-white p-2 rounded">Cerrar</button>
-         </div>
-       </div>
-      </div>
+      <Popap
+      see={see}
+      changeSee={changeSee}
+      component={FormSeeHour} 
+      />        
      )}
-     
      {see.component === 'allHours' && see.isTrue===true && (
       <Popap
       see={see}

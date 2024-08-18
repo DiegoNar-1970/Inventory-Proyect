@@ -60,7 +60,7 @@ const workHourSchema = new Schema({
           dayHour:{
             hours:hours,
             minutes:minutes, 
-          },
+          },  
           creationDate:creationDate,
           ...rest,
         });
