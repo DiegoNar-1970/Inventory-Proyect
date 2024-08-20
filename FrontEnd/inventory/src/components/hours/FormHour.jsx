@@ -1,12 +1,12 @@
 import { useForm } from "react-hook-form";
 
-const FormHour = ({ item: { dataItem } }) => {
+const FormHour = ({ item }) => {
   const {
     register,
     handleSubmit,
-    formState: { errors }
+    formState: { errors },
   } = useForm();
-
+console.log(item)
   const onSubmit = handleSubmit((data) => {
     console.log(data);
   });
@@ -22,13 +22,13 @@ const FormHour = ({ item: { dataItem } }) => {
           type="text"
           className="border-[1px] text-black rounded-lg p-[2px] border-gray-400"
           {...register("employee")}
-          defaultValue={dataItem._id}
+          defaultValue={item._id}
         />
       </section>
       <section className="flex gap-1 mb-[20px]  ">
         <h3 className=" font-sans font-medium text-[1.2em]">Empleado:</h3>
         <span className="font-sans text-[1em] self-end   ">
-          {dataItem.profile.name} {dataItem.profile.lastName}
+          {item.profile.name} {item.profile.lastName}
         </span>
       </section>
       <section className="flex gap-2 flex-wrap mb-[20px]">
@@ -64,7 +64,10 @@ const FormHour = ({ item: { dataItem } }) => {
           )}
         </article>
         <article className="flex flex-col gap-2">
-          <label htmlFor="checkTime" className="font-medium font-sans self-end ">
+          <label
+            htmlFor="checkTime"
+            className="font-medium font-sans self-end "
+          >
             Hora de entrada
           </label>
           <input
@@ -75,11 +78,12 @@ const FormHour = ({ item: { dataItem } }) => {
                 message: "se requiere la hora de entrada",
               },
             })}
-            
             className="border-[1px] rounded-lg p-[2px] border-gray-400  max-w-[200px]"
           />
           {errors.checkTime && (
-            <span className="text-red-600 max-w-[195px]">{errors.checkTime.message}</span>
+            <span className="text-red-600 max-w-[195px]">
+              {errors.checkTime.message}
+            </span>
           )}
         </article>
         <article className="flex flex-col gap-2">
@@ -98,12 +102,17 @@ const FormHour = ({ item: { dataItem } }) => {
             className="border-[1px] rounded-lg p-[2px] border-gray-400 max-w-[185px] "
           />
           {errors.leavework && (
-            <span className="text-red-600 max-w-[195px]">{errors.leavework.message}</span>
+            <span className="text-red-600 max-w-[195px]">
+              {errors.leavework.message}
+            </span>
           )}
         </article>
-        <article className="flex flex-col gap-2 " >
-          <label htmlFor="creationDate" className="font-medium font-sans self-end">
-            Fecha de Creacion
+        <article className="flex flex-col gap-2 ">
+          <label
+            htmlFor="creationDate"
+            className="font-medium font-sans self-end"
+          >
+            Fecha registro
           </label>
           <input
             type="datetime-local"
@@ -117,57 +126,83 @@ const FormHour = ({ item: { dataItem } }) => {
             className="border-[1px] rounded-lg p-[2px] border-gray-400 max-w-[195px] "
           />
           {errors.creationDate && (
-            <span className="text-red-600 max-w-[195px]">{errors.creationDate.message}</span>
+            <span className="text-red-600 max-w-[195px]">
+              {errors.creationDate.message}
+            </span>
+          )}
+        </article>
+        <article className="flex flex-col gap-2 flex-1">
+          <label htmlFor="shift" className="font-medium font-sans ">
+            Turno
+          </label>
+          <select
+            {...register("shift", {
+              required: {
+                value: true,
+                message: "Este campo es obligatorio",
+              },
+            })}
+            className="border-[1px] rounded-lg p-[2px] border-gray-400 flex-1"
+          >
+            <option value="">Selecciona un turno</option>
+            <option value="dia">Día</option>
+            <option value="noche">Noche</option>
+          </select>
+          {errors.creationDate && (
+            <span className="text-red-600 max-w-[195px]">
+              {errors.creationDate.message}
+            </span>
           )}
         </article>
       </section>
       <article>
-          <div className=" flex gap-2 items-center justify-between ">
-            <label htmlFor="breakfast" className="font-medium font-sans ">
-             Desayuno
-            </label>
-            <input
-              type="checkbox"
-              {...register("breakfast")}
-              defaultChecked=""
-              className="border-[1px] rounded-lg p-[2px] border-gray-400 w-[20px] h-[20px]  "
-            />
-          </div>
+        <div className=" flex gap-2 items-center justify-between ">
+          <label htmlFor="breakfast" className="font-medium font-sans ">
+            Desayuno
+          </label>
+          <input
+            type="checkbox"
+            {...register("breakfast")}
+            defaultChecked=""
+            className="border-[1px] rounded-lg p-[2px] border-gray-400 w-[20px] h-[20px]  "
+          />
+        </div>
       </article>
       <article>
-          <div className=" flex gap-2 items-center justify-between ">
-            <label htmlFor="lunch" className="font-medium font-sans ">
-              Almuerzo
-            </label>
-            <input
-              type="checkbox"
-              {...register("lunch")}
-              defaultChecked=""
-              className="border-[1px] rounded-lg p-[2px] border-gray-400 w-[20px] h-[20px]  "
-            />
-          </div>
+        <div className=" flex gap-2 items-center justify-between ">
+          <label htmlFor="lunch" className="font-medium font-sans ">
+            Almuerzo
+          </label>
+          <input
+            type="checkbox"
+            {...register("lunch")}
+            defaultChecked=""
+            className="border-[1px] rounded-lg p-[2px] border-gray-400 w-[20px] h-[20px]  "
+          />
+        </div>
       </article>
       <article>
-          <div className=" flex gap-2 items-center justify-between ">
-            <label htmlFor="isHoliday" className="font-medium font-sans ">
-             Marcar solo si es festivo
-            </label>
-            <input
-              type="checkbox"
-              {...register("isHoliday", {
-                require: {
-                  value: true,
-                  message: "se requieren horas",
-                },defaultChecked: false
-              })}
-              defaultChecked=""
-              className="border-[1px] rounded-lg p-[2px] border-gray-400 w-[20px] h-[20px]  "
-            />
-          </div>
+        <div className=" flex gap-2 items-center justify-between ">
+          <label htmlFor="isHoliday" className="font-medium font-sans ">
+            Marcar solo si es festivo
+          </label>
+          <input
+            type="checkbox"
+            {...register("isHoliday", {
+              require: {
+                value: true,
+                message: "se requieren horas",
+              },
+              defaultChecked: false,
+            })}
+            defaultChecked=""
+            className="border-[1px] rounded-lg p-[2px] border-gray-400 w-[20px] h-[20px]  "
+          />
+        </div>
       </article>
       <button className="bg-black text-white rounded-lg self p-1 mt-2">
-          Enviar
-        </button>
+        Enviar
+      </button>
     </form>
   );
 };

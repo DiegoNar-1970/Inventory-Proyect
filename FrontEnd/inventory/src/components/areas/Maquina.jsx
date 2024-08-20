@@ -1,8 +1,7 @@
 
+import { CgAirplane, CgAlarm } from "react-icons/cg";
 import { FaIdCard } from "react-icons/fa";
-import LinkParam from '../smallComponents/LinkParam'
-import { CgAlarm } from "react-icons/cg";
-import { CgAirplane } from "react-icons/cg";
+import LinkParam from '../links/LinkParam';
 
 const Maquina = () => {
   return (

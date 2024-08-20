@@ -10,6 +10,7 @@ const workHourSchemaZod = z.object({
   checkTime: z.string(),
   breakfast: z.boolean(),
   lunch: z.boolean(),
+  shift: z.string(),
 });
 
 export function vWorkHourSchemaZod(input) {

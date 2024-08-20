@@ -1,80 +1,56 @@
-import PropTypes from 'prop-types';
 import { formatedDate } from '../../helpers/formateDate';
 import img from '../../media/img/img.png';
 
 const Profile = ({item}) => {
-  const { dataItem } = item;
-  console.log(dataItem)
   return (
     <div className="flex flex-col gap-2">
 <div className="flex justify-center">
-  <img className='self-center w-[100px] rounded-full h-[100px]' src={img} alt={`${dataItem.profile.name}`} />
+  <img className='self-center w-[100px] rounded-full h-[100px]' src={img} alt={`${item.profile.name}`} />
 </div>
 <div className=" flex gap-2 text-[18px] ">
   <h2 className="font-sans font-medium">Nombre:</h2>
-  <span className="font-sans font-normal">{dataItem.profile.name}</span>
+  <span className="font-sans font-normal">{item.profile.name}</span>
 </div>
 <div className=" flex gap-2 text-[18px] ">
   <h2 className="font-sans font-medium">Apellido:</h2>
-  <span className="font-sans font-normal">{dataItem.profile.lastName}</span>
+  <span className="font-sans font-normal">{item.profile.lastName}</span>
 </div>
 <div className=" flex gap-2 text-[18px] ">
   <h2 className="font-sans font-medium">Identificacion:</h2>
-  <span className="font-sans font-normal">{dataItem.profile.cc}</span>
+  <span className="font-sans font-normal">{item.profile.cc}</span>
 </div>
 <div className=" flex gap-2 text-[18px] ">
   <h2 className="font-sans font-medium">Correo:</h2>
-  <span className="font-sans font-normal">{dataItem.profile.email}</span>
+  <span className="font-sans font-normal">{item.profile.email}</span>
 </div>
 <div className=" flex gap-2 text-[18px] ">
   <h2 className="font-sans font-medium">Telefono:</h2>
-  <span className="font-sans font-normal">{dataItem.profile.phone}</span>
+  <span className="font-sans font-normal">{item.profile.phone}</span>
 </div>
 <div className=" flex gap-2 text-[18px] ">
   <h2 className="font-sans font-medium">EPS:</h2>
-  <span className="font-sans font-normal">{dataItem.profile.eps}</span>
+  <span className="font-sans font-normal">{item.profile.eps}</span>
 </div>
 <div className=" flex gap-2 text-[18px] ">
   <h2 className="font-sans font-medium">Area:</h2>
-  <span className="font-sans font-normal">{dataItem.area}</span>
+  <span className="font-sans font-normal">{item.area}</span>
 </div>
 <div className=" flex gap-2 text-[18px] ">
   <h2 className="font-sans font-medium">Fecha de Admision:</h2>
-  <span className="font-sans font-normal">{formatedDate(dataItem.admissionDate)}</span>
+  <span className="font-sans font-normal">{formatedDate(item.admissionDate)}</span>
 </div>
 <div className=" flex gap-2 text-[18px] ">
   <h2 className="font-sans font-medium">Cargo:</h2>
-  <span className="font-sans font-normal">{dataItem.position}</span>
+  <span className="font-sans font-normal">{item.position}</span>
 </div>
 <div className=" flex gap-2 text-[18px] ">
   <h2 className="font-sans font-medium">Turno:</h2>
-  <span className="font-sans font-normal">{dataItem.shift}</span>
+  <span className="font-sans font-normal">{item.shift}</span>
 </div>
 </div>
   
   )
 }
-
-Profile.propTypes = {
-  item: PropTypes.shape({
-    dataItem: PropTypes.shape({
-      profile: PropTypes.shape({
-        name: PropTypes.string.isRequired,
-        lastName: PropTypes.string.isRequired,
-        cc: PropTypes.oneOfType([PropTypes.string, PropTypes.number]).isRequired,
-        email: PropTypes.string.isRequired,
-        phone: PropTypes.oneOfType([PropTypes.string, PropTypes.number]).isRequired,
-        eps: PropTypes.string.isRequired,
-        sex: PropTypes.string,
-      }).isRequired,
-      area: PropTypes.string.isRequired,
-      admissionDate: PropTypes.oneOfType([PropTypes.string, PropTypes.instanceOf(Date)]).isRequired,
-      position: PropTypes.string.isRequired,
-      shift: PropTypes.string.isRequired,
-    }).isRequired,
-  }).isRequired,
-};
-
 
 export default Profile
 
@@ -90,7 +66,7 @@ export default Profile
           value:9,
           message:'debe tener al menos 9 caracteres'
         }
-        })} defaultValue={dataItem.profile.cc} />
+        })} defaultValue={item.profile.cc} />
       {errors.cc && <span className='text-red-600'>{errors.cc.message}</span>}
     </div>
   <div className='flex flex-col gap-2'>
@@ -102,7 +78,7 @@ export default Profile
     }})
     } className="border-[1px] rounded-lg p-[2px] 
     border-gray-400"
-    defaultValue={dataItem.profile.name}/>
+    defaultValue={item.profile.name}/>
     {errors.name && <span className='text-red-600'>{errors.name.message}</span>}
   </div>
   <div className='flex flex-col gap-2'>
@@ -120,7 +96,7 @@ export default Profile
     }})} 
 
     className="border-[1px] rounded-lg p-[2px]
-    border-gray-400"  defaultValue={dataItem.profile.lastName}/>
+    border-gray-400"  defaultValue={item.profile.lastName}/>
     {errors.shift && <span className='text-red-600'>{errors.shift.message}</span>} 
   
   </div>
@@ -133,7 +109,7 @@ export default Profile
     }})
     } className="border-[1px] rounded-lg p-[2px] 
     border-gray-400"
-    defaultValue={dataItem.profile.sex}/>
+    defaultValue={item.profile.sex}/>
     {errors.sex && <span className='text-red-600'>{errors.sex.message}</span>}
   </div>
   <div className='flex flex-col gap-2'>
@@ -145,7 +121,7 @@ export default Profile
     }})
     } className="border-[1px] rounded-lg p-[2px] 
     border-gray-400"
-    defaultValue={dataItem.profile.phone}/>
+    defaultValue={item.profile.phone}/>
     {errors.phone && <span className='text-red-600'>{errors.phone.message}</span>}
   </div>
   <div className='flex flex-col gap-2'>
@@ -164,7 +140,7 @@ export default Profile
 
     } className="border-[1px] rounded-lg p-[2px] 
     border-gray-400"
-    defaultValue={dataItem.profile.email}/>
+    defaultValue={item.profile.email}/>
     {errors.email && <span className='text-red-600'>{errors.email.message}</span>}
   
   </div>
@@ -177,7 +153,7 @@ export default Profile
     }})
     } className="border-[1px] rounded-lg p-[2px] 
     border-gray-400"
-    defaultValue={dataItem.profile.eps}/>
+    defaultValue={item.profile.eps}/>
     {errors.eps && <span className='text-red-600'>{errors.eps.message}</span>}
   </div>
   {/* <button className='bg-black text-white rounded-lg self p-1 mt-2'>Enviar</button> */}

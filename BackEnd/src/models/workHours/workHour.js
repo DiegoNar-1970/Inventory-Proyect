@@ -20,6 +20,7 @@ const workHourSchema = new Schema({
     checkTime:{type:Date},
     lunch:{type:Boolean,default:false},
     breakfast:{type:Boolean,default:false},
+    shift:{ type: String}
 
   });
   

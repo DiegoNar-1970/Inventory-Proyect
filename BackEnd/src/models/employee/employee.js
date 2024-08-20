@@ -7,7 +7,6 @@ const employeeSchema = new Schema({
     admissionDate:{type:Date, default:Date.now()},
     position:{ type: String},
     area:{ type: String },
-    shift:{ type: String},
     profile:{
         type:mongoose.Schema.Types.ObjectId,ref:'Profile'
     }

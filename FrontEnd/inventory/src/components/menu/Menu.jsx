@@ -1,14 +1,19 @@
 
+import { useContext } from "react";
 import { CiSettings } from "react-icons/ci";
 import { FaBoxes, FaWarehouse } from "react-icons/fa";
 import { GiAvocado, GiCardboardBoxClosed } from "react-icons/gi";
 import { IoIosPeople } from "react-icons/io";
 import { LiaSnowflakeSolid } from "react-icons/lia";
+import { RiAdminFill } from "react-icons/ri";
+import { AuthContext } from "../../context/AuthContext.jsx";
 import img from '../../media/img/img.png';
-import Links from '../menu/Links.jsx';
+import Links from '../links/Links.jsx';
 import Logout from '../user/Logout.jsx';
 
  const Menu = () => {
+  const { user } = useContext(AuthContext);
+      
   return (
     <div className='flex flex-col flex-1 rounded-lg p-2'>
           <div className='flex items-center p-2 bg-[#1b1b1b] rounded-[1em]'>
@@ -27,6 +32,8 @@ import Logout from '../user/Logout.jsx';
               <Links icon={IoIosPeople} href={"administracion"} area={"administración"}></Links>
               <Links icon={GiCardboardBoxClosed} href={"empaque"} area={"Empaque"}></Links>
               <Links icon={CiSettings} href={"maquina"} area={"Máquina"}></Links>
+              {user?.role?.role=="administrador" && <Links icon={RiAdminFill} href={"administrador"} area={"administrador"}></Links> }
+            
             </ul>
           </nav>
       

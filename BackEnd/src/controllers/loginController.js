@@ -4,7 +4,7 @@ export class LoginController{
 
     static async login(req,res){
         try{
-            const {foundRole,token}= await LoginModel.login(req.body);  
+            const {redirection,token,role}= await LoginModel.login(req.body);  
 
             if(token.message) return res.status(401).json({message:token.message})
 
@@ -23,8 +23,9 @@ export class LoginController{
                  })
                  .status(200).json({
                       ok:true,
-                      redirection:foundRole,
-                      message:"Sesion Iniciada"
+                      redirection:redirection,
+                      message:"Sesion Iniciada",
+                      role:role,
                  }))
 
         }catch(err){

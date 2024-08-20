@@ -1,6 +1,7 @@
 import { IoCloseOutline } from "react-icons/io5";
 
 export const Popap = ({see,changeSee,component:Component}) => {
+
   return (
     <section className="fixed top-0 left-0 h-screen w-screen bg-[#ffffff41] z-10 flex items-center justify-start ">
       <article className=" m-auto p-auto bg-gray-200 p-2 rounded-lg flex flex-col  text-black min-w-[300px] max-w-[430px] ">

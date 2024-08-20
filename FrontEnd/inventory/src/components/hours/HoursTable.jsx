@@ -2,9 +2,9 @@
 import { useState } from 'react';
 import { formatedDate } from '../../helpers/formateDate.js';
 import img from '../../media/img/img.png';
-import FormSeeHour from '../Forms/FormSeeHours.jsx';
-import FormUpHour from '../Forms/FormUpHour.jsx';
-import SeeTotalHours from '../Forms/SeeTotalHours.jsx';
+import FormSeeHour from '../hours/FormSeeHours.jsx';
+import FormUpHour from '../hours/FormUpHour.jsx';
+import SeeTotalHours from '../hours/SeeTotalHours.jsx';
 import { Popap } from '../smallComponents/Popap.jsx';
 
 

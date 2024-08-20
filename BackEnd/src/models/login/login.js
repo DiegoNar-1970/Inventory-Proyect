@@ -1,7 +1,7 @@
+import bcrypt from 'bcrypt';
+import jwt from 'jsonwebtoken';
 import mongoose from 'mongoose';
 import User from '../register/User.js';
-import bcrypt from 'bcrypt'
-import jwt from 'jsonwebtoken'
 import Role from '../roles/roles.js';
 const {Schema} = mongoose;
 
@@ -26,13 +26,13 @@ export class LoginModel{
                     //esta es una forma de evitar enviar datos sensibles 
                     //el toObject() es porque al usar el ... copia todos los datos
                     //del documento en mongose el cual contiene configuracion isNew etc
-            const foundRole=await Role.findById({_id:user.roles})
+            const foundRole=await Role.findById({_id:user.roles},{__v:0})
 
             const {password: _, ...publicUser}=user.toObject();
 
             const token = jwt.sign( publicUser, process.env.JWT_SECRET_KEY);
-
-            return {token,foundRole:foundRole.role};
+            console.log('role models',foundRole)
+            return {token,redirection:foundRole.role,role:foundRole};
 
         }catch(err){
             return {message:err.message};

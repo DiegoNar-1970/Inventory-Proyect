@@ -1,4 +1,4 @@
-import {useForm} from 'react-hook-form'
+import { useForm } from 'react-hook-form';
 
 const FormUpEmployee = ({item}) => {
   const {register,handleSubmit,formState:{errors}}=useForm();
@@ -6,7 +6,6 @@ const FormUpEmployee = ({item}) => {
   const onSubmit=handleSubmit((data)=>{
     console.log(data)
   })
-  const {dataItem}=item;
   return (
     <form className='flex flex-col gap-2' onSubmit={onSubmit}>
       <div className='flex flex-col gap-2'>
@@ -20,7 +19,7 @@ const FormUpEmployee = ({item}) => {
           value:2,
           message:'debe tener al menos dos caracteres'
         }
-        })} defaultValue={dataItem.area} />
+        })} defaultValue={item.area} />
         {errors.area && <span className='text-red-600'>{errors.area.message}</span>}
       </div>
       <div className='flex flex-col gap-2'>
@@ -32,7 +31,7 @@ const FormUpEmployee = ({item}) => {
         }})
         } className="border-[1px] rounded-lg p-[2px] 
         border-gray-400"
-        defaultValue={dataItem.position}/>
+        defaultValue={item.position}/>
         {errors.position && <span className='text-red-600'>{errors.position.message}</span>}
       </div>
       <div className='flex flex-col gap-2'>
@@ -41,7 +40,7 @@ const FormUpEmployee = ({item}) => {
           value:true,
           message:'"Dia" o "Noche" Se necesita un turno '
         }})} className="border-[1px] rounded-lg p-[2px]
-        border-gray-400"  defaultValue={dataItem.shift}/>
+        border-gray-400"  defaultValue={item.shift}/>
         {errors.shift && <span className='text-red-600'>{errors.shift.message}</span>} 
       </div>
       <button className='bg-black text-white rounded-lg self p-1 mt-2'>Enviar</button>

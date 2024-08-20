@@ -1,9 +1,9 @@
 
 import { useState } from 'react';
 import img from '../../media/img/img.png';
-import FormHour from '../Forms/FormHour.jsx';
-import FormUpEmployee from '../Forms/FormUpEmployee.jsx';
-import Profile from '../Forms/Profile.jsx';
+import FormUpEmployee from '../employee/FormUpEmployee.jsx';
+import Profile from '../employee/Profile.jsx';
+import FormHour from '../hours/FormHour.jsx';
 import { Popap } from './Popap.jsx';
 
   const Table = ({data}) => {
@@ -14,7 +14,11 @@ import { Popap } from './Popap.jsx';
   });
 
   const changeSee=()=>{
-    setSee({component:'',isTrue:false,dataItem:{}});
+    setSee({
+      component:'',
+      isTrue:false,
+      dataItem:{}
+    });
   }
   return (
     <>
@@ -73,21 +77,22 @@ import { Popap } from './Popap.jsx';
             </tbody>
           </table>
           {see.component === 'update' && see.isTrue===true && (
+          
           <Popap
-          see={see}
+          see={see.dataItem}
           changeSee={changeSee}
           component={FormUpEmployee}/>
           )}
           {see.component === 'profile' && see.isTrue===true && (
            <Popap
-            see={see}
+            see={see.dataItem}
             changeSee={changeSee}
             component={Profile} 
            />
           )}
           {see.component === 'hour' && see.isTrue===true && (
            <Popap
-            see={see}
+            see={see.dataItem}
             changeSee={changeSee}
             component={FormHour}
 

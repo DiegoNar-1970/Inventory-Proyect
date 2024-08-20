@@ -1,10 +1,8 @@
 // import { useState } from "react";
-import { useForm } from "react-hook-form"
-import { Link } from "react-router-dom";
-import { useContext } from "react";
-import {useEffect} from 'react'
+import { useContext, useEffect } from "react";
+import { useForm } from "react-hook-form";
+import { Link, useNavigate } from "react-router-dom";
 import { AuthContext } from "../../context/AuthContext.jsx";
-import {useNavigate} from 'react-router-dom'
 const url='/login'
 
 
@@ -12,7 +10,7 @@ const Login = () => {
     const navigate = useNavigate()
     const {fetchLogin,error,user,isAuthenticated}=useContext(AuthContext);
     const {register,handleSubmit,formState:{errors}}=useForm()
-
+    
     useEffect(()=>{
         console.log('usuario',user)
         if(isAuthenticated) navigate(`/employee/${user.redirection}`)

@@ -11,7 +11,7 @@ import Menu from './components/menu/Menu.jsx';
 
 const Hours=lazy(()=>import('./components/hours/Hours.jsx'));
 const Paletizado=lazy(()=>import('./components/areas/Paletizado.jsx'));
-const Home=lazy(()=>import("./components/home/Home.jsx"));
+const Home=lazy(()=>import("./pages/home/Home.jsx"));
 const Employee=lazy(()=>import("./components/employee/Employee.jsx"));
 const Almacen=lazy(()=>import("./components/areas/Almacen.jsx"));
 const Frios=lazy(()=>import("./components/areas/Frios.jsx"));

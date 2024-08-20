@@ -1,9 +1,9 @@
 import mongoose from "mongoose";
-import WorkHour from "../workHours/workHour.js";
-import Employee from "../employee/employee.js";
-const {Schema,model}=mongoose
 import { calcPaiment } from "../../helpers/filtersPaiment.js";
 import { queryCond } from "../../helpers/queryConditios.js";
+import Employee from "../employee/employee.js";
+import WorkHour from "../workHours/workHour.js";
+const {Schema,model}=mongoose
 
 const infoPaimentSche = new Schema({
     employee: { 
@@ -26,11 +26,11 @@ const infoPaimentSche = new Schema({
             hours: { type: Number, default:0},
             paimentForHour: { type: Number, default:9.681 }
         },
-        horasExtras:{
+    horasExtras:{
                 hours: { type: Number, default:0},
                 paimentForHour: { type: Number, default:6.915 }
-            },
-    date: { type: Date, default:Date.now() },
+    },
+    creationDate: { type: Date, default:Date.now() },
     sueldoBasico:{type:Number},
     sueldoTotal:{type:Number}
   });
@@ -89,8 +89,8 @@ const infoPaimentSche = new Schema({
         try {
             return await WorkHour.find(query,{ __v: 0 })
                 .populate({
-                    path: 'holiday',
-                    select: '-_id isHoliday hrsHoliday'
+                    path: 'isHoliday',
+                    select: 'isHoliday hours minutes'
                 })
                 .populate({
                     path: 'employee',

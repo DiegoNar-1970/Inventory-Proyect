@@ -2,8 +2,7 @@ import { useForm } from "react-hook-form";
 import { formatedDateLocal } from "../../helpers/formateDate.js";
 
 const FormUpHour = ({ item }) => {
-  const { dataResult } = item;
-  console.log(dataResult);
+
   const {
     register,
     handleSubmit,
@@ -26,7 +25,7 @@ const FormUpHour = ({ item }) => {
         </label>
         <input
           type="text"
-          defaultValue={dataResult.employee.profile.cc}
+          defaultValue={item.employee.profile.cc}
           readOnly
           className="border-[1px] rounded-lg p-[2px]
         border-gray-400"
@@ -38,7 +37,7 @@ const FormUpHour = ({ item }) => {
         </label>
         <input
           type="text"
-          defaultValue={dataResult.employee.profile.name}
+          defaultValue={item.employee.profile.name}
           readOnly
           className="border-[1px] rounded-lg p-[2px]
         border-gray-400"
@@ -59,7 +58,7 @@ const FormUpHour = ({ item }) => {
           })}
           className="border-[1px] rounded-lg p-[2px] 
         border-gray-400"
-          defaultValue={dataResult.week}
+          defaultValue={item.week}
         />
         {errors.position && (
           <span className="text-red-600">{errors.position.message}</span>
@@ -74,7 +73,7 @@ const FormUpHour = ({ item }) => {
           {...register("checkTime")}
           className="border-[1px] rounded-lg p-[2px] 
         border-gray-400 max-w-[180px] max-sm:flex-1"
-          defaultValue={formatedDateLocal(dataResult.checkTime)}
+          defaultValue={formatedDateLocal(item.checkTime)}
         />
         {errors.checkTime && (
           <span className="text-red-600">{errors.checkTime.message}</span>
@@ -89,7 +88,7 @@ const FormUpHour = ({ item }) => {
           {...register("leaveWork")}
           className="border-[1px] rounded-lg p-[2px] 
         border-gray-400 max-sm:min-w-[180px] max-sm:max-w-[70px] max-xl:min-w-[370px] max-2xl:min-w-[370px]"
-          defaultValue={formatedDateLocal(dataResult.leaveWork)}
+          defaultValue={formatedDateLocal(item.leaveWork)}
         />
         {errors.checkTime && (
           <span className="text-red-600">{errors.checkTime.message}</span>
@@ -109,7 +108,7 @@ const FormUpHour = ({ item }) => {
                 message: "se requieren horas",
               },
             })}
-            defaultChecked={dataResult.isHoliday}
+            defaultChecked={item.isHoliday}
             className="border-[1px] rounded-lg p-[2px] border-gray-400"
           />
         </div>
@@ -125,7 +124,7 @@ const FormUpHour = ({ item }) => {
                 message: "se requieren horas",
               },
             })}
-            defaultChecked={dataResult.breakfast}
+            defaultChecked={item.breakfast}
             className="border-[1px] rounded-lg p-[2px] border-gray-400"
           />
         </div>
@@ -141,7 +140,7 @@ const FormUpHour = ({ item }) => {
                 message: "se requieren horas",
               },
             })}
-            defaultChecked={dataResult.lunch}
+            defaultChecked={item.lunch}
             className="border-[1px] rounded-lg p-[2px] border-gray-400"
           />
         </div>
