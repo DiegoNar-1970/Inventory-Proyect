@@ -90,21 +90,21 @@ const HoursTable = ({datos}) => {
      </table>
      {see.component === 'update' && see.isTrue===true && (
       <Popap
-        see={see}
+        see={see.dataResult}
         changeSee={changeSee}
         component={FormUpHour} 
       />      
      )}
      {see.component === 'info' && see.isTrue===true && (
       <Popap
-      see={see}
+      see={see.dataResult}
       changeSee={changeSee}
       component={FormSeeHour} 
       />        
      )}
      {see.component === 'allHours' && see.isTrue===true && (
       <Popap
-      see={see}
+      see={see.dataResult}
       changeSee={changeSee}
       component={SeeTotalHours} 
       />

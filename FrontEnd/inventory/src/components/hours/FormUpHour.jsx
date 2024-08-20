@@ -2,7 +2,7 @@ import { useForm } from "react-hook-form";
 import { formatedDateLocal } from "../../helpers/formateDate.js";
 
 const FormUpHour = ({ item }) => {
-
+console.log('en item',item);
   const {
     register,
     handleSubmit,

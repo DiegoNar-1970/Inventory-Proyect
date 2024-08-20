@@ -25,7 +25,7 @@ export class LoginController{
                       ok:true,
                       redirection:redirection,
                       message:"Sesion Iniciada",
-                      role:role,
+                      role:role
                  }))
 
         }catch(err){
