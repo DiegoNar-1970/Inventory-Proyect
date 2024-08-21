@@ -1,6 +1,7 @@
 
-import { useState } from 'react';
-import { useNavigate } from 'react-router-dom';
+import { useContext, useState } from 'react';
+import { useLocation, useNavigate } from 'react-router-dom';
+import { AuthContext } from '../../context/AuthContext.jsx';
 import img from '../../media/img/img.png';
 import FormUpEmployee from '../employee/FormUpEmployee.jsx';
 import Profile from '../employee/Profile.jsx';
@@ -8,12 +9,20 @@ import FormHour from '../hours/FormHour.jsx';
 import { Popap } from './Popap.jsx';
 
   const Table = ({data}) => {
+    const location = useLocation();
+    const pathLocation=location.pathname
+    const navigate = useNavigate(); 
+    
+    const {saveUser,setUserSave}=useContext(AuthContext);
+    if(pathLocation.includes('employee')) setUserSave(null);
+    if(saveUser!=null) data=[saveUser];
+    console.log(location.pathname)
+
   const [see,setSee]=useState({
     component:'',
     isTrue:false,
     dataItem:{}
   });
-  const navigate = useNavigate(); 
   const changeSee=()=>{
     setSee({
       component:'',
@@ -22,7 +31,8 @@ import { Popap } from './Popap.jsx';
     });
   }
 
-  const seeProfile=(id)=>{
+  const seeProfile=(id,item)=>{
+    setUserSave(item);
     navigate(`/profileEmployee/${id}`);
   }
 
@@ -67,8 +77,14 @@ import { Popap } from './Popap.jsx';
                         })
                       }} className="ml-[5px] bg-[##00800017] text-white rounded-[1em] 
                       border-[1px] border-white hover:text-[#52d9669b] hover:border-[#52d9669b] transition-all p-[4px]">Actualizar</button>
-                      <button onClick={()=>seeProfile(item._id)}  className="ml-[5px] bg-[##00800017] text-white rounded-[1em] 
-                      border-[1px] border-white hover:text-[#52d9669b] hover:border-[#52d9669b] p-[4px]">Ver Perfil</button>
+                      {pathLocation.includes('profileEmployee') ? ''
+                      : <button onClick={()=>seeProfile(item._id,item)}  
+                          className="ml-[5px] bg-[##00800017] text-white rounded-[1em] border-[1px] border-white hover:text-[#52d9669b] 
+                          hover:border-[#52d9669b] p-[4px]">
+                          Ver Perfil
+                        </button>
+                      }
+                      
                       <button className=" bg-[#ff969601] border-[1px] border-[#952c2c98] text-[#952c2c] hover:text-white
                        hover:bg-[#952c2c98] ml-[5px] rounded-[1em] p-[4px]">Eliminar</button>
                     </td>

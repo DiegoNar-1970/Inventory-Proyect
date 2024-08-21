@@ -11,3 +11,5 @@
     export const createEmployee=(url,employee)=> axios.post(url,employee);
 
     export const getEmployees= (url) => axios.get(url);
+    
+    export const getByIdEmployee= (url) => axios.get(url);

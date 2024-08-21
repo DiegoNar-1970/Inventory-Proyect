@@ -13,6 +13,7 @@ const employeeSchema = new Schema({
 });
 const Employee=mongoose.model('Employee',employeeSchema);
 export default Employee;
+
 export class EmployeeModel{
     static async findByIdAndUpdate(id,data){
         const result= validatePartialEmployee(data)
@@ -57,5 +58,8 @@ export class EmployeeModel{
         }catch(err){
             return {message:err.message};
         }
+    }
+    static async getByid(){
+        
     }
 }

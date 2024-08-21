@@ -11,9 +11,10 @@
 #main{
   display: grid;
   grid-template-areas:
+  "header header aside"
   "main main aside";
-  grid-template-columns: 1059px 1fr;
-  grid-template-rows: 1fr auto;
+  grid-template-columns: 2fr 1fr;
+  grid-template-rows: .1fr 1fr ;
 }
 
 td,th{

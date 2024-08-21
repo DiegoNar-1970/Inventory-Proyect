@@ -1,16 +1,20 @@
-import { createContext,useEffect,useState } from "react";
-import {login,verifyToken} from '../services/auth.js'
-import Cookies from 'js-cookie'
-import { logout } from "../services/auth.js";
+import Cookies from 'js-cookie';
+import { createContext, useEffect, useState } from "react";
+import { login, logout, verifyToken } from '../services/auth.js';
 
 export const AuthContext=createContext();
 
 export function AuthProvider({children}){
 
     const [user,setUser]=useState(null);
+    const [saveUser,setSaveUser]=useState();
     const [error,setError]=useState(null);
     const [isAuthenticated,setIsAuthenticated]=useState(false);
     const [isLoading,setIsLoading]=useState(true);
+
+    const setUserSave=(data)=>{
+        setSaveUser(data);
+    }
 
     const fetchLogin=async(url,formLogin)=>{
         try{
@@ -28,10 +32,10 @@ export function AuthProvider({children}){
             setUser(null);
             setIsAuthenticated(false)
             setIsLoading(false);
-        async function checkLogin (){
+            async function checkLogin (){
+            setIsLoading(true);
             const cookie = Cookies.get();
             console.log('cookie',cookie);
-
             if(!cookie.token){
                setIsAuthenticated(false);
                setIsLoading(false)
@@ -39,7 +43,7 @@ export function AuthProvider({children}){
             }
             try{
                 const res = await verifyToken('verify',cookie.token)
-                console.log('respuesta',res)
+
                 if(!res.data){
                     setIsAuthenticated(false);
                     setIsLoading(false);
@@ -82,7 +86,9 @@ export function AuthProvider({children}){
             error,
             isAuthenticated,
             isLoading,
-            reqLogut
+            reqLogut,
+            setUserSave,
+            saveUser
         }}>
             {children}
         </AuthContext.Provider>
