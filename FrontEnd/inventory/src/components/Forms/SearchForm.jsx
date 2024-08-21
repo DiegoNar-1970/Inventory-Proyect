@@ -1,12 +1,22 @@
+import { useForm } from "react-hook-form";
 
+const SearchForm = ({onSubmit}) => {
+  const {
+    register,
+    handleSubmit, 
+    formState: { errors }
+  } = useForm();
 
-const SearchForm = () => {
+   const data = handleSubmit ((data)=>{
+    onSubmit(data)
+  })
+
   return (
     <form
             action=""
             className="p-[20px] flex flex-col relative  
                w-[50%] min-w-[305px] max-w-[354px] rounded-xl outline outline-[2px] outline-[#393a3c] "
-            onSubmit={onSubmit}
+            onSubmit={data}
           >
             <h3 className="text-[25px] font-sans font-medium mb-[1px] ">
               Filtrar por fechas
