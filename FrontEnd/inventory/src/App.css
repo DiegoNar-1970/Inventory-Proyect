@@ -8,10 +8,17 @@
     background: #202124;
     font-family: 'spotify-regular', -apple-system, system-ui, sans-serif;
 }
+#main{
+  display: grid;
+  grid-template-areas:
+  "main main aside";
+  grid-template-columns: 1059px 1fr;
+  grid-template-rows: 1fr auto;
+}
 
 td,th{
     padding: 9px;
-    border-bottom: 1px solid rgb(107 114 128 );
+    border-bottom: 1px solid #6b7280;
 }
 @font-face {
     font-family: 'spotify';

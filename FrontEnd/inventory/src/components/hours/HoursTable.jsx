@@ -20,7 +20,7 @@ const HoursTable = ({datos}) => {
   }
   return (
     <>
-    <h1 className=" ml-1 text-[17px] text-gray-500">Personal</h1>
+    <h1 className=" ml-1 text-[17px] text-gray-500">Horas</h1>
      <table className="text-left text-[13px] border-collapse text-white rounded-r-lg">
        <thead className="text-white rounded-r-lg ">
          <tr className="" >

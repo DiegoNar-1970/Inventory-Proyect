@@ -20,6 +20,7 @@ const Maquina=lazy(()=>import("./components/areas/Maquina.jsx"))
 const Administracion=lazy(()=>import("./components/areas/Administracion.jsx"))
 const Login=lazy(()=>import("./components/user/Login.jsx"))
 const Logout=lazy(()=>import("./components/user/Logout.jsx"))
+const InfoEmployee=lazy(()=>import("./components/employee/InfoEmployee.jsx"))
 const ProtectedRoute=lazy(()=>import('./components/protectedRouter/ProtectecRouter.jsx'))
 
 function App() {
@@ -43,6 +44,7 @@ function App() {
           <Route path='/login' element={<Login/>}/>
           <Route path='/logout' element={<Logout/>}/>
           <Route element={<ProtectedRoute/>}>
+            <Route path='/profileEmployee/:id' element={<InfoEmployee/>}/>
             <Route path='/home' element={<Home/>}/>
             <Route path='/almacen' element={<Almacen/>}/>
             <Route path='/paletizado' element={<Paletizado/>}/>

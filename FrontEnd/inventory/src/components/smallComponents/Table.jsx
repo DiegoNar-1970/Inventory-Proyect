@@ -1,5 +1,6 @@
 
 import { useState } from 'react';
+import { useNavigate } from 'react-router-dom';
 import img from '../../media/img/img.png';
 import FormUpEmployee from '../employee/FormUpEmployee.jsx';
 import Profile from '../employee/Profile.jsx';
@@ -12,7 +13,7 @@ import { Popap } from './Popap.jsx';
     isTrue:false,
     dataItem:{}
   });
-
+  const navigate = useNavigate(); 
   const changeSee=()=>{
     setSee({
       component:'',
@@ -20,6 +21,11 @@ import { Popap } from './Popap.jsx';
       dataItem:{}
     });
   }
+
+  const seeProfile=(id)=>{
+    navigate(`/profileEmployee/${id}`);
+  }
+
   return (
     <>
          <h1 className=" ml-1 text-[17px] text-gray-500">Personal</h1>
@@ -61,13 +67,7 @@ import { Popap } from './Popap.jsx';
                         })
                       }} className="ml-[5px] bg-[##00800017] text-white rounded-[1em] 
                       border-[1px] border-white hover:text-[#52d9669b] hover:border-[#52d9669b] transition-all p-[4px]">Actualizar</button>
-                      <button onClick={()=>{
-                        setSee({
-                          component:'profile',
-                          isTrue:true,
-                          dataItem:item
-                        })
-                      }}  className="ml-[5px] bg-[##00800017] text-white rounded-[1em] 
+                      <button onClick={()=>seeProfile(item._id)}  className="ml-[5px] bg-[##00800017] text-white rounded-[1em] 
                       border-[1px] border-white hover:text-[#52d9669b] hover:border-[#52d9669b] p-[4px]">Ver Perfil</button>
                       <button className=" bg-[#ff969601] border-[1px] border-[#952c2c98] text-[#952c2c] hover:text-white
                        hover:bg-[#952c2c98] ml-[5px] rounded-[1em] p-[4px]">Eliminar</button>
@@ -103,3 +103,10 @@ import { Popap } from './Popap.jsx';
 }
 
 export default Table
+// ()=>{
+//   setSee({
+//     component:'profile',
+//     isTrue:true,
+//     dataItem:item
+//   })
+// }
