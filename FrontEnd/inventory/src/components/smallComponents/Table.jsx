@@ -13,16 +13,17 @@ import { Popap } from './Popap.jsx';
     const pathLocation=location.pathname
     const navigate = useNavigate(); 
     
+    //recuerda que solo los de administración pueden tener la opcion de ver el perfil de un empleado con sus pagos etc 
     const {saveUser,setUserSave}=useContext(AuthContext);
     if(pathLocation.includes('employee')) setUserSave(null);
     if(saveUser!=null) data=[saveUser];
-    console.log(location.pathname)
 
   const [see,setSee]=useState({
     component:'',
     isTrue:false,
     dataItem:{}
   });
+
   const changeSee=()=>{
     setSee({
       component:'',
@@ -77,11 +78,22 @@ import { Popap } from './Popap.jsx';
                         })
                       }} className="ml-[5px] bg-[##00800017] text-white rounded-[1em] 
                       border-[1px] border-white hover:text-[#52d9669b] hover:border-[#52d9669b] transition-all p-[4px]">Actualizar</button>
-                      {pathLocation.includes('profileEmployee') ? ''
+                      {pathLocation.includes('profileEmployee') 
+                      ? <button onClick={()=>{
+                        setSee({
+                          component:'profile',
+                          isTrue:true,
+                          dataItem:item
+                        })
+                      }}  
+                          className="ml-[5px] bg-[##00800017] text-white rounded-[1em] border-[1px] border-white hover:text-[#52d9669b] 
+                        hover:border-[#52d9669b] p-[4px]">
+                          Ver Perfil
+                        </button>
                       : <button onClick={()=>seeProfile(item._id,item)}  
                           className="ml-[5px] bg-[##00800017] text-white rounded-[1em] border-[1px] border-white hover:text-[#52d9669b] 
                           hover:border-[#52d9669b] p-[4px]">
-                          Ver Perfil
+                          Informacion Personal
                         </button>
                       }
                       

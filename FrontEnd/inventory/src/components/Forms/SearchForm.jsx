@@ -14,7 +14,7 @@ const SearchForm = ({onSubmit}) => {
   return (
     <form
             action=""
-            className="p-[20px] flex flex-col relative  
+            className="p-[20px] flex flex-col  
                w-[50%] min-w-[305px] max-w-[354px] rounded-xl outline outline-[2px] outline-[#393a3c] "
             onSubmit={data}
           >
@@ -24,7 +24,7 @@ const SearchForm = ({onSubmit}) => {
             <h3 className="text-[15px] font-sans font-ligth mb-[30px] text-[#6b7280]">
               Selecciona el rango de fechas y semanas para consultar.
             </h3>
-            <div className="flex gap-5 flex-wrap relative">
+            <div className="flex gap-4 flex-wrap flex-1 ">
               <div className="flex flex-col gap-2 ">
                 <label
                   htmlFor="startWeek"
@@ -35,7 +35,7 @@ const SearchForm = ({onSubmit}) => {
                 <input
                   className=" rounded-lg p-[2px] border-gray-400
                      text-white border-t-[0px] bg-[#393a3c]
-                    focus:outline-none border-none"
+                    focus:outline-none border-none w-[149px]"
                   type="number"
                   {...register("startWeek", {
                     required: {
@@ -70,7 +70,7 @@ const SearchForm = ({onSubmit}) => {
                 <input
                   className="rounded-lg p-[2px] border-gray-400
                      text-white border-t-[0px] bg-[#393a3c]
-                    focus:outline-none border-none"
+                    focus:outline-none border-none w-[149px]"
                   type="number"
                   {...register("endWeek", {
                     required: {
@@ -104,9 +104,9 @@ const SearchForm = ({onSubmit}) => {
                 </label>
                 <input
                   placeholder="Fecha"
-                  className=" max-w-[145px] rounded-lg p-[2px] border-gray-400
+                  className=" w-[149px] rounded-lg p-[2px] border-gray-400
                      text-white border-t-[0px] bg-[#393a3c] placeholder-white
-                    focus:outline-none border-none "
+                    focus:outline-none border-none"
                   type="date"
                   {...register("startDate", {
                     required: {
@@ -131,9 +131,9 @@ const SearchForm = ({onSubmit}) => {
                 </label>
                 <input
                   placeholder={"semana"}
-                  className="max-w-[145px] rounded-lg p-[2px] border-gray-400
+                  className="w-[149px] rounded-lg p-[2px] border-gray-400
                      text-white border-t-[0px] bg-[#393a3c] placeholder-white
-                    focus:outline-none border-none"
+                    focus:outline-none border-none "
                   type="date"
                   {...register("endDate", {
                     required: {
