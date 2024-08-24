@@ -1,4 +1,4 @@
-import { useContext, useState } from "react";
+import { Suspense, useContext, useState } from "react";
 import { FaMoneyCheckAlt } from "react-icons/fa";
 import { FaAddressBook, FaListCheck } from "react-icons/fa6";
 import TablePays from "../../components/employee/TablePays.jsx";
@@ -15,6 +15,7 @@ const InfoEmployee = () => {
     })
  const {saveUser}=useContext(AuthContext);
   return (
+    <Suspense fallback={<div className="loader"></div>}>
     <section id="main" className="h-screen gap-3     ">
       <article className=" [grid-area:header] p-2 flex flex-col bg-[#1b1b1b] rounded-[1em] text-white pb-[15px] ">
           <Table data={saveUser}/>
@@ -46,6 +47,7 @@ const InfoEmployee = () => {
            </div>
       </article>
     </section>
+    </Suspense> 
   )
 }
 

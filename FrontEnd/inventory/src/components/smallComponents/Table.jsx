@@ -1,5 +1,5 @@
 
-import { useContext, useState } from 'react';
+import { useContext, useEffect, useState } from 'react';
 import { useLocation, useNavigate } from 'react-router-dom';
 import { AuthContext } from '../../context/AuthContext.jsx';
 import img from '../../media/img/img.png';
@@ -15,9 +15,13 @@ import { Popap } from './Popap.jsx';
     
     //recuerda que solo los de administración pueden tener la opcion de ver el perfil de un empleado con sus pagos etc 
     const {saveUser,setUserSave}=useContext(AuthContext);
-    if(pathLocation.includes('employee')) setUserSave(null);
-    if(saveUser!=null) data=[saveUser];
+    
 
+    useEffect(() => {
+      if(pathLocation.includes('employee')) setUserSave(null);
+    }, []);
+
+    if(saveUser!=null) data=[saveUser];
   const [see,setSee]=useState({
     component:'',
     isTrue:false,
