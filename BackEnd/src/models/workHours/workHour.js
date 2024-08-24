@@ -20,13 +20,17 @@ const workHourSchema = new Schema({
     checkTime:{type:Date},
     lunch:{type:Boolean,default:false},
     breakfast:{type:Boolean,default:false},
-    shift:{ type: String}
+    shiftType:{ type: String},
+    extraHour:{
+      type:String,
+      value:Number
+    },
 
   });
   
   const WorkHour = mongoose.model('WorkHour', workHourSchema);
   export default WorkHour;
-
+  
   export class WorkHourModel{
 
     static async create(id,data){

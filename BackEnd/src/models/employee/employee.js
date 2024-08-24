@@ -9,7 +9,10 @@ const employeeSchema = new Schema({
     area:{ type: String },
     profile:{
         type:mongoose.Schema.Types.ObjectId,ref:'Profile'
-    }
+    },
+    parafiscales:{type:Boolean,default:false},
+    baseSalary:{type:Number},
+    assistanceTransport:{type:Number},
 });
 const Employee=mongoose.model('Employee',employeeSchema);
 export default Employee;

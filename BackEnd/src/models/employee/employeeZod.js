@@ -1,4 +1,4 @@
-import z from 'zod'
+import z from 'zod';
 
 const employeeSchema = z.object({
   admissionDate:z.date({
@@ -17,8 +17,12 @@ const employeeSchema = z.object({
       required_error: 'shift is required.'}),
 
   profile: z.object({
-      invalid_type_error: 'profile just be a ProfileSchema'}).optional()
+      invalid_type_error: 'profile just be a ProfileSchema'}).optional(),
+      parafiscales:z.boolean(),
+      baseSalary: z.number().min(100000),
+      assistanceTransport:z.number().min(0),
 })
+
 
 export function validateEmployeeSchema(input) {
   return employeeSchema.safeParse(input);

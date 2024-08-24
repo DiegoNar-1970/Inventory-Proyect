@@ -1,4 +1,4 @@
-import { PaiModel } from "../models/pai/pai.js"
+import { PaiModel } from "../models/pai/pai.js";
 export class PaiController{
     static async geAll(req,res){
         const {id}=req.query;
@@ -18,23 +18,10 @@ export class PaiController{
     }
 
     static async create(req,res){
-        const {employee,news}=req.query;
-        if(!employee){
-            return res.status(400).json({err:"employee is required"})
-        }
-        if(!news){
-            return res.status(400).json({err:"news is required"})
-        }
-        try{
-            const pai=await PaiModel.create(employee,news,req.body);
-            if(pai.message){
-                return res.status(400).json({message:pai.message,
-                    err:pai.err
-                })
-            }
-            return res.status(201).json(pai)
-        }catch(err){
-            return res.status(400).json({err:err.message})
-        }
+        const {employee}=req.query;
+        console.log('req,body',req.body)
+        const pai=await PaiModel.create(employee,req.body);
+
+
     }
 }

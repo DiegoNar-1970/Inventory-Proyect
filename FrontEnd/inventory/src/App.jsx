@@ -27,7 +27,8 @@ function App() {
 
   return (
     <Suspense fallback={
-      <div className='loader'></div>}>
+      <div className='loader'></div>}
+      >
     <div id="app" className=' h-screen p-2 gap-2'>
       <section className='[grid-area:aside] flex flex-col rounded-lg bg-[#202124]'>
         <Menu className=''/>

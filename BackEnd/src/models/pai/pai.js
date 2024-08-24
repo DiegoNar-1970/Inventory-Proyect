@@ -1,22 +1,52 @@
 import mongoose from "mongoose";
+import { queryCond } from "../../helpers/queryConditios.js";
 const {Schema,Types}=mongoose
-import {validatePartiaPaiSchema} from './paiZod.js'
-import  Employee from '../employee/employee.js'
-import News from '../news/news.js'
 
 const paiSchema=new Schema({
     employee:{type:Types.ObjectId,ref:'Employee'},
-    pai:{type:Types.Decimal128},
     date:{type:Date,default:Date.now()},
     week:[{type:Number}],
-    news:{type:Types.ObjectId,ref:'News',
-        optional:true
+    totalHours:{type:Number},
+    nightSurcharge:{type:Number}, //recargo nocturno
+    dominicalSurcharge:{type:Number},  
+    prima:{
+        istime:{type:Boolean,default:false},
+        value:{type:Number,default:0}
     },
+    deductions:{type:Number},
+    typesHours:[{
+        name:{type:String},
+        value:{type:Number}
+    },],
+    pai:{type:Types.Decimal128},
 })
 const Pai=mongoose.model('Pai',paiSchema);
 export default Pai;
 
+const EXTRAS_HOURS_TYPES={
+    H_E_DIURNA:'HORA_EXTRA_DIURNA',
+    H_E_DOMINICAL:'HORA_EXTRA_DOMINICAL',
+    H_E_DOMINICAL_NOTURNA:'HORA_EXTRA_DOMINICAL_NOTURNA',
+    H_E_NOCTURNA:'HORA_EXTRA_NOCTURNA'
+}
+const TYPE_SHIFT={
+    DAY_SHIFT:'DIURNO',
+    NIGHT_SHIFT:'NOCTURNO',
+    DOMINICAL_SHIFT:'FESTIVO'
+    //DEBE DE HABER RECARGO SI ES NOCTURNO Y DOMINICAL
+    //PERO ESTOS SON APARTE SE SUMA EL TOTAL DE HORAS 
+    //Y SE SACA LAS HORAS QUE SEAN NOCTURNAS Y DOMINICALES
+    //PARA DARLE UN EXTRA
+
+}
 export class PaiModel{
+    
+    static async create(employeeId,date){
+        const query=queryCond(date,employeeId);
+        console.log('query',query)
+        console.log(employeeId)
+    //    const arrBreak=await WorkHour.find(query,{_v:0});
+    }
     static async getAll(id){
         if(id){
             const paiId=await Pai.findById(id,{__v:0}).populate({
@@ -44,33 +74,5 @@ export class PaiModel{
         }catch(err){
             return {message:'error',err};
         }
-    }
-    
-    static async create(employeeId,newsId,data){
-        const result= await validatePartiaPaiSchema(data);
-        if(!result.success){
-            return {
-                message:'validation error',
-                err:result.error
-            }
-        }
-        try{
-            const employee=await Employee.findById(employeeId);
-            const news=await News.findById(newsId);
-
-            if(employee===undefined){
-                return {message:'employee not found'};
-            }
-            if(news===undefined){
-                return {message:'news not found'};
-            }
-                const pai=new Pai({employee,news,...result.data});
-                await pai.save();
-                return pai;
-
-        }catch(err){
-            return {message:err}
-        }
-
     }
 }
