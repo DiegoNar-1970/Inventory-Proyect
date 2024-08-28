@@ -19,6 +19,7 @@ const paiSchema=new Schema({
         value:{type:Number}
     },],
     pai:{type:Types.Decimal128},
+    assistanceTransport:{type:Number},
 })
 const Pai=mongoose.model('Pai',paiSchema);
 export default Pai;

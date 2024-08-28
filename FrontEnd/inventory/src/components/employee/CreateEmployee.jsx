@@ -29,13 +29,14 @@ const CreateEmployee = ({onChangue,changue,see,closePop}) => {
       sex: data.sex,
     };
     setLoading(true);
+    setErrorReq([]);
     try {
       const profileResult = await createProfile(urlProfile, profile);
 
       const employee = {
         position: data.position,
         area: data.area,
-        shift: data.shift,
+        baseSalary: data.baseSalary,
       };
 
       const id = profileResult.data._id;
@@ -47,6 +48,7 @@ const CreateEmployee = ({onChangue,changue,see,closePop}) => {
       return;
 
     } catch (err) {
+      console.log(err);
       if (err.response.data.message == "duplicate key") {
         setErrorReq([{ key: '1', value: { message: "Esta persona ya esta registrada"} }]);
         console.log('llave duplicada');
@@ -59,12 +61,10 @@ const CreateEmployee = ({onChangue,changue,see,closePop}) => {
           key,
           value
         }));
-        console.log('entro en multiples errores');
         setErrorReq(arrError);
         setLoading(false);
         return;
       }
-      console.log('entro abajo');
       setErrorReq([{key:'1',value:{message:err.response.data.message}}]);
       
       setLoading(false);
@@ -91,7 +91,8 @@ const CreateEmployee = ({onChangue,changue,see,closePop}) => {
                     <div key={e.key} className="flex flex-col gap-2 font-sans m-1 pl-4 pr-4 ">
                         <div className="flex gap-2 ">
                           <span className="w-[25px] rounded-md bg-red-700 text-center text-white">{i+=1}</span>
-                          <p className=" text-black">{e.value.message}</p>
+                          {console.log(e)}
+                          <p className=" text-black">{e.value.message && e.value.message}</p>
                         </div>
                     </div>
                 )
@@ -112,7 +113,7 @@ const CreateEmployee = ({onChangue,changue,see,closePop}) => {
           <div className="flex gap-3">
             <button
               className="flex-1 hover:bg-green-600 transition duration-300 ease-in-ou font-sans font-medium bg-green-400 p-2 rounded-[.7em] text-white"
-              onClick={() => { setErrorReq(undefined)}}>
+              onClick={() => { setErrorReq([],setResOk(undefined))}}>
               Seguir agregando
             </button>
             <button
@@ -341,21 +342,25 @@ const CreateEmployee = ({onChangue,changue,see,closePop}) => {
                 )}
               </div>
               <div className="flex flex-col gap-2 flex-1">
-                <label htmlFor="shift" className=" font-sans ">
-                  Turno
+                <label htmlFor="baseSalary" className=" font-sans ">
+                  Salario
                 </label>
-                <input placeholder="Turno"
-                  type="text"
-                  {...register("shift", {
+                <input placeholder="Salario"
+                  type="number"
+                  {...register("baseSalary", {
                     required: {
                       value: true,
                       message: "Campo Requerido",
+                    },min:{
+                      value: 100000,
+                      message:"El salario debe ser mayor a 100000",
                     },
+                    valueAsNumber: true,
                   })}
                   className="border-[1px] rounded-lg p-[2px] border-gray-400 "
                 />
-                {errors.shift && (
-                  <span className="text-red-600">{errors.shift.message}</span>
+                {errors.baseSalary && (
+                  <span className="text-red-600">{errors.baseSalary.message}</span>
                 )}
               </div>
             </div>

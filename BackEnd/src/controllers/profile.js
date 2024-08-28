@@ -9,8 +9,8 @@ export class profileController{
         }
         try{
             const newProfile = new Profile(result.data);
-            const saveProfile= await newProfile.save();
-            return res.status(201).json(saveProfile);
+            // await newProfile.save();
+            return res.status(201).json(newProfile);
         }catch(err){
             if(err.code==11000){
                 return res.status(400).json({message:"duplicate key"})

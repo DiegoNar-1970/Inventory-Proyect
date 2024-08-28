@@ -18,9 +18,9 @@ const employeeSchema = z.object({
 
   profile: z.object({
       invalid_type_error: 'profile just be a ProfileSchema'}).optional(),
-      parafiscales:z.boolean(),
-      baseSalary: z.number().min(100000),
-      assistanceTransport:z.number().min(0),
+      parafiscales:z.boolean().optional(),
+      baseSalary: z.number().min(100000)
+
 })
 
 

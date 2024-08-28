@@ -32,6 +32,7 @@ export class employeeController{
     }
     static async create (req,res){
        const {id}=req.query;
+       console.log(req.body)
        if(!id){
         return res.status(400).json({message:'profile required'})
        }
@@ -42,7 +43,7 @@ export class employeeController{
             }
             return res.status(201).json(employee);
        }catch(err){
-            return res.status(400).json({message:'Bad request'})
+            return res.status(400).json({message:err})
        }
 
     }
