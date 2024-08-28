@@ -12,7 +12,7 @@ const CreateEmployee = ({onChangue,changue,see,closePop}) => {
 
   const [loading, setLoading] = useState(false);
   const [errorReq, setErrorReq] = useState([]);
-  const [resOk, setResOk] = useState(undefined);
+  const [resOk, setResOk] = useState('');
 
   const urlProfile = "http://localhost:3000/profile";
   const urlEmployee = (id) => `http://localhost:3000/employee/?id=${id}`;
@@ -31,27 +31,22 @@ const CreateEmployee = ({onChangue,changue,see,closePop}) => {
     setLoading(true);
     setErrorReq([]);
     try {
-      const profileResult = await createProfile(urlProfile, profile);
+      const {data:{_id}} = await createProfile(urlProfile, profile);
 
       const employee = {
         position: data.position,
         area: data.area,
         baseSalary: data.baseSalary,
       };
-
-      const id = profileResult.data._id;
-      const employeeResult = await createEmployee(urlEmployee(id), employee);
-      console.log(employeeResult);
+      await createEmployee(urlEmployee(_id), employee);
       setLoading(false);
       setResOk("El usuario se ha creado exitosamente ✔");
       setErrorReq([]);
       return;
 
     } catch (err) {
-      console.log(err);
       if (err.response.data.message == "duplicate key") {
         setErrorReq([{ key: '1', value: { message: "Esta persona ya esta registrada"} }]);
-        console.log('llave duplicada');
         setLoading(false);
         return;
       }
@@ -91,7 +86,6 @@ const CreateEmployee = ({onChangue,changue,see,closePop}) => {
                     <div key={e.key} className="flex flex-col gap-2 font-sans m-1 pl-4 pr-4 ">
                         <div className="flex gap-2 ">
                           <span className="w-[25px] rounded-md bg-red-700 text-center text-white">{i+=1}</span>
-                          {console.log(e)}
                           <p className=" text-black">{e.value.message && e.value.message}</p>
                         </div>
                     </div>
@@ -113,12 +107,12 @@ const CreateEmployee = ({onChangue,changue,see,closePop}) => {
           <div className="flex gap-3">
             <button
               className="flex-1 hover:bg-green-600 transition duration-300 ease-in-ou font-sans font-medium bg-green-400 p-2 rounded-[.7em] text-white"
-              onClick={() => { setErrorReq([],setResOk(undefined))}}>
+              onClick={() => { setErrorReq([],setResOk(''))}}>
               Seguir agregando
             </button>
             <button
               className="flex-1 hover:bg-gray-600 hover:text-white transition duration-300 ease-in-ou font-sans font-medium  p-2 rounded-[.7em] text-black"
-              onClick={() => { onChangue(changue,!see)}}>
+              onClick={() => onChangue(changue,!see)}>
               ver tabla
             </button>
           </div>

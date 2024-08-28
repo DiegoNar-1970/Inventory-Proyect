@@ -112,7 +112,6 @@ const workHourSchema = new Schema({
           if(hours.message){
             return{message:hours.message}
           }
-          console.log('calc',hours);
           return hours;
       }catch(err){
         return {message:err}
@@ -134,7 +133,6 @@ const workHourSchema = new Schema({
       const filterHours=hours.filter(hour=>{
         return hour.employee?.area===area
       })
-       console.log('filter',filterHours);
       return filterHours;
       }catch(err){
         return {message:err.message}

@@ -41,9 +41,7 @@ export class EmployeeModel{
     }
 
     static async create(id,data){
-        console.log('data desde el model', data);
         const result= await validatePartialEmployee(data);
-        console.log('validacion del body', result);
         if(!result.success){
             return {message:'invalid Type', err:result.error.errors};
         }
@@ -54,7 +52,7 @@ export class EmployeeModel{
             if(!profile || profile===undefined || profile===null){
                 return {message:'profile not found'};       
             }
-            console.log('datica',result.data)
+
             const employee= new Employee({...result.data,profile});
             await employee.save();
             return employee;

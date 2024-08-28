@@ -35,15 +35,14 @@ const FormUpEmployee = ({item}) => {
         {errors.position && <span className='text-red-600'>{errors.position.message}</span>}
       </div>
       <div className='flex flex-col gap-2'>
-        <label htmlFor="shift" className='font-medium font-sans '>Turno</label>
-        <input type="text" {...register('shift',{required:{
+        <label htmlFor="baseSalary" className='font-medium font-sans '>Salario Base</label>
+        <input type="number" {...register('baseSalary',{required:{
           value:true,
           message:'"Dia" o "Noche" Se necesita un turno '
         }})} className="border-[1px] rounded-lg p-[2px]
-        border-gray-400"  defaultValue={item.shift}/>
-        {errors.shift && <span className='text-red-600'>{errors.shift.message}</span>} 
+        border-gray-400"  defaultValue={item.baseSalary}/>
+        {errors.baseSalary && <span className='text-red-600'>{errors.baseSalary.message}</span>} 
       </div>
-      <button className='bg-black text-white rounded-lg self p-1 mt-2'>Enviar</button>
     </form>
   )
 }

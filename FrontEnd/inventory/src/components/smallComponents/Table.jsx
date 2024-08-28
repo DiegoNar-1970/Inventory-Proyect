@@ -3,16 +3,23 @@ import { useContext, useEffect, useState } from 'react';
 import { useLocation, useNavigate } from 'react-router-dom';
 import { AuthContext } from '../../context/AuthContext.jsx';
 import img from '../../media/img/img.png';
+import { deleteEmployee } from '../../services/auth.js';
 import FormUpEmployee from '../employee/FormUpEmployee.jsx';
 import Profile from '../employee/Profile.jsx';
 import FormHour from '../hours/FormHour.jsx';
 import { Popap } from './Popap.jsx';
 
-  const Table = ({data}) => {
+  const Table = ({data,onChangue}) => {
     const location = useLocation();
     const pathLocation=location.pathname
     const navigate = useNavigate(); 
     
+  const [see,setSee]=useState({
+    component:'',
+    isTrue:false,
+    dataItem:{}
+  });
+
     //recuerda que solo los de administración pueden tener la opcion de ver el perfil de un empleado con sus pagos etc 
     const {saveUser,setUserSave}=useContext(AuthContext);
     
@@ -22,11 +29,12 @@ import { Popap } from './Popap.jsx';
     }, []);
 
     if(saveUser!=null) data=[saveUser];
-  const [see,setSee]=useState({
-    component:'',
-    isTrue:false,
-    dataItem:{}
-  });
+
+  const delEmployee = async (item) => {
+    await deleteEmployee(`http://localhost:3000/profile/${item.profile._id}`)
+    await deleteEmployee(`http://localhost:3000/employee/${item._id}`)
+    onChangue('',!see);
+  }
 
   const changeSee=()=>{
     setSee({
@@ -101,7 +109,8 @@ import { Popap } from './Popap.jsx';
                         </button>
                       }
                       
-                      <button className=" bg-[#ff969601] border-[1px] border-[#952c2c98] text-[#952c2c] hover:text-white
+                      <button onClick={()=>delEmployee(item)}
+                      className=" bg-[#ff969601] border-[1px] border-[#952c2c98] text-[#952c2c] hover:text-white
                        hover:bg-[#952c2c98] ml-[5px] rounded-[1em] p-[4px]">Eliminar</button>
                     </td>
                 </tr>

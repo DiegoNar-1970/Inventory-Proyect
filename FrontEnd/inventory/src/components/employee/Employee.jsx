@@ -61,7 +61,7 @@ const Employee = () => {
 
       </article>
       <article className="flex flex-col bg-fondo-menu rounded-lg box-border p-2 justify-center">
-          <Table data={nameFilter ? nameFilter : areaFilter}/>
+          <Table data={nameFilter ? nameFilter : areaFilter} onChangue={onChangue}/>
       </article>
       {see ? 
            <div className="fixed top-0 left-0 h-screen w-screen bg-[#ffffff41] z-10 flex items-center justify-start ">

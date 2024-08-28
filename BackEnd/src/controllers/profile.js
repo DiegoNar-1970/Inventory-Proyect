@@ -9,7 +9,7 @@ export class profileController{
         }
         try{
             const newProfile = new Profile(result.data);
-            // await newProfile.save();
+            await newProfile.save();
             return res.status(201).json(newProfile);
         }catch(err){
             if(err.code==11000){

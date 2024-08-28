@@ -8,7 +8,7 @@ export class employeeController{
         if(id){
             try{
                 const employeeId = await Employee.findById(id,{__v:0}).populate('profile',
-                    { _id:0, __v:0});
+                    {__v:0});
                     
                 return res.status(201).json(employeeId)
                     ;
@@ -19,7 +19,7 @@ export class employeeController{
         
         try{
             const allEmployees= await Employee.find({},{__v:0}).populate('profile',
-                { _id:0,__v:0}
+                {__v:0}
             );
 
             res.send(allEmployees)
@@ -32,7 +32,6 @@ export class employeeController{
     }
     static async create (req,res){
        const {id}=req.query;
-       console.log(req.body)
        if(!id){
         return res.status(400).json({message:'profile required'})
        }
@@ -52,7 +51,6 @@ export class employeeController{
             const result=req.body;
             const {id} =req.params;
             const employeeUpd= await EmployeeModel.findByIdAndUpdate(id,result);
-            console.log(employeeUpd)
             return res.send(employeeUpd) ;
         }catch(err){
             res.status(404).json({message:err.message})
