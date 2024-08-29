@@ -1,5 +1,5 @@
-import { formatedDate } from '../../helpers/formateDate';
-import img from '../../media/img/img.png';
+import { formatedDate } from '../../../helpers/formateDate';
+import img from '../../../media/img/img.png';
 
 const Profile = ({item}) => {
   return (

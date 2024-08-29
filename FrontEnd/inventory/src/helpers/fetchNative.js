@@ -7,6 +7,7 @@ export const fetchEmployees = async (
   area
 ) => {
   try {
+    setLoading(true);
     const response = await fetchData("http://localhost:3000/employee");
     setAreaFilter(response.filter((employee) => employee.area === area));
     setLoading(false);

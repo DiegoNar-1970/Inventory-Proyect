@@ -4,8 +4,8 @@
 import { useEffect, useState } from "react";
 import { IoPersonAddOutline, IoSearch } from "react-icons/io5";
 import { useParams } from "react-router-dom";
-import { fetchEmployees } from "../../helpers/fetchNative.js";
-import Table from "../smallComponents/Table.jsx";
+import { fetchEmployees } from "../../../helpers/fetchNative.js";
+import Table from "../../smallComponents/Table.jsx";
 import CreateEmployee from "./CreateEmployee.jsx";
 
 
@@ -13,22 +13,21 @@ import CreateEmployee from "./CreateEmployee.jsx";
 const Employee = () => {
 
   let {area}=useParams();
+
   const [areaFilter,setAreaFilter]=useState();
   const [nameFilter,setNameFilter]=useState();
-  const [see,setSee]=useState(false);
+  const [see,setSee]=useState({bolean:false,isReRender:false});
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
   const [changue, setChangue] = useState(0);
 
-  const onChangue = (change,see)=>{
-    console.log(change)
-    console.log(see)
+  const onChangue = (isReRender,bolean)=>{
     setChangue(change=>change+1);
-    setSee(see);
-  }
-
-  const closePop=(value)=>{
-    setSee(value)
+    setSee((prevSee) => ({
+      ...prevSee,
+      isReRender,
+      bolean
+    }));
   }
 
   useEffect(() => { 
@@ -58,27 +57,28 @@ const Employee = () => {
 
         <div className="flex gap-2 items-center">
           <IoPersonAddOutline className="text-[30px] text-green-500" />
-          <button onClick={()=>{setSee(!see)}}>agregar persona</button>
+          <button onClick={()=>setSee({...see,bolean:!see.bolean})}>agregar persona</button>
         </div>
 
       </article>
       <article className="flex flex-col bg-fondo-menu rounded-lg box-border p-2 justify-center">
-          <Table data={nameFilter ? nameFilter : areaFilter} onChangue={onChangue}/>
+          <Table data={nameFilter ? nameFilter : areaFilter} onChangue={onChangue} setLoading={setLoading}/>
       </article>
-      {see ? 
+      {see.bolean === true ? 
            <div className="fixed top-0 left-0 h-screen w-screen bg-[#ffffff41] z-10 flex items-center justify-start ">
-            <div className=" m-auto p-auto bg-gray-200   rounded-[.7em] flex flex-col  text-black min-w-[400px] max-w-[600px] p-5 ">
-              
-                <CreateEmployee onChangue={onChangue} changue={changue} see={see} closePop={closePop}/>
+            <div className=" m-auto p-auto bg-[#e5e7eb]   rounded-[.7em] flex flex-col  text-black min-w-[400px] max-w-[600px] p-5 ">
+                <CreateEmployee onChangue={onChangue} changue={changue} see={see} setSee={setSee} />
               
               <div className='w-[100%] mt-[.7em]'>
                 <button className="w-[100%] p-2 rounded-[.5em] 
                 font-sans font-medium hover:bg-black transition duration-300 ease-in-ou  hover:text-white  text-black "
                 onClick={()=> {
-                  if(see){
-                    onChangue('',!see)
+                  if(see.isReRender){
+                    console.log('si rerenderizo')
+                   return onChangue(false,false)
                   }
-                  setSee(!see);
+                  console.log('no rerenderizo')
+                 return setSee({...see,isReRender:false,bolean: false});
                   } } >Cerrar</button> 
               </div>
             </div>

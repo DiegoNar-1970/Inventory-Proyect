@@ -4,12 +4,14 @@ import { useLocation, useNavigate } from 'react-router-dom';
 import { AuthContext } from '../../context/AuthContext.jsx';
 import img from '../../media/img/img.png';
 import { deleteEmployee } from '../../services/auth.js';
-import FormUpEmployee from '../employee/FormUpEmployee.jsx';
-import Profile from '../employee/Profile.jsx';
+import FormUpEmployee from '../employee/Forms/FormUpEmployee.jsx';
+import Profile from '../employee/actions/Profile.jsx';
 import FormHour from '../hours/FormHour.jsx';
 import { Popap } from './Popap.jsx';
 
-  const Table = ({data,onChangue}) => {
+  const Table = ({data,onChangue,setLoading}) => {
+     //recuerda que solo los de administración pueden tener la opcion de ver el perfil de un empleado con sus pagos etc 
+    const {saveUser,setUserSave}=useContext(AuthContext);
     const location = useLocation();
     const pathLocation=location.pathname
     const navigate = useNavigate(); 
@@ -20,10 +22,6 @@ import { Popap } from './Popap.jsx';
     dataItem:{}
   });
 
-    //recuerda que solo los de administración pueden tener la opcion de ver el perfil de un empleado con sus pagos etc 
-    const {saveUser,setUserSave}=useContext(AuthContext);
-    
-
     useEffect(() => {
       if(pathLocation.includes('employee')) setUserSave(null);
     }, []);
@@ -31,9 +29,10 @@ import { Popap } from './Popap.jsx';
     if(saveUser!=null) data=[saveUser];
 
   const delEmployee = async (item) => {
+    setLoading(true);
     await deleteEmployee(`http://localhost:3000/profile/${item.profile._id}`);
     await deleteEmployee(`http://localhost:3000/employee/${item._id}`);
-    onChangue('',!see);
+    onChangue(false,false);
   }
 
   const changeSee=()=>{
@@ -108,10 +107,13 @@ import { Popap } from './Popap.jsx';
                           Informacion Personal
                         </button>
                       }
-                      
-                      <button onClick={()=>delEmployee(item)}
-                      className=" bg-[#ff969601] border-[1px] border-[#952c2c98] text-[#952c2c] hover:text-white
-                       hover:bg-[#952c2c98] ml-[5px] rounded-[1em] p-[4px]">Eliminar</button>
+                      {pathLocation.includes('profileEmployee')
+                        ?''
+                        : <button onClick={()=>delEmployee(item)}
+                        className=" bg-[#ff969601] border-[1px] border-[#952c2c98] text-[#952c2c] hover:text-white
+                        hover:bg-[#952c2c98] ml-[5px] rounded-[1em] p-[4px]">Eliminar</button>
+                      }
+                     
                     </td>
                 </tr>
               ))}

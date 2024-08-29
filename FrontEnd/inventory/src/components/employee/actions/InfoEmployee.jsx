@@ -1,10 +1,10 @@
 import { Suspense, useContext, useState } from "react";
 import { FaMoneyCheckAlt } from "react-icons/fa";
 import { FaAddressBook, FaListCheck } from "react-icons/fa6";
-import TablePays from "../../components/employee/TablePays.jsx";
-import { AuthContext } from "../../context/AuthContext.jsx";
-import SearchForm from "../Forms/SearchForm.jsx";
-import Table from "../smallComponents/Table.jsx";
+import { AuthContext } from "../../../context/AuthContext.jsx";
+import TablePays from "../../employee/pays/TablePays.jsx";
+import SearchForm from "../../Forms/SearchForm.jsx";
+import Table from "../../smallComponents/Table.jsx";
 // import { getByIdEmployee } from "../../services/auth.js";
 
 const InfoEmployee = () => {

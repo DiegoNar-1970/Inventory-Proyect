@@ -12,7 +12,7 @@ import Menu from './components/menu/Menu.jsx';
 const Hours=lazy(()=>import('./components/hours/Hours.jsx'));
 const Paletizado=lazy(()=>import('./components/areas/Paletizado.jsx'));
 const Home=lazy(()=>import("./pages/home/Home.jsx"));
-const Employee=lazy(()=>import("./components/employee/Employee.jsx"));
+const Employee=lazy(()=>import("./components/employee/actions/Employee.jsx"));
 const Almacen=lazy(()=>import("./components/areas/Almacen.jsx"));
 const Frios=lazy(()=>import("./components/areas/Frios.jsx"));
 const Empaque=lazy(()=>import("./components/areas/Empaque.jsx"))
@@ -20,7 +20,7 @@ const Maquina=lazy(()=>import("./components/areas/Maquina.jsx"))
 const Administracion=lazy(()=>import("./components/areas/Administracion.jsx"))
 const Login=lazy(()=>import("./components/user/Login.jsx"))
 const Logout=lazy(()=>import("./components/user/Logout.jsx"))
-const InfoEmployee=lazy(()=>import("./components/employee/InfoEmployee.jsx"))
+const InfoEmployee=lazy(()=>import("./components/employee/actions/InfoEmployee.jsx"))
 const ProtectedRoute=lazy(()=>import('./components/protectedRouter/ProtectecRouter.jsx'))
 
 function App() {
