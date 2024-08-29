@@ -21,6 +21,8 @@ const Employee = () => {
   const [changue, setChangue] = useState(0);
 
   const onChangue = (change,see)=>{
+    console.log(change)
+    console.log(see)
     setChangue(change=>change+1);
     setSee(see);
   }
@@ -72,7 +74,12 @@ const Employee = () => {
               <div className='w-[100%] mt-[.7em]'>
                 <button className="w-[100%] p-2 rounded-[.5em] 
                 font-sans font-medium hover:bg-black transition duration-300 ease-in-ou  hover:text-white  text-black "
-                onClick={()=>setSee(!see)} >Cerrar</button> 
+                onClick={()=> {
+                  if(see){
+                    onChangue('',!see)
+                  }
+                  setSee(!see);
+                  } } >Cerrar</button> 
               </div>
             </div>
            </div>

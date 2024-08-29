@@ -18,7 +18,7 @@ export const Popap = ({see,changeSee,component:Component}) => {
             <button
               onClick={changeSee}
               className="mt-2 w-[100%] bg-red-500 text-white p-2 rounded">
-              Cerrar
+              Hola
             </button>
           </div>
         </div>

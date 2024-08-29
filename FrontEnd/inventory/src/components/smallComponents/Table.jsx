@@ -31,8 +31,8 @@ import { Popap } from './Popap.jsx';
     if(saveUser!=null) data=[saveUser];
 
   const delEmployee = async (item) => {
-    await deleteEmployee(`http://localhost:3000/profile/${item.profile._id}`)
-    await deleteEmployee(`http://localhost:3000/employee/${item._id}`)
+    await deleteEmployee(`http://localhost:3000/profile/${item.profile._id}`);
+    await deleteEmployee(`http://localhost:3000/employee/${item._id}`);
     onChangue('',!see);
   }
 
