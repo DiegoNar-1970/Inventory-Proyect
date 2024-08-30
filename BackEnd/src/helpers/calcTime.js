@@ -1,15 +1,25 @@
-export const calcTime=(initialDate,endDate,breakfast,lunch,inputDate)=>{
+import { COMISSIONS, TYPE_SHIFT } from '../const/TYPES_HOURS.js';
+export const calcTime=(initialDate,endDate,breakfast,lunch,typeHour)=>{
     const checkTime=new Date(initialDate);
     const leaveWork=new Date(endDate);
-    const creationDate=new Date(inputDate);
-
     let deadMin=0
     let totalMinHour=0
     let hours=0
     let minutes=0
+    let horasExtras={
+      type:'NO_APLICA',
+      hours:0,
+      minutes:0,
+      percentage:0,
+    }
+    let recargos={
+      type:'NO_APLICA',
+      apply:false,
+      value:0
+    }
 
     if(checkTime.getMinutes() >= 45 && checkTime.getMinutes() <= 59){
-       totalMinHour=Math.abs(checkTime.getHours()-leaveWork.getHours())-1;
+       totalMinHour=Math.abs(checkTime.getHours()-leaveWork.getHours())-1; //math.abs obtiene el valor absoluto
        deadMin=60-checkTime.getMinutes()
        totalMinHour=totalMinHour*60
        totalMinHour=totalMinHour+deadMin;
@@ -31,12 +41,34 @@ export const calcTime=(initialDate,endDate,breakfast,lunch,inputDate)=>{
        hours=Math.floor(totalMinHour/60)
        minutes=totalMinHour%60;
     })();
-    
+
+    if (typeHour === TYPE_SHIFT.DAY_SHIFT) {
+      if (hours > 8) {
+          horasExtras.hours = hours - 8;
+          hours=hours-horasExtras.hours
+          horasExtras.type = `HORA_EXTRA_${typeHour}`;
+          horasExtras.minutes = minutes;
+          horasExtras.percentage = 1.25
+          minutes = 0;
+      }}
+      if (typeHour === TYPE_SHIFT.NIGHT_SHIFT) {
+        if (hours > 8) {
+            horasExtras.hours = hours - 8;
+            hours=hours-horasExtras.hours
+            horasExtras.type = `HORA_EXTRA_${typeHour}`;
+            horasExtras.minutes = minutes;
+            horasExtras.percentage = 2  
+            recargos.type = COMISSIONS.NIGHT_SURCHARGE;
+            recargos.apply = true;
+            minutes = 0;
+        }}
+
     return {
       hours,
       minutes,
       checkTime,
       leaveWork,
-      creationDate
+      horasExtras,
+      recargos
     }
 }

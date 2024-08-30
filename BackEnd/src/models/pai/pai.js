@@ -7,8 +7,16 @@ const paiSchema=new Schema({
     date:{type:Date,default:Date.now()},
     week:[{type:Number}],
     totalHours:{type:Number},
-    nightSurcharge:{type:Number}, //recargo nocturno
-    dominicalSurcharge:{type:Number},  
+    nightSurcharge:{                //recargo nocturno
+        minutes:{type:Number,default:0},
+        hours:{type: Number, default: 0 },
+        value:{type:Number,default:0}
+    }, 
+    dominicalSurcharge:{
+        minutes:{type:Number,default:0},
+        hours:{type: Number, default: 0 },
+        value:{type:Number,default:0} 
+    },  
     prima:{
         istime:{type:Boolean,default:false},
         value:{type:Number,default:0}
@@ -24,29 +32,13 @@ const paiSchema=new Schema({
 const Pai=mongoose.model('Pai',paiSchema);
 export default Pai;
 
-const EXTRAS_HOURS_TYPES={
-    H_E_DIURNA:'HORA_EXTRA_DIURNA',
-    H_E_DOMINICAL:'HORA_EXTRA_DOMINICAL',
-    H_E_DOMINICAL_NOTURNA:'HORA_EXTRA_DOMINICAL_NOTURNA',
-    H_E_NOCTURNA:'HORA_EXTRA_NOCTURNA'
-}
-const TYPE_SHIFT={
-    DAY_SHIFT:'DIURNO',
-    NIGHT_SHIFT:'NOCTURNO',
-    DOMINICAL_SHIFT:'FESTIVO'
-    //DEBE DE HABER RECARGO SI ES NOCTURNO Y DOMINICAL
-    //PERO ESTOS SON APARTE SE SUMA EL TOTAL DE HORAS 
-    //Y SE SACA LAS HORAS QUE SEAN NOCTURNAS Y DOMINICALES
-    //PARA DARLE UN EXTRA
-
-}
 export class PaiModel{
     
     static async create(employeeId,date){
         const query=queryCond(date,employeeId);
         console.log('query',query)
         console.log(employeeId)
-    //    const arrBreak=await WorkHour.find(query,{_v:0});
+     
     }
     static async getAll(id){
         if(id){

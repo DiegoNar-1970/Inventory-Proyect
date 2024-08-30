@@ -1,30 +1,34 @@
 import mongoose from "mongoose";
-import { calcTime } from '../../helpers/calcTime.js';
+import { calcTime } from "../../helpers/calcTime.js";
 import { queryCond } from '../../helpers/queryConditios.js';
 import Employee from '../employee/employee.js';
-import { vWorkHourSchemaZod } from '../workHours/workHourZod.js';
+import { vWorkHourSchemaZod } from './workHourZod.js';
 
 const {Schema}=mongoose
 const workHourSchema = new Schema({
-    employee: { 
-      type: Schema.Types.ObjectId, ref: 'Employee'
-    },
-    week: { type: Number },
+    employee: { type: Schema.Types.ObjectId, ref: 'Employee' },
     dayHour: {
       hours:{type:Number, default:0},
       minutes:{type:Number, default:0},
-     },
-    creationDate: { type: Date },
-    isHoliday: { type: Boolean, default:false },
+    },
+    week: { type: Number },
+    creationDate: { type: Date, default:Date.now() },
     leaveWork: {type : Date},
     checkTime:{type:Date},
-    lunch:{type:Boolean,default:false},
     breakfast:{type:Boolean,default:false},
-    shiftType:{ type: String},
-    extraHour:{
-      type:String,
-      value:Number
+    lunch:{type:Boolean,default:false},
+    typeHour:{ type: String},
+    extraHours:{
+      type:{type:String,default:'NO_APLICA'},
+      hours:{type:Number,default:0},
+      minutes:{type:Number,default:0},
+      percentage:{type:Number,default:0},
     },
+    comissions:{
+      type:{type:String,default:'NO_APLICA'},
+      apply:{type:Boolean,default:false},
+      value:{type:Number,default:0},
+    }
 
   });
   
@@ -36,7 +40,6 @@ const workHourSchema = new Schema({
     static async create(id,data){
 
       const result = vWorkHourSchemaZod({...data,employee:id});
-
       if (!result.success) {
         return { message: 'invalid type', error: result.error };
       }
@@ -48,14 +51,13 @@ const workHourSchema = new Schema({
             return { message: 'El empleado no existe' };
           }
 
-          const {checkTime,leaveWork,hours,minutes,creationDate}=calcTime(
+          const {checkTime,leaveWork,hours,minutes,creationDate,horasExtras,recargos}=calcTime(
             result.data.checkTime,
             result.data.leaveWork,
             result.data.breakfast,
             result.data.lunch,
-            result.data.creationDate
+            result.data.typeHour,
           )
-
 
         const {checkTime: _,leaveWork: __, ...rest}=result.data;
 
@@ -66,10 +68,10 @@ const workHourSchema = new Schema({
             hours:hours,
             minutes:minutes, 
           },  
-          creationDate:creationDate,
-          ...rest,
+          extraHours:{...horasExtras},
+          comissions:{...recargos},
+          ...rest
         });
-       
         await newWorkH.save();
         return newWorkH;
       } catch (err) {

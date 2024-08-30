@@ -4,7 +4,7 @@ import { IoCalendarNumber, IoSearch } from "react-icons/io5";
 import { useParams } from "react-router-dom";
 import { UseBodyFetch } from "../../services/UseBodyFetch.jsx";
 import SearchForm from '../Forms/SearchForm.jsx';
-import HoursTable from "./HoursTable.jsx";
+import HoursTable from './HoursTable.jsx';
 
 const Hours = () => {
   let { area } = useParams();
