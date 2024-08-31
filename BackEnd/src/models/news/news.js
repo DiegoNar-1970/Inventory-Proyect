@@ -29,6 +29,7 @@ export class NewsModel{
     static async getByIdAndDate(id,data){
         try{
             const query=queryCond(data,id);
+            console.log('esta es la query',query)
             const hours=await this.getHoursById(query);
             if(hours.message){
                 return {message:hours.message};
@@ -54,6 +55,7 @@ export class NewsModel{
     }
     static async getHoursById(query){
         try{
+            console.log('aqui se aplica la',query)
             const hours = await News.find(query,{__v:0}).populate({
                 path:"employee",
                 select:"-__v -parafiscales -admissionDate -position",

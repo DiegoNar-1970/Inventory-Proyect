@@ -17,3 +17,5 @@
     export const deleteEmployee = (url) => axios.delete(url);
 
     export const creteHour=(url,data)=>axios.post(url,data);
+    
+    export const getNews=(url,data)=>axios.post(url,data);

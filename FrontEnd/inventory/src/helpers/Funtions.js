@@ -54,3 +54,4 @@ export const OnSubmit = (async (data,setLoading,setErrorReq,setResOk) => {
     }
   });
   
+  export const transformDate = (date) => date.replace(/-/g, '/');

@@ -2,6 +2,7 @@ import { useState } from "react";
 
 import { IoCalendarNumber, IoSearch } from "react-icons/io5";
 import { useParams } from "react-router-dom";
+import { transformDate } from "../../helpers/Funtions.js";
 import { UseBodyFetch } from "../../services/UseBodyFetch.jsx";
 import SearchForm from '../Forms/SearchForm.jsx';
 import HoursTable from './HoursTable.jsx';
@@ -16,7 +17,7 @@ const Hours = () => {
   const [view, setView] = useState(style);
 
   const url = `http://localhost:3000/workHour/?area=${area}`;
-  const transformDate = (date) => date.replace(/-/g, '/');
+
 
   const { data, loading } = UseBodyFetch(
     url,

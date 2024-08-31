@@ -2,18 +2,47 @@ import { Suspense, useContext, useState } from "react";
 import { FaMoneyCheckAlt } from "react-icons/fa";
 import { FaAddressBook, FaListCheck } from "react-icons/fa6";
 import { AuthContext } from "../../../context/AuthContext.jsx";
+import { transformDate } from "../../../helpers/Funtions.js";
+import { getNews } from "../../../services/auth.js";
+import { getByIdNewsURL } from "../../../services/urls.js";
 import TablePays from "../../employee/pays/TablePays.jsx";
 import SearchForm from "../../Forms/SearchForm.jsx";
 import Table from "../../smallComponents/Table.jsx";
-// import { getByIdEmployee } from "../../services/auth.js";
 
 const InfoEmployee = () => {
+  const [loading,setLoading]=useState(false);
+  const [data,setData]=useState({});
+
     const [tables,setTable]=useState({
         view:'pay',
         component:'pay',
         optional:''
     })
  const {saveUser}=useContext(AuthContext);
+ const onSubmit = (async (condiciones) => {
+  try {
+    setTable({...tables,component:''})
+    setLoading(true);
+    condiciones.startDate = transformDate(condiciones.startDate);
+    condiciones.endDate = transformDate(condiciones.endDate);
+    const response=await getNews(getByIdNewsURL(saveUser._id),condiciones);
+    console.log(response);
+    if(response.status===200||response.status===201){
+      setData(response.data);
+      setTable({...tables,component:'table'})
+      setLoading(false);
+      return;
+    }
+    console.log('cuando entra aqui?');
+    setLoading(false);
+  } catch (error) {
+    setTable({...tables,component:'error'})
+    setData(error.response.data.message)
+    setLoading(false);  
+    console.log(error);
+  }
+
+});
   return (
     <Suspense fallback={<div className="loader"></div>}>
     <section id="main" className="h-screen gap-3     ">
@@ -21,9 +50,12 @@ const InfoEmployee = () => {
           <Table data={saveUser}/>
       </article>
       <article className={`[grid-area:main] bg-[#1b1b1b] rounded-[1em] p-2 text-white ${tables.optional}`}>
+           {loading && <div className="loader"></div>}
            {tables.component === 'pay' ? <TablePays/> : '' }
-           {tables.component === 'news' ? <SearchForm/> : '' }
+           {tables.component === 'news' ? <SearchForm onSubmit={onSubmit} saveUser={saveUser}/> : '' }
            {tables.component === 'permissions' ? <TablePays/> : '' }
+           {tables.component=== 'table' ? <div></div> : '' }
+           {tables.component=== 'error' ? <p className="text-red-500">{data} {':('}</p> : '' }
       </article>
       <article className="[grid-area:aside] " >
            <div className={`flex flex-col gap-3 h-full bg-[#1b1b1b] p-2 rounded-[1em]  text-text-menu ${tables.style} text-[16px]`}>

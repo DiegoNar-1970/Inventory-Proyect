@@ -88,7 +88,7 @@ export function AuthProvider({children}){
             isLoading,
             reqLogut,
             setUserSave,
-            saveUser
+            saveUser,
         }}>
             {children}
         </AuthContext.Provider>

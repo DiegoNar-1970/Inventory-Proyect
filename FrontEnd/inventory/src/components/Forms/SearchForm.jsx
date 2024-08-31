@@ -1,6 +1,6 @@
 import { useForm } from "react-hook-form";
 
-const SearchForm = ({onSubmit}) => {
+const SearchForm = ({onSubmit, saveUser={} }) => {
   const {
     register,
     handleSubmit, 

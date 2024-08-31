@@ -3,9 +3,9 @@ import { NewsModel } from "../models/news/news.js";
 
 export class NewsController{
     static async getByIdAndDate(req,res){
+        const data=req.body;
+        const {id}=req.params;
         try{
-            const {id}=req.params;
-            const data=req.body;
             const result=await NewsModel.getByIdAndDate(id,data);
             if(result.message){
                 return res.status(400).json({message:result.message})
