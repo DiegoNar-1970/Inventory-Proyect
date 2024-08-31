@@ -5,18 +5,19 @@ const newsSchema=z.object({
         invalid_type_error: 'employee just be a string',
         required_error: 'employee is required.'}).optional(),
 
-        week: z.array(z.number({
-            invalid_type_error: 'week must be a number'
-        })).nonempty({
-            message: 'week array cannot be empty'
-        }),
-  
-    date: z.date({
-        invalid_type_error: 'date just be a date'}).optional(),
-  
-    hours: z.number({
-        invalid_type_error: 'hours just be a number',
-        required_error: 'hours is required.'}).min(0).max(40).nonnegative(),
+    week: z.number({invalid_type_error: 'tipo de dato incorrecto'})
+        .min(1).max(60),
+    extraHours:z.object({
+        type : z.string(),
+        hours : z.number().min(0).max(24),
+        minutes:z.number().max(61),
+        percentage:z.number()
+    }),
+    comissions:z.object({
+        type:z.string(),
+        apply:z.boolean(),
+        value:z.number()
+    })
 })
 export function validateNewsSchema(input) {
     return newsSchema.safeParse(input)

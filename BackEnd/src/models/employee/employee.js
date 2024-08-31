@@ -5,13 +5,20 @@ const {Schema}=mongoose;
 
 const employeeSchema = new Schema({
     admissionDate:{type:Date, default:Date.now()},
-    position:{ type: String},
+    position:{ type: String },
     area:{ type: String },
     profile:{
         type:mongoose.Schema.Types.ObjectId,ref:'Profile'
     },
     parafiscales:{type:Boolean,default:false},
-    baseSalary:{type:Number}
+    baseSalary:{type:Number},
+    // bonifics:{
+    //     auxTrasnport:{type:Number},
+    //     arl:{
+    //         value:{type:Number},
+    //         apply:{type:Boolean},
+    //     }
+    // },
 });
 const Employee=mongoose.model('Employee',employeeSchema);
 export default Employee;

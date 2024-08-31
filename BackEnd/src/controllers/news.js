@@ -2,6 +2,35 @@ import mongoose from "mongoose";
 import { NewsModel } from "../models/news/news.js";
 
 export class NewsController{
+    static async getByIdAndDate(req,res){
+        try{
+            const {id}=req.params;
+            const data=req.body;
+            const result=await NewsModel.getByIdAndDate(id,data);
+            if(result.message){
+                return res.status(400).json({message:result.message})
+            }
+            return res.send(result)
+        }catch(err){
+            return res.status(400).json({message:err.message})
+        }
+
+    }
+
+    static async getByCcAndDate(req,res){
+        try{
+            const data=req.body
+            const {cc}=req.body
+            const result=await NewsModel.getByCcAndDate(cc,data);
+            if(result.message){
+                return res.status(400).json({message:result.message})
+            }
+            return res.send(result)
+        }catch(err){
+            return res.status(400).json({message:err.message})
+        }    
+
+    }
     static async getAll(req,res){
         try{
             const allNews=await NewsModel.getAll();

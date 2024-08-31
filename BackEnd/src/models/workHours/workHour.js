@@ -2,6 +2,7 @@ import mongoose from "mongoose";
 import { calcTime } from "../../helpers/calcTime.js";
 import { queryCond } from '../../helpers/queryConditios.js';
 import Employee from '../employee/employee.js';
+import { NewsModel } from "../news/news.js";
 import { vWorkHourSchemaZod } from './workHourZod.js';
 
 const {Schema}=mongoose
@@ -17,18 +18,7 @@ const workHourSchema = new Schema({
     checkTime:{type:Date},
     breakfast:{type:Boolean,default:false},
     lunch:{type:Boolean,default:false},
-    typeHour:{ type: String},
-    extraHours:{
-      type:{type:String,default:'NO_APLICA'},
-      hours:{type:Number,default:0},
-      minutes:{type:Number,default:0},
-      percentage:{type:Number,default:0},
-    },
-    comissions:{
-      type:{type:String,default:'NO_APLICA'},
-      apply:{type:Boolean,default:false},
-      value:{type:Number,default:0},
-    }
+    typeHour:{ type: String}
 
   });
   
@@ -51,7 +41,7 @@ const workHourSchema = new Schema({
             return { message: 'El empleado no existe' };
           }
 
-          const {checkTime,leaveWork,hours,minutes,creationDate,horasExtras,recargos}=calcTime(
+          const {checkTime,leaveWork,hours,minutes,horasExtras,recargos}=calcTime(
             result.data.checkTime,
             result.data.leaveWork,
             result.data.breakfast,
@@ -59,8 +49,16 @@ const workHourSchema = new Schema({
             result.data.typeHour,
           )
 
-        const {checkTime: _,leaveWork: __, ...rest}=result.data;
-
+        const {checkTime : _, leaveWork : __, ...rest}=result.data;
+        const {breakfast : b, lunch : l ,typeHour:t ,...dataNews}=rest;
+        const news=await NewsModel.create({
+          ...dataNews,
+          extraHours:{...horasExtras},
+          comissions:{...recargos},
+        });
+        if(news.message){
+          return {message:'bad request',err:news.error}
+        }
         const newWorkH = new WorkHour({
           checkTime:checkTime,
           leaveWork:leaveWork,
@@ -68,12 +66,10 @@ const workHourSchema = new Schema({
             hours:hours,
             minutes:minutes, 
           },  
-          extraHours:{...horasExtras},
-          comissions:{...recargos},
           ...rest
         });
         await newWorkH.save();
-        return newWorkH;
+        return {newWorkH,news};
       } catch (err) {
         return { message: err.message };
       }
