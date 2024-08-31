@@ -57,10 +57,49 @@ export const calcTime=(initialDate,endDate,breakfast,lunch,typeHour)=>{
             hours=hours-horasExtras.hours
             horasExtras.type = `HORA_EXTRA_${typeHour}`;
             horasExtras.minutes = minutes;
-            horasExtras.percentage = 2  
+            horasExtras.percentage = 1.75  
             recargos.type = COMISSIONS.NIGHT_SURCHARGE;
             recargos.apply = true;
+            recargos.value=0.35
             minutes = 0;
+        }
+        else{
+          recargos.type = COMISSIONS.NIGHT_SURCHARGE;
+          recargos.apply = true;
+          recargos.value=0.35
+        }
+      }
+        if (typeHour === TYPE_SHIFT.DOMINICAL_SHIFT) {
+          if (hours > 8) {
+              horasExtras.hours = hours - 8;
+              hours=hours-horasExtras.hours
+              horasExtras.type = `HORA_EXTRA_${typeHour}`;
+              horasExtras.minutes = minutes;
+              horasExtras.percentage = 2 
+              recargos.type = COMISSIONS.SUNDAY;
+              recargos.apply = true;
+              minutes = 0;
+          }
+        else{
+              recargos.type = COMISSIONS.SUNDAY;
+              recargos.apply = true;
+              recargos.value=0.75
+        }}
+        if (typeHour === TYPE_SHIFT.NIGH_DOMINICAL_SHIFT) {
+          if (hours > 8) {
+              horasExtras.hours = hours - 8;
+              horasExtras.type = `HORA_EXTRA_${typeHour}`;
+              horasExtras.minutes = minutes;
+              horasExtras.percentage = 2.5 
+              recargos.type = COMISSIONS.SUNDAY_NIGHT;
+              recargos.apply = true;
+              minutes = 0;
+              hours=hours-horasExtras.hours
+          }
+        else{
+              recargos.type = COMISSIONS.SUNDAY_NIGHT;
+              recargos.apply = true;
+              recargos.value= 1.1
         }}
 
     return {

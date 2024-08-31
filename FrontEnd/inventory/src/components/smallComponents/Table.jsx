@@ -9,13 +9,12 @@ import Profile from '../employee/actions/Profile.jsx';
 import FormHour from '../hours/FormHour.jsx';
 import { Popap } from './Popap.jsx';
 
-  const Table = ({data,onChangue,setLoading}) => {
+  const Table = ({data,onChangue}) => {
      //recuerda que solo los de administración pueden tener la opcion de ver el perfil de un empleado con sus pagos etc 
     const {saveUser,setUserSave}=useContext(AuthContext);
     const location = useLocation();
     const pathLocation=location.pathname
     const navigate = useNavigate(); 
-    
   const [see,setSee]=useState({
     component:'',
     isTrue:false,
@@ -26,10 +25,10 @@ import { Popap } from './Popap.jsx';
       if(pathLocation.includes('employee')) setUserSave(null);
     }, []);
 
+
     if(saveUser!=null) data=[saveUser];
 
   const delEmployee = async (item) => {
-    setLoading(true);
     await deleteEmployee(`http://localhost:3000/profile/${item.profile._id}`);
     await deleteEmployee(`http://localhost:3000/employee/${item._id}`);
     onChangue(false,false);
@@ -138,7 +137,7 @@ import { Popap } from './Popap.jsx';
             see={see.dataItem}
             changeSee={changeSee}
             component={FormHour}
-
+            setSee={setSee}
            />
           )}
     </>

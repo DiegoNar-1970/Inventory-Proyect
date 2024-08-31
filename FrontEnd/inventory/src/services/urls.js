@@ -1,0 +1,1 @@
+export const createHourURL=(id)=>`http://localhost:3000/workHour/${id}`;

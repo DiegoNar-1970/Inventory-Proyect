@@ -3,8 +3,8 @@ import { useForm } from "react-hook-form";
 import { OnSubmit } from "../../../helpers/Funtions.js";
 import { areaOptions, sexOptions } from '../../../helpers/options.js';
 import ErrorDisplay from "../../errors/ErrorDisplay.jsx";
-import InputField from "../helpers/InputField.jsx";
-import SuccessDisplay from '../helpers/SuccessDisplay.jsx';
+import InputField from "../../helpers/InputField.jsx";
+import SuccessDisplay from '../../helpers/SuccessDisplay.jsx';
 
 const CreateEmployee = ({ onChangue, see,setSee }) => {
   const {

@@ -514,3 +514,45 @@ uso de groupby
       delete formattedData.hrsHoliday;
       console.log('Datos enviados:', formattedData);
     });
+
+
+
+
+
+
+
+
+
+
+
+
+
+    <label htmlFor="week" className="font-medium font-sans ">
+            Semana
+          </label>
+          <input
+            type="number"
+            {...register("week", {
+              required: {
+                value: true,
+                message: "Se necesita una semana",
+              },
+              valueAsNumber: true,
+              max: {
+                value: 60,
+                message: "semanas maximas 60",
+              },
+              min: {
+                value: 1,
+                message: "numero no permitido",
+              },
+              pattern: {
+                value: /^(0?[0-9]|1[0-2])$/,
+                message: "Ingrese un número válido del 0 al 12",
+              },
+            })}
+            className="border-[1px] rounded-lg p-[2px] border-gray-400 max-w-[200px]"
+          />
+          {errors.week && (
+            <span className="text-red-600">{errors.week.message}</span>
+          )}

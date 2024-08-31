@@ -96,22 +96,6 @@ console.log('en item',item);
       </div>
       
       <div className="flex-1 flex gap-2 flex-col max-sm:min-w-[300px] max-sm:max-w-[70px] ">
-        <div className=" flex gap-2 items-center justify-between">
-          <label htmlFor="isHoliday" className="font-medium font-sans ">
-            Marcar solo si es festivo 
-          </label>
-          <input
-            type="checkbox"
-            {...register("isHoliday", {
-              require: {
-                value: true,
-                message: "se requieren horas",
-              },
-            })}
-            defaultChecked={item.isHoliday}
-            className="border-[1px] rounded-lg p-[2px] border-gray-400"
-          />
-        </div>
         <div className=" flex fle-1 gap-2 items-center justify-between">
           <label htmlFor="breakfast" className="font-medium font-sans ">
             Desayuno 

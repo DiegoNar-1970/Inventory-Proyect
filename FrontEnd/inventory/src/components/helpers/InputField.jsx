@@ -1,14 +1,15 @@
 
-const InputField = ({ label, name, type = "text", register, errors, options = [], placeHolder, style, ...rest }) => {
+const InputField = ({ label, name, type = "text", register, errors,validates={}, options = [], placeHolder, styleIput, styleDiv , 
+    defaultValue ,required , ...rest}) => {
     return (
-      <div className= {`flex flex-col gap-2 ${style}`}>
+      <div className= {`flex  gap-2 ${styleDiv}`}>
 
         <label htmlFor={name} className="font-sans">{label}</label>
         {type === "select" ? (
                 <select
                     id={name}
-                    {...register(name, { required: "Campo Requerido", ...rest })}
-                    className={`border-[1px] rounded-lg p-[2px] border-gray-400 min-w-[185px]`}
+                    {...register(name, { required: "Campo Requerido", ...validates, ...rest })}
+                    className={`outline outline-[1px] rounded-lg p-[2px] outline-gray-400  ${styleIput} `}
                 >
                     {options.map((option) => (
                         <option key={option.value} value={option.value}>
@@ -21,9 +22,11 @@ const InputField = ({ label, name, type = "text", register, errors, options = []
                     id={name}
                     type={type}
                     placeholder={placeHolder}
-                    {...register(name, { required: "Campo Requerido", ...rest })}
-                    className="border-[1px] rounded-lg p-[2px] border-gray-400 
-                text-gray-600 min-w-[185px]"
+                    {...register(name, { required: required , ...validates, ...rest})}
+                    defaultValue={defaultValue}
+                
+                    className= {`border-[1px] rounded-lg p-[2px] border-gray-400
+                text-gray-600 ${styleIput} `}
                 />
             )}
         {errors[name] && <span className="text-red-600">{errors[name].message}</span>}

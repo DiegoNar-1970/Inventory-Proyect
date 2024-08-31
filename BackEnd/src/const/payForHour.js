@@ -1,0 +1,1 @@
+const PAY_FOR_HOUR=5957
