@@ -7,6 +7,7 @@ import { getNews } from "../../../services/auth.js";
 import { getByIdNewsURL } from "../../../services/urls.js";
 import TablePays from "../../employee/pays/TablePays.jsx";
 import SearchForm from "../../Forms/SearchForm.jsx";
+import TableNews from "../../news/TableNews.jsx";
 import Table from "../../smallComponents/Table.jsx";
 
 const InfoEmployee = () => {
@@ -29,7 +30,7 @@ const InfoEmployee = () => {
     console.log(response);
     if(response.status===200||response.status===201){
       setData(response.data);
-      setTable({...tables,component:'table'})
+      setTable({...tables,component:'table',optional:'',view:'table'});
       setLoading(false);
       return;
     }
@@ -37,6 +38,7 @@ const InfoEmployee = () => {
     setLoading(false);
   } catch (error) {
     setTable({...tables,component:'error'})
+    console.log(error)
     setData(error.response.data.message)
     setLoading(false);  
     console.log(error);
@@ -49,13 +51,13 @@ const InfoEmployee = () => {
       <article className=" [grid-area:header] p-2 flex flex-col bg-[#1b1b1b] rounded-[1em] text-white pb-[15px] ">
           <Table data={saveUser}/>
       </article>
-      <article className={`[grid-area:main] bg-[#1b1b1b] rounded-[1em] p-2 text-white ${tables.optional}`}>
+      <article className={`[grid-area:main] bg-[#1b1b1b] rounded-[1em] text-white ${tables.optional} p-2 overflow-auto  `}>
            {loading && <div className="loader"></div>}
-           {tables.component === 'pay' ? <TablePays/> : '' }
-           {tables.component === 'news' ? <SearchForm onSubmit={onSubmit} saveUser={saveUser}/> : '' }
-           {tables.component === 'permissions' ? <TablePays/> : '' }
-           {tables.component=== 'table' ? <div></div> : '' }
-           {tables.component=== 'error' ? <p className="text-red-500">{data} {':('}</p> : '' }
+           {tables.component === 'pay' && <TablePays/> }
+           {tables.component === 'search' && <SearchForm onSubmit={onSubmit} saveUser={saveUser}/> }
+           {tables.component === 'permissions' && <TablePays/>  }
+           {tables.component=== 'table' && <TableNews datos={data} setTable={setTable}/>  }
+           {tables.component=== 'error' && <p className="text-red-500"> {data} {':('}</p>  }
       </article>
       <article className="[grid-area:aside] " >
            <div className={`flex flex-col gap-3 h-full bg-[#1b1b1b] p-2 rounded-[1em]  text-text-menu ${tables.style} text-[16px]`}>
@@ -65,9 +67,9 @@ const InfoEmployee = () => {
                     Pagos
                 </button>
             </div>
-            <div className={`${tables.view ==='news'?'bg-gray-600 text-white ':''}bg-[#202124] rounded-[1em] p-2 hover:bg-gray-600 hover:text-white transition-all flex gap-2 items-center`}>
+            <div className={`${tables.view ==='search'?'bg-gray-600 text-white ':''}bg-[#202124] rounded-[1em] p-2 hover:bg-gray-600 hover:text-white transition-all flex gap-2 items-center`}>
               <FaAddressBook className="text-[20px]"/>
-                <button onClick={()=>setTable({view:'news',component:'news',optional:' flex justify-center items-center '})}
+                <button onClick={()=>setTable(prevState=>({...prevState,optional:' flex justify-center items-center '}))}
                 >Novedades</button>
             </div>
             <div className={`${tables.view ==='permissions'?'bg-gray-600 text-white ':''}bg-[#202124] rounded-[1em] p-2 hover:bg-gray-600 hover:text-white transition-all flex gap-2 items-center`}>
