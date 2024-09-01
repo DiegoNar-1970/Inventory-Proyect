@@ -31,8 +31,8 @@ export class LoginModel{
             const {password: _, ...publicUser}=user.toObject();
 
             const token = jwt.sign( publicUser, process.env.JWT_SECRET_KEY);
-            console.log('role models',foundRole)
-            return {token, redirection:foundRole.role, role:foundRole};
+            console.log('role models',publicUser)
+            return {publicUser,token, redirection:foundRole.role, role:foundRole};
 
         }catch(err){
             return {message:err.message};

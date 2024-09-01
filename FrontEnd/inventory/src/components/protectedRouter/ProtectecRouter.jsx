@@ -1,6 +1,6 @@
 import { useContext } from "react";
+import { Navigate, Outlet } from 'react-router-dom';
 import { AuthContext } from "../../context/AuthContext";
-import {Navigate,Outlet} from 'react-router-dom'
 
 const ProtectecRouter = () => {
   const {isAuthenticated,isLoading}=useContext(AuthContext);
@@ -11,4 +11,4 @@ const ProtectecRouter = () => {
   return <Outlet/>
 }
 
-export default ProtectecRouter
+export default ProtectecRouter;

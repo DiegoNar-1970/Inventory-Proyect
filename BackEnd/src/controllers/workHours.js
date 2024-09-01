@@ -12,9 +12,7 @@ if (!result || !id) {
 try {
   const {newWorkH} = await WorkHourModel.create(id, result);
   if (newWorkH.message) {
-    return res.status(400).json({ message: newWorkH.message,
-        error:newWorkH.error
-     });
+    return res.status(400).json({ message: newWorkH.message });
   }
   return res.status(201).json(newWorkH);
 } catch (err) {

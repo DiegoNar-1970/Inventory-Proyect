@@ -1,7 +1,9 @@
 
 import { Suspense } from 'react';
 import { NavLink, Outlet } from 'react-router-dom';
+
 const Links = ({icon:Icon, href,area}) => {
+
     return (
         <div className='flex gap-2 p-1 hover:bg-gray-700 rounded-[1em]'>
             <Suspense fallback={

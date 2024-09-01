@@ -32,7 +32,7 @@ import Logout from '../user/Logout.jsx';
               <Links icon={IoIosPeople} href={"administracion"} area={"administración"}></Links>
               <Links icon={GiCardboardBoxClosed} href={"empaque"} area={"Empaque"}></Links>
               <Links icon={CiSettings} href={"maquina"} area={"Máquina"}></Links>
-              {user?.role?.role=="administrador" && <Links icon={RiAdminFill} href={"administrador"} area={"administrador"}></Links> }
+              {user?.role?.role === "administrador" && <Links icon={RiAdminFill} href={"administrador"} area={"administrador"}></Links> }
             
             </ul>
           </nav>
@@ -42,7 +42,10 @@ import Logout from '../user/Logout.jsx';
             <picture className='rounded-[1em] items-center w-[40px] h-[40px] '>
                 <img src={img} alt="avatar" className='object-contain rounded-[1em]' />
             </picture>
-            <Logout></Logout>
+            <div className="flex flex-col    items-center justify-between">
+              <span className="text-gray-400">{user?.name}</span>
+              <Logout/>
+            </div>
 
           </div>
     </div>

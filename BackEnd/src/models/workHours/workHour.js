@@ -56,9 +56,7 @@ const workHourSchema = new Schema({
           extraHours:{...horasExtras},
           comissions:{...recargos},
         });
-        if(news.message){
-          return {message:'bad request',err:news.error}
-        }
+
         const newWorkH = new WorkHour({
           checkTime:checkTime,
           leaveWork:leaveWork,
@@ -69,9 +67,9 @@ const workHourSchema = new Schema({
           ...rest
         });
         await newWorkH.save();
-        return {newWorkH,news};
+        return {newWorkH};
       } catch (err) {
-        return { message: err.message };
+        return { message: err };
       }
     }
     

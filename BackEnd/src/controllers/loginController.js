@@ -4,7 +4,7 @@ export class LoginController{
 
     static async login(req,res){
         try{
-            const {redirection,token,role}= await LoginModel.login(req.body);  
+            const {publicUser,redirection,token,role}= await LoginModel.login(req.body);  
 
             if(token.message) return res.status(401).json({message:token.message})
 
@@ -22,6 +22,7 @@ export class LoginController{
                     maxAge: 100 * 60 * 60
                  })
                  .status(200).json({
+                      name:publicUser.name,
                       ok:true,
                       redirection:redirection,
                       message:"Sesion Iniciada",
