@@ -14,6 +14,8 @@ export function queryCond({startDate,endDate,startWeek,endWeek,},employee){
     if(startWeek&&endWeek){
         conditions.push({week:{$gte:startWeek,$lte:endWeek}})
     } 
+
     const query= conditions.length ? {$and:conditions} : {};
+
     return query;
 }

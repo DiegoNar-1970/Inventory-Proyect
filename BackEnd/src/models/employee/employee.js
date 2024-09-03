@@ -14,11 +14,11 @@ const employeeSchema = new Schema({
     baseSalary:{type:Number},
     // bonifics:{
     //     auxTrasnport:{type:Number},
-    //     arl:{
-    //         value:{type:Number},
-    //         apply:{type:Boolean},
-    //     }
     // },
+    // deduccions:{
+    //     salud,
+    //     pension
+    // }
 });
 const Employee=mongoose.model('Employee',employeeSchema);
 export default Employee;

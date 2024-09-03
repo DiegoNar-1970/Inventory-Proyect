@@ -134,4 +134,34 @@ const workHourSchema = new Schema({
         return {message:err.message}
       }
     }
+
+    static async groupByType(id,data,endWeek,startWeek){
+
+        const query=queryCond(data);
+        const employeeId = new mongoose.Types.ObjectId(id);
+      //el agregate es bastante canson asi que el id del empleado se debe pasar si o si como un oobject id
+        let hours=await WorkHour.aggregate([
+          {
+            $match: {
+              ...query,
+              employee: employeeId 
+            }
+          },
+          {
+            $group:{
+            _id: "$typeHour", 
+            cantHoursType: { $sum: 1},
+            totalMinutes: { $sum: "$dayHour.minutes"},
+            totalHoras: { $sum:"$dayHour.hours" }
+          }
+        }
+      ]);
+        hours={
+          ...hours,
+          endWeek:endWeek,
+          startWeek:startWeek,
+        }
+        return{hours}
+      }
+      
     }

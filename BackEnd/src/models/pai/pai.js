@@ -7,16 +7,6 @@ const paiSchema=new Schema({
     date:{type:Date,default:Date.now()},
     week:[{type:Number}],
     totalHours:{type:Number},
-    nightSurcharge:{                //recargo nocturno
-        minutes:{type:Number,default:0},
-        hours:{type: Number, default: 0 },
-        value:{type:Number,default:0}
-    }, 
-    dominicalSurcharge:{
-        minutes:{type:Number,default:0},
-        hours:{type: Number, default: 0 },
-        value:{type:Number,default:0} 
-    },  
     prima:{
         istime:{type:Boolean,default:false},
         value:{type:Number,default:0}
@@ -26,8 +16,7 @@ const paiSchema=new Schema({
         name:{type:String},
         value:{type:Number}
     },],
-    pai:{type:Types.Decimal128},
-    assistanceTransport:{type:Number},
+    pai:{type:Number},
 })
 const Pai=mongoose.model('Pai',paiSchema);
 export default Pai;

@@ -51,4 +51,19 @@ try {
         return res.status(404).json({err:err.message})
       }
     }
+    static async groupByType(req,res){
+      const {endWeek}=req.body;
+      const {startWeek}=req.body;  
+      const {id}=req.params;
+      try{
+        const result=await WorkHourModel.groupByType(id,req.body,startWeek,endWeek)
+        console.log('este es el resultado',result);
+      if(result.message){
+          return res.status(401).json({err:result.message})
+          }
+        return res.send(result);
+      }catch(err){
+          return res.status(404).json({err:err.message})
+        }
+    }
 }
