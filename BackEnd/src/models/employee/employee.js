@@ -67,7 +67,20 @@ export class EmployeeModel{
             return {message:err.message};
         }
     }
-    static async getByid(){
+    static async getByid(id){
+        try{
+            const employee= await Employee.findById(id).populate({},{
+                __v:0,
+                parafiscales:0,
+                position:0
+            });
+            if(!employee){
+                return {message:'Employee not found'};
+            }
+            return employee;
+        }catch(err){
+            return {message:err.message};
+        }
         
     }
 }

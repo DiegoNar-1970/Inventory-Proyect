@@ -31,7 +31,6 @@ const Hours = () => {
     },
     formData
   );
- console.log(data)
   const onSubmit = ((condiciones) => {
      condiciones.startDate = transformDate(condiciones.startDate);
      condiciones.endDate = transformDate(condiciones.endDate);

@@ -150,17 +150,22 @@ const workHourSchema = new Schema({
           {
             $group:{
             _id: "$typeHour", 
-            cantHoursType: { $sum: 1},
             totalMinutes: { $sum: "$dayHour.minutes"},
             totalHoras: { $sum:"$dayHour.hours" }
           }
         }
       ]);
+      
+      if(hours.length === 0){
+        return {message:'No se Encontraron Datos Por favor ingresa fechas con registros'}
+      };
+
         hours={
           ...hours,
           endWeek:endWeek,
           startWeek:startWeek,
-        }
+        };
+
         return{hours}
       }
       

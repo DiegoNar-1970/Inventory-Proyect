@@ -127,5 +127,49 @@ export class NewsModel{
             return {message:'created error',err:err}
         }
     }
+    static async groupByType(id,data,newsEndW,newsStartW){
 
+        const query=queryCond(data);
+        const employeeId = new mongoose.Types.ObjectId(id);
+        let news = await News.aggregate([
+          {
+            $match: {
+              ...query,
+              employee: employeeId 
+            }
+          },
+          {
+            $group:{
+            _id: {
+                extraHours:"$extraHours.type",
+                comissions:"$comissions.type",
+                employee: "$employee"
+            }, 
+            totalMinutes: { $sum: "$extraHours.minutes"},
+            totalHoras: { $sum:"$extraHours.hours" }
+          }
+        },
+        {
+            $project: {
+            _id: 1,
+            calcHoursTotal: {
+                $sum: [
+                  "$totalHoras", 
+                  { $divide: ["$totalMinutes", 60] }]
+              },
+              totalHoras: 1,
+              employee: 1
+          }
+        }
+        ]);
+        if(news.length === 0){
+            return {message:'No se Encontraron Datos Por favor ingresa fechas con registros'}
+        }
+        news={
+             ...news,
+            endWeek:newsEndW,
+            startWeek:newsStartW,
+        }
+        return{news}
+      }
 }

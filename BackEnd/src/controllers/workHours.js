@@ -1,4 +1,6 @@
 
+import { EmployeeModel } from "../models/employee/employee.js";
+import { NewsModel } from "../models/news/news.js";
 import { WorkHourModel } from "../models/workHours/workHour.js";
 
 export class WorkHourController{
@@ -53,17 +55,35 @@ try {
     }
     static async groupByType(req,res){
       const {endWeek}=req.body;
-      const {startWeek}=req.body;  
+      const {startWeek}=req.body;    
+      const {newsDateE,newsDateS,newsStartW,newsEndW}=req.body;
+      const data={newsDateE,newsDateS,newsStartW,newsEndW};
       const {id}=req.params;
+
       try{
-        const result=await WorkHourModel.groupByType(id,req.body,startWeek,endWeek)
-        console.log('este es el resultado',result);
-      if(result.message){
-          return res.status(401).json({err:result.message})
+        const employee= await EmployeeModel.getByid(id);
+
+        if(!employee){
+          return res.status(400).json({message:'Empleado no encontrado'});
+        }
+
+        const news=await NewsModel.groupByType(id,data,newsStartW,newsEndW);
+        const workHour=await WorkHourModel.groupByType(id,req.body,startWeek,endWeek);
+
+      if(workHour.message){
+          return res.status(401).json({message:workHour.message})
           }
-        return res.send(result);
+          
+      if(news.message){
+          return res.status(401).json({message:news.message})
+         }
+        Object.entries(news).forEach(([key,value])=>{
+          console.log(key,value);
+        })
+        return res.send({news});
+
       }catch(err){
-          return res.status(404).json({err:err.message})
+          return res.status(404).json({message:err.message})
         }
     }
 }

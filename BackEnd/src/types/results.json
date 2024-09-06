@@ -1,0 +1,44 @@
+{
+    "news": {
+      "news": {
+        "0": {
+          "_id": {
+            "extraHours": "NO_APLICA",
+            "comissions": "RECARGO_NOCTURNO",
+            "employee": "66d0b8060ddc0b9241abae8c"
+          },
+          "totalHoras": 0,
+          "calcHoursTotal": 0
+        },
+        "1": {
+          "_id": {
+            "extraHours": "HORA_EXTRA_DIURNO",
+            "comissions": "NO_APLICA",
+            "employee": "66d0b8060ddc0b9241abae8c"
+          },
+          "totalHoras": 6,
+          "calcHoursTotal": 8.483333333333334
+        },
+        "2": {
+          "_id": {
+            "extraHours": "HORA_EXTRA_NOCTURNO",
+            "comissions": "RECARGO_NOCTURNO",
+            "employee": "66d0b8060ddc0b9241abae8c"
+          },
+          "totalHoras": 6,
+          "calcHoursTotal": 8.516666666666666
+        },
+        "3": {
+          "_id": {
+            "extraHours": "HORA_EXTRA_FESTIVO_NOCTURNO",
+            "comissions": "RECARGO_DOMINICAL_NOCTURNO",
+            "employee": "66d0b8060ddc0b9241abae8c"
+          },
+          "totalHoras": 4,
+          "calcHoursTotal": 5.666666666666667
+        },
+        "endWeek": 1,
+        "startWeek": 1
+      }
+    }
+  }

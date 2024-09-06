@@ -29,6 +29,6 @@ export const validateWeek={
 export const shiftOptions = [
   { value: "DIURNO", label: "Diurno" },
   { value: "NOCTURNO", label: "Nocturno" },
-  { value: "NFESTIVO_DIURNO", label: "Festivo Diurno" },
+  { value: "FESTIVO_DIURNO", label: "Festivo Diurno" },
   { value: "FESTIVO_NOCTURNO", label: "Festivo Nocturno" },
 ];
