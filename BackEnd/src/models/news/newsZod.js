@@ -16,7 +16,8 @@ const newsSchema=z.object({
     comissions:z.object({
         type:z.string(),
         apply:z.boolean(),
-        value:z.number()
+        value:z.number(),
+        hrs:z.number()
     })
 })
 export function validateNewsSchema(input) {

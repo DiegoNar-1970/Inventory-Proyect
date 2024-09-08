@@ -1,4 +1,6 @@
 
+import { EH_DAYTIME_HOLIDAY, EH_DAYTIME_OVERTIME, EH_NIGHT_HOLIDAY, EH_NIGHT_OVERTIME } from '../const/payForHour.js';
+import { EX_HOUR } from '../const/TYPES_HOURS.js';
 import { EmployeeModel } from "../models/employee/employee.js";
 import { NewsModel } from "../models/news/news.js";
 import { WorkHourModel } from "../models/workHours/workHour.js";
@@ -44,7 +46,7 @@ try {
         return res.status(401).json({message:'need area'})
       }   
       try{
-        const allHours=await WorkHourModel.calcHours(area,req.body)
+        const allHours=await WorkHourModel.calcHours(area,req.body);
         if(allHours.message){
          return res.status(401).json({err:allHours.message})
         }
@@ -53,6 +55,7 @@ try {
         return res.status(404).json({err:err.message})
       }
     }
+    
     static async groupByType(req,res){
       const {endWeek}=req.body;
       const {startWeek}=req.body;    
@@ -77,9 +80,40 @@ try {
       if(news.message){
           return res.status(401).json({message:news.message})
          }
-        Object.entries(news).forEach(([key,value])=>{
-          console.log(key,value);
+
+        let dayTimeOvertime={ totalHours:0, paiForHour:0, comissions :[] }
+        let nightOvertime={ totalHours:0, paiForHour:0, comissions : [] }
+        let dayTimeHoliday={ totalHours:0, paiForHour:0, comissions : [] }
+        let nightHoliday={ totalHours:0, paiForHour:0, comissions : [] }
+        
+        Object.entries(news.news).forEach(([key,value])=>{ 
+
+          if(value._id?.extraHours === EX_HOUR.DAYTIME_OVERTIME){
+            dayTimeOvertime.totalHours += value.calcHoursTotal;
+            dayTimeOvertime.paiForHour += dayTimeOvertime.totalHours * EH_DAYTIME_OVERTIME
+            if(value._id.comissions != "NO_APLICA" ) dayTimeOvertime.comissions.push(value._id.comissions)
+          }
+          if(value._id?.extraHours === EX_HOUR.NIGHT_OVERTIME){
+            nightOvertime.totalHours += value.calcHoursTotal;
+            nightOvertime.paiForHour += nightOvertime.totalHours * EH_NIGHT_OVERTIME
+            if(value._id.comissions != "NO_APLICA" ) nightOvertime.comissions.push(value._id.comissions)
+          }
+          if(value._id?.extraHours === EX_HOUR.DAYTIME_HOLIDAY){
+            dayTimeHoliday.totalHours += value.calcHoursTotal;
+            dayTimeHoliday.paiForHour += dayTimeHoliday.totalHours * EH_DAYTIME_HOLIDAY
+            if(value._id.comissions != "NO_APLICA" ) dayTimeHoliday.comissions.push(value._id.comissions)
+          }
+          if(value._id?.extraHours === EX_HOUR.NIGHT_HOLIDAY){
+            nightHoliday.totalHours += value.calcHoursTotal;
+            nightHoliday.paiForHour += nightHoliday.totalHours * EH_NIGHT_HOLIDAY
+            if(value._id.comissions != "NO_APLICA" ) dayTimeHoliday.comissions.push(value._id.comissions)
+          }
+
         })
+        console.log(dayTimeOvertime)
+        console.log(nightOvertime)
+        console.log(dayTimeHoliday)
+        console.log(nightHoliday)
         return res.send({news});
 
       }catch(err){

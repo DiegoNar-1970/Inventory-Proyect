@@ -20,6 +20,7 @@ const newsSchema=new Schema({
         type:{type:String,default:'NO_APLICA'},
         apply:{type:Boolean,default:false},
         value:{type:Number,default:0},
+        hrs:{type:Number,default:0}
       }
 })
 const News=mongoose.model('News',newsSchema);
@@ -131,6 +132,7 @@ export class NewsModel{
 
         const query=queryCond(data);
         const employeeId = new mongoose.Types.ObjectId(id);
+        
         let news = await News.aggregate([
           {
             $match: {
@@ -162,14 +164,17 @@ export class NewsModel{
           }
         }
         ]);
+
         if(news.length === 0){
             return {message:'No se Encontraron Datos Por favor ingresa fechas con registros'}
         }
+        
         news={
              ...news,
             endWeek:newsEndW,
             startWeek:newsStartW,
         }
+        
         return{news}
       }
 }

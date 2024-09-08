@@ -1,44 +1,53 @@
 {
+  "news": {
     "news": {
-      "news": {
-        "0": {
-          "_id": {
-            "extraHours": "NO_APLICA",
-            "comissions": "RECARGO_NOCTURNO",
-            "employee": "66d0b8060ddc0b9241abae8c"
-          },
-          "totalHoras": 0,
-          "calcHoursTotal": 0
+      "0": {
+        "_id": {
+          "extraHours": "HORA_EXTRA_NOCTURNO",
+          "comissions": "RECARGO_NOCTURNO",
+          "employee": "66d0b8060ddc0b9241abae8c"
         },
-        "1": {
-          "_id": {
-            "extraHours": "HORA_EXTRA_DIURNO",
-            "comissions": "NO_APLICA",
-            "employee": "66d0b8060ddc0b9241abae8c"
-          },
-          "totalHoras": 6,
-          "calcHoursTotal": 8.483333333333334
+        "totalHoras": 6,
+        "calcHoursTotal": 8.516666666666666
+      },
+      "1": {
+        "_id": {
+          "extraHours": "NO_APLICA",
+          "comissions": "RECARGO_NOCTURNO",
+          "employee": "66d0b8060ddc0b9241abae8c"
         },
-        "2": {
-          "_id": {
-            "extraHours": "HORA_EXTRA_NOCTURNO",
-            "comissions": "RECARGO_NOCTURNO",
-            "employee": "66d0b8060ddc0b9241abae8c"
-          },
-          "totalHoras": 6,
-          "calcHoursTotal": 8.516666666666666
+        "totalHoras": 0,
+        "calcHoursTotal": 0
+      },
+      "2": {
+        "_id": {
+          "extraHours": "HORA_EXTRA_DIURNO",
+          "comissions": "NO_APLICA",
+          "employee": "66d0b8060ddc0b9241abae8c"
         },
-        "3": {
-          "_id": {
-            "extraHours": "HORA_EXTRA_FESTIVO_NOCTURNO",
-            "comissions": "RECARGO_DOMINICAL_NOCTURNO",
-            "employee": "66d0b8060ddc0b9241abae8c"
-          },
-          "totalHoras": 4,
-          "calcHoursTotal": 5.666666666666667
+        "totalHoras": 6,
+        "calcHoursTotal": 8.483333333333334
+      },
+      "3": {
+        "_id": {
+          "extraHours": "HORA_EXTRA_FESTIVO_NOCTURNO",
+          "comissions": "RECARGO_DOMINICAL_NOCTURNO",
+          "employee": "66d0b8060ddc0b9241abae8c"
         },
-        "endWeek": 1,
-        "startWeek": 1
-      }
+        "totalHoras": 4,
+        "calcHoursTotal": 5.666666666666667
+      },
+      "4": {
+        "_id": {
+          "extraHours": "NO_APLICA",
+          "comissions": "RECARGO_DOMINICAL_NOCTURNO",
+          "employee": "66d0b8060ddc0b9241abae8c"
+        },
+        "totalHoras": 0,
+        "calcHoursTotal": 0
+      },
+      "endWeek": 3,
+      "startWeek": 1
     }
   }
+}

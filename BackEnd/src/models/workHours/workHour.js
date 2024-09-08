@@ -28,19 +28,17 @@ const workHourSchema = new Schema({
   export class WorkHourModel{
 
     static async create(id,data){
-
       const result = vWorkHourSchemaZod({...data,employee:id});
+
       if (!result.success) {
         return { message: 'invalid type', error: result.error };
       }
+
       try {
-
         const employee = await Employee.findById(id);
-
           if(!employee){
             return { message: 'El empleado no existe' };
           }
-
           const {checkTime,leaveWork,hours,minutes,horasExtras,recargos}=calcTime(
             result.data.checkTime,
             result.data.leaveWork,
@@ -50,7 +48,8 @@ const workHourSchema = new Schema({
           )
 
         const {checkTime : _, leaveWork : __, ...rest}=result.data;
-        const {breakfast : b, lunch : l ,typeHour:t ,...dataNews}=rest;
+        const {breakfast : b, lunch : l, typeHour:t, ...dataNews}=rest;
+
         const news=await NewsModel.create({
           ...dataNews,
           extraHours:{...horasExtras},
