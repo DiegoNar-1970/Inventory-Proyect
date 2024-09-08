@@ -18,7 +18,8 @@ const workHourSchema = new Schema({
     checkTime:{type:Date},
     breakfast:{type:Boolean,default:false},
     lunch:{type:Boolean,default:false},
-    typeHour:{ type: String}
+    typeHour:{ type: String},
+    news:{type: Schema.Types.ObjectId, ref:'News'},
 
   });
   
@@ -55,14 +56,17 @@ const workHourSchema = new Schema({
           extraHours:{...horasExtras},
           comissions:{...recargos},
         });
-
+        const newsId = (news.comissions.type === 'NO_APLICA' && news.extraHours.type === 'NO_APLICA')
+          ? 'NO_APLICA'
+          : news._id;
         const newWorkH = new WorkHour({
           checkTime:checkTime,
           leaveWork:leaveWork,
           dayHour:{
             hours:hours,
             minutes:minutes, 
-          },  
+          }, 
+          news:newsId,
           ...rest
         });
         await newWorkH.save();
@@ -100,16 +104,43 @@ const workHourSchema = new Schema({
       }
     }
 
-    static async calcHours(area,data){
-      try{
-          const query=queryCond(data);
-          const hours=await this.getHours(area,query)
-          if(hours.message){
-            return{message:hours.message}
+    static async calcHours(area, data) {
+      try {
+        const query = queryCond(data);
+        const hours = await this.getHours(area, query);
+    
+        let totalHours = 0;
+        let totalMinutes = 0;
+        let totalExtraHours = 0; 
+        let totalExtraMinutes = 0; 
+    
+        for (const hour of hours) {
+
+          await hour.populate('news');
+    
+          totalHours += hour.dayHour.hours;
+
+          totalMinutes += hour.dayHour.minutes;
+          console.log('total minutes' , totalMinutes)
+
+          if (hour.news != "NO_APLICA") {
+            totalExtraHours += hour.news.extraHours.hours;
+            totalExtraHours += hour.news.extraHours.minutes;
           }
-          return hours;
-      }catch(err){
-        return {message:err}
+        }
+        totalHours += Math.floor(totalMinutes / 60);
+        console.log(totalHours);
+        console.log(totalMinutes);
+        totalMinutes = totalMinutes % 60;
+        console.log(totalMinutes); 
+        return {
+          totalHours,
+          totalMinutes,
+          totalExtraHours, 
+          hours, 
+        };
+      } catch (err) {
+        return { message: err.message };
       }
     }
 
