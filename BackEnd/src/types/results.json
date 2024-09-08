@@ -1,53 +1,136 @@
-{
-  "news": {
+
+[
+  {
     "news": {
-      "0": {
-        "_id": {
-          "extraHours": "HORA_EXTRA_NOCTURNO",
-          "comissions": "RECARGO_NOCTURNO",
-          "employee": "66d0b8060ddc0b9241abae8c"
+      "news": {
+        "0": {
+          "_id": {
+            "extraHours": "HORA_EXTRA_NOCTURNO",
+            "comissions": "RECARGO_NOCTURNO",
+            "employee": "66d0b8060ddc0b9241abae8c"
+          },
+          "totalHoras": 6,
+          "calcHoursTotal": 8.516666666666666
         },
-        "totalHoras": 6,
-        "calcHoursTotal": 8.516666666666666
-      },
-      "1": {
-        "_id": {
-          "extraHours": "NO_APLICA",
-          "comissions": "RECARGO_NOCTURNO",
-          "employee": "66d0b8060ddc0b9241abae8c"
+        "1": {
+          "_id": {
+            "extraHours": "NO_APLICA",
+            "comissions": "RECARGO_NOCTURNO",
+            "employee": "66d0b8060ddc0b9241abae8c"
+          },
+          "totalHoras": 0,
+          "calcHoursTotal": 0
         },
-        "totalHoras": 0,
-        "calcHoursTotal": 0
-      },
-      "2": {
-        "_id": {
-          "extraHours": "HORA_EXTRA_DIURNO",
-          "comissions": "NO_APLICA",
-          "employee": "66d0b8060ddc0b9241abae8c"
+        "2": {
+          "_id": {
+            "extraHours": "HORA_EXTRA_DIURNO",
+            "comissions": "NO_APLICA",
+            "employee": "66d0b8060ddc0b9241abae8c"
+          },
+          "totalHoras": 6,
+          "calcHoursTotal": 8.483333333333334
         },
-        "totalHoras": 6,
-        "calcHoursTotal": 8.483333333333334
-      },
-      "3": {
-        "_id": {
-          "extraHours": "HORA_EXTRA_FESTIVO_NOCTURNO",
-          "comissions": "RECARGO_DOMINICAL_NOCTURNO",
-          "employee": "66d0b8060ddc0b9241abae8c"
+        "3": {
+          "_id": {
+            "extraHours": "HORA_EXTRA_FESTIVO_NOCTURNO",
+            "comissions": "RECARGO_DOMINICAL_NOCTURNO",
+            "employee": "66d0b8060ddc0b9241abae8c"
+          },
+          "totalHoras": 4,
+          "calcHoursTotal": 5.666666666666667
         },
-        "totalHoras": 4,
-        "calcHoursTotal": 5.666666666666667
-      },
-      "4": {
-        "_id": {
-          "extraHours": "NO_APLICA",
-          "comissions": "RECARGO_DOMINICAL_NOCTURNO",
-          "employee": "66d0b8060ddc0b9241abae8c"
+        "4": {
+          "_id": {
+            "extraHours": "NO_APLICA",
+            "comissions": "RECARGO_DOMINICAL_NOCTURNO",
+            "employee": "66d0b8060ddc0b9241abae8c"
+          },
+          "totalHoras": 0,
+          "calcHoursTotal": 0
         },
-        "totalHoras": 0,
-        "calcHoursTotal": 0
-      },
-      "endWeek": 3,
-      "startWeek": 1
+        "endWeek": 3,
+        "startWeek": 1
+      }
     }
   }
-}
+  {
+    "dayHour": {
+      "hours": 7,
+      "minutes": 20
+    },
+    "_id": "66ddd89aab3826b8a1e50c2a",
+    "employee": {
+      "_id": "66d0b8060ddc0b9241abae8c",
+      "area": "almacen",
+      "profile": {
+        "_id": "66d0b8060ddc0b9241abae89",
+        "cc": 1004688991,
+        "name": "Diego",
+        "lastName": "naranjo"
+      }
+    },
+    "week": 1,
+    "leaveWork": "2024-09-07T20:25:00.000Z",
+    "checkTime": "2024-09-07T11:55:00.000Z",
+    "typeHour": "DIURNO",
+    "news": null
+  },
+  {
+    "dayHour": {
+      "hours": 8,
+      "minutes": 0
+    },
+    "_id": "66ddd8d3ab3826b8a1e50c2e",
+    "employee": {
+      "_id": "66d0b8060ddc0b9241abae8c",
+      "area": "almacen",
+      "profile": {
+        "_id": "66d0b8060ddc0b9241abae89",
+        "cc": 1004688991,
+        "name": "Diego",
+        "lastName": "naranjo"
+      }
+    },
+    "week": 1,
+    "leaveWork": "2024-09-08T21:05:00.000Z",
+    "checkTime": "2024-09-08T11:55:00.000Z",
+    "typeHour": "DIURNO",
+    "news": null
+  },
+  {
+    "dayHour": {
+      "hours": 8,
+      "minutes": 0
+    },
+    "_id": "66ddd8ebab3826b8a1e50c33",
+    "employee": {
+      "_id": "66d0b8060ddc0b9241abae8c",
+      "area": "almacen",
+      "profile": {
+        "_id": "66d0b8060ddc0b9241abae89",
+        "cc": 1004688991,
+        "name": "Diego",
+        "lastName": "naranjo"
+      }
+    },
+    "week": 1,
+    "leaveWork": "2024-09-09T23:05:00.000Z",
+    "checkTime": "2024-09-09T11:55:00.000Z",
+    "typeHour": "DIURNO",
+    "news": {
+      "extraHours": {
+        "type": "HORA_EXTRA_DIURNO",
+        "hours": 2,
+        "minutes": 0,
+        "percentage": 1.25
+      },
+      "comissions": {
+        "type": "NO_APLICA",
+        "apply": false,
+        "value": 0,
+        "hrs": 0
+      },
+      "week": 1
+    }
+  }
+]

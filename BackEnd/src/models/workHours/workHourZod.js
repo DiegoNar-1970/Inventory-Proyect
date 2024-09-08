@@ -8,7 +8,8 @@ const workHourSchemaZod = z.object({
   checkTime: z.string(),
   breakfast: z.boolean(),
   lunch: z.boolean(),
-  typeHour: z.string()
+  typeHour: z.string(),
+  creationDate:z.date()
 });
 
 export function vWorkHourSchemaZod(input) {

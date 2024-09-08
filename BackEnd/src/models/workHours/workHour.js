@@ -57,7 +57,7 @@ const workHourSchema = new Schema({
           comissions:{...recargos},
         });
         const newsId = (news.comissions.type === 'NO_APLICA' && news.extraHours.type === 'NO_APLICA')
-          ? 'NO_APLICA'
+          ? null
           : news._id;
         const newWorkH = new WorkHour({
           checkTime:checkTime,
@@ -104,49 +104,53 @@ const workHourSchema = new Schema({
       }
     }
 
-    static async calcHours(area, data) {
-      try {
-        const query = queryCond(data);
-        const hours = await this.getHours(area, query);
-    
-        let totalHours = 0;
-        let totalMinutes = 0;
-        let totalExtraHours = 0; 
-        let totalExtraMinutes = 0; 
-    
-        for (const hour of hours) {
-
-          await hour.populate('news');
-    
-          totalHours += hour.dayHour.hours;
-
-          totalMinutes += hour.dayHour.minutes;
-          console.log('total minutes' , totalMinutes)
-
-          if (hour.news != "NO_APLICA") {
-            totalExtraHours += hour.news.extraHours.hours;
-            totalExtraHours += hour.news.extraHours.minutes;
+    static async calcHours(area,data){
+      try{
+          const query=queryCond(data);
+          const hours=await this.getHours(area,query)
+          if(hours.message){
+            return{message:hours.message}
           }
-        }
-        totalHours += Math.floor(totalMinutes / 60);
-        console.log(totalHours);
-        console.log(totalMinutes);
-        totalMinutes = totalMinutes % 60;
-        console.log(totalMinutes); 
-        return {
-          totalHours,
-          totalMinutes,
-          totalExtraHours, 
-          hours, 
-        };
-      } catch (err) {
-        return { message: err.message };
+          const groupedByEmployee = hours.reduce((acc, curr) => {
+            const employeeId = curr.employee.profile.cc.toString(); 
+            
+            if (!acc[employeeId]) {
+              acc[employeeId] = {
+                totalHours: 0,
+                totalMinutes: 0, 
+                info: []
+              };
+            }
+          
+            acc[employeeId].totalHours += curr.dayHour.hours;
+            acc[employeeId].totalMinutes += curr.dayHour.minutes;
+            acc[employeeId].info.push(curr);
+
+            if (acc[employeeId].totalMinutes >= 60) {
+              let additionalHours = Math.floor(acc[employeeId].totalMinutes / 60);
+              acc[employeeId].totalHours += additionalHours;
+              acc[employeeId].totalMinutes = acc[employeeId].totalMinutes % 60;
+            }
+          
+            return acc;
+          }, {});
+
+          
+          return groupedByEmployee;
+      }catch(err){
+        return {message:err}
       }
     }
 
     static async getHours(area,query){
       try{ 
-        const hours =await WorkHour.find(query,{__v:0}).populate({
+        const hours =await WorkHour.find(query,
+          {
+          __v:0,
+          breakfast:0,
+          lunch:0,
+          creationDate:0
+        }).populate({
           path:'employee',
           select:'area profile',
           match:{area:area},
@@ -154,14 +158,17 @@ const workHourSchema = new Schema({
               path:'profile',
               select:'cc lastName name '
           }
-      }).exec();
-      
+        }).populate({
+          path: 'news',
+          select: '-__v -employee -creationDate -_id'
+        }).exec();
+      console.log('hours',hours);
       const filterHours=hours.filter(hour=>{
         return hour.employee?.area===area
       })
       return filterHours;
       }catch(err){
-        return {message:err.message}
+        return {message:err}
       }
     }
 
@@ -169,7 +176,6 @@ const workHourSchema = new Schema({
 
         const query=queryCond(data);
         const employeeId = new mongoose.Types.ObjectId(id);
-      //el agregate es bastante canson asi que el id del empleado se debe pasar si o si como un oobject id
         let hours=await WorkHour.aggregate([
           {
             $match: {
@@ -189,7 +195,7 @@ const workHourSchema = new Schema({
       if(hours.length === 0){
         return {message:'No se Encontraron Datos Por favor ingresa fechas con registros'}
       };
-
+        
         hours={
           ...hours,
           endWeek:endWeek,
