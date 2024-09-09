@@ -134,3 +134,255 @@
     }
   }
 ]
+[
+  {
+    "extraHours": {
+      "type": "HORA_EXTRA_DIURNO",
+      "hours": 2,
+      "minutes": 0,
+      "percentage": 1.25
+    },
+    "comissions": {
+      "type": "NO_APLICA",
+      "apply": false,
+      "value": 0,
+      "hrs": 0
+    },
+    "_id": "66dcdae25137c156ce1c9b44",
+    "employee": {
+      "_id": "66d0b8060ddc0b9241abae8c",
+      "area": "almacen",
+      "profile": {
+        "_id": "66d0b8060ddc0b9241abae89",
+        "cc": 1004688991,
+        "name": "Diego",
+        "lastName": "naranjo"
+      }
+    },
+    "week": 1,
+    "creationDate": "2024-09-07T22:58:29.634Z"
+  },
+  {
+    "extraHours": {
+      "type": "HORA_EXTRA_DIURNO",
+      "hours": 2,
+      "minutes": 0,
+      "percentage": 1.25
+    },
+    "comissions": {
+      "type": "NO_APLICA",
+      "apply": false,
+      "value": 0,
+      "hrs": 0
+    },
+    "_id": "66dce57df79006cd3b57f21c",
+    "employee": {
+      "_id": "66d0b8060ddc0b9241abae8c",
+      "area": "almacen",
+      "profile": {
+        "_id": "66d0b8060ddc0b9241abae89",
+        "cc": 1004688991,
+        "name": "Diego",
+        "lastName": "naranjo"
+      }
+    },
+    "week": 1,
+    "creationDate": "2024-09-07T23:42:21.015Z"
+  },
+  {
+    "extraHours": {
+      "type": "HORA_EXTRA_DIURNO",
+      "hours": 2,
+      "minutes": 0,
+      "percentage": 1.25
+    },
+    "comissions": {
+      "type": "NO_APLICA",
+      "apply": false,
+      "value": 0,
+      "hrs": 0
+    },
+    "_id": "66dce952f6d52be7daeb1dee",
+    "employee": {
+      "_id": "66d0b8060ddc0b9241abae8c",
+      "area": "almacen",
+      "profile": {
+        "_id": "66d0b8060ddc0b9241abae89",
+        "cc": 1004688991,
+        "name": "Diego",
+        "lastName": "naranjo"
+      }
+    },
+    "week": 1,
+    "creationDate": "2024-09-08T00:00:39.199Z"
+  },
+  {
+    "extraHours": {
+      "type": "HORA_EXTRA_DIURNO",
+      "hours": 2,
+      "minutes": 0,
+      "percentage": 1.25
+    },
+    "comissions": {
+      "type": "NO_APLICA",
+      "apply": false,
+      "value": 0,
+      "hrs": 0
+    },
+    "_id": "66ddd8e9ab3826b8a1e50c31",
+    "employee": {
+      "_id": "66d0b8060ddc0b9241abae8c",
+      "area": "almacen",
+      "profile": {
+        "_id": "66d0b8060ddc0b9241abae89",
+        "cc": 1004688991,
+        "name": "Diego",
+        "lastName": "naranjo"
+      }
+    },
+    "week": 1,
+    "creationDate": "2024-09-08T17:02:10.618Z"
+  },
+  {
+    "extraHours": {
+      "type": "HORA_EXTRA_DIURNO",
+      "hours": 2,
+      "minutes": 0,
+      "percentage": 1.25
+    },
+    "comissions": {
+      "type": "NO_APLICA",
+      "apply": false,
+      "value": 0,
+      "hrs": 0
+    },
+    "_id": "66de10ec957e91cc89bd0772",
+    "employee": {
+      "_id": "66de0e68d5635dffb5740d9b",
+      "area": "almacen",
+      "profile": null
+    },
+    "week": 1,
+    "creationDate": "2024-09-08T21:01:04.977Z"
+  },
+  {
+    "extraHours": {
+      "type": "HORA_EXTRA_NOCTURNO",
+      "hours": 3,
+      "minutes": 0,
+      "percentage": 1.75
+    },
+    "comissions": {
+      "type": "RECARGO_NOCTURNO",
+      "apply": true,
+      "value": 0.35,
+      "hrs": 8
+    },
+    "_id": "66de21083e8b790d409550a4",
+    "employee": {
+      "_id": "66de0e68d5635dffb5740d9b",
+      "area": "almacen",
+      "profile": null
+    },
+    "week": 1,
+    "creationDate": "2024-09-08T22:08:11.495Z"
+  },
+  {
+    "extraHours": {
+      "type": "HORA_EXTRA_FESTIVO_DIURNO",
+      "hours": 3,
+      "minutes": 0,
+      "percentage": 2
+    },
+    "comissions": {
+      "type": "RECARGO_DOMINICAL_DIURNO",
+      "apply": true,
+      "value": 0,
+      "hrs": 11
+    },
+    "_id": "66de21133e8b790d409550a9",
+    "employee": {
+      "_id": "66de0e68d5635dffb5740d9b",
+      "area": "almacen",
+      "profile": null
+    },
+    "week": 1,
+    "creationDate": "2024-09-08T22:08:11.495Z"
+  },
+  {
+    "extraHours": {
+      "type": "HORA_EXTRA_FESTIVO_NOCTURNO",
+      "hours": 3,
+      "minutes": 0,
+      "percentage": 2.5
+    },
+    "comissions": {
+      "type": "RECARGO_DOMINICAL_NOCTURNO",
+      "apply": true,
+      "value": 0,
+      "hrs": 8
+    },
+    "_id": "66de21243e8b790d409550ae",
+    "employee": {
+      "_id": "66de0e68d5635dffb5740d9b",
+      "area": "almacen",
+      "profile": null
+    },
+    "week": 1,
+    "creationDate": "2024-09-08T22:08:11.495Z"
+  }
+]
+
+
+
+
+
+
+
+
+{
+  "news": {
+    "0": {
+      "_id": {
+        "extraHours": "HORA_EXTRA_NOCTURNO",
+        "comissions": "RECARGO_NOCTURNO",
+        "employee": "66de0e68d5635dffb5740d9b"
+      },
+      "totalHoras": 3,
+      "commissionHours": 0,
+      "calcHoursTotal": 3
+    },
+    "1": {
+      "_id": {
+        "extraHours": "HORA_EXTRA_FESTIVO_DIURNO",
+        "comissions": "RECARGO_DOMINICAL_DIURNO",
+        "employee": "66de0e68d5635dffb5740d9b"
+      },
+      "totalHoras": 3,
+      "commissionHours": 0,
+      "calcHoursTotal": 3
+    },
+    "2": {
+      "_id": {
+        "extraHours": "HORA_EXTRA_DIURNO",
+        "comissions": "NO_APLICA",
+        "employee": "66de0e68d5635dffb5740d9b"
+      },
+      "totalHoras": 2,
+      "commissionHours": 0,
+      "calcHoursTotal": 2
+    },
+    "3": {
+      "_id": {
+        "extraHours": "HORA_EXTRA_FESTIVO_NOCTURNO",
+        "comissions": "RECARGO_DOMINICAL_NOCTURNO",
+        "employee": "66de0e68d5635dffb5740d9b"
+      },
+      "totalHoras": 6,
+      "commissionHours": 0,
+      "calcHoursTotal": 6
+    },
+    "endWeek": 3,
+    "startWeek": 1
+  }
+}

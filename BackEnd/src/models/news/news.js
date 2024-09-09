@@ -40,6 +40,7 @@ export class NewsModel{
         }
 
     }
+    
     static async getByCcAndDate(cc,data){
         try{
             const query=queryCond(data);
@@ -53,6 +54,7 @@ export class NewsModel{
         }
         
     }
+    
     static async getHoursById(query){
         try{
             const hours = await News.find(query,{__v:0}).populate({
@@ -74,6 +76,7 @@ export class NewsModel{
             return {message:err.message}
         }
     }
+    
     static async getHoursByCc(cc,query){
         try{
             const hours = await News.find(query,{__v:0}).populate({
@@ -95,6 +98,7 @@ export class NewsModel{
             return {message:err.message};
         }
     }
+    
     static async getAll(){
         try{
             const allNews = await News.find({},{__v:0})
@@ -128,6 +132,7 @@ export class NewsModel{
             return {message:'created error',err:err}
         }
     }
+
     static async groupByType(id,data,newsEndW,newsStartW){
 
         const query=queryCond(data);
@@ -147,8 +152,10 @@ export class NewsModel{
                 comissions:"$comissions.type",
                 employee: "$employee"
             }, 
-            totalMinutes: { $sum: "$extraHours.minutes"},
-            totalHoras: { $sum:"$extraHours.hours" }
+            totalMinutes: { $sum:"$extraHours.minutes"},
+            totalHoras: { $sum:"$extraHours.hours" },
+            commissionHours: { $sum:"$comissions.hrs" }
+            
           }
         },
         {
@@ -159,8 +166,8 @@ export class NewsModel{
                   "$totalHoras", 
                   { $divide: ["$totalMinutes", 60] }]
               },
-              totalHoras: 1,
-              employee: 1
+              employee: 1,
+              commissionHours:1,
           }
         }
         ]);

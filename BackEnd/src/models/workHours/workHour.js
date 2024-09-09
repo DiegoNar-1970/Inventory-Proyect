@@ -126,6 +126,11 @@ const workHourSchema = new Schema({
             acc[employeeId].totalMinutes += curr.dayHour.minutes;
             acc[employeeId].info.push(curr);
 
+            if(curr.news!=null){
+              acc[employeeId].totalHours += curr.news.extraHours.hours;
+              acc[employeeId].totalMinutes += curr.news.extraHours.minutes;
+            }
+            
             if (acc[employeeId].totalMinutes >= 60) {
               let additionalHours = Math.floor(acc[employeeId].totalMinutes / 60);
               acc[employeeId].totalHours += additionalHours;
@@ -188,6 +193,16 @@ const workHourSchema = new Schema({
             _id: "$typeHour", 
             totalMinutes: { $sum: "$dayHour.minutes"},
             totalHoras: { $sum:"$dayHour.hours" }
+          }
+        },
+        {
+            $project: {
+            _id: 1,
+            calcHoursTotal: {
+                $sum: [
+                  "$totalHoras", 
+                  { $divide: ["$totalMinutes", 60] }]
+              }
           }
         }
       ]);
