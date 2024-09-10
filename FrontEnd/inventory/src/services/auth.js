@@ -19,3 +19,5 @@
     export const creteHour=(url,data)=>axios.post(url,data);
     
     export const getNews=(url,data)=>axios.post(url,data);
+
+    export const getAllHours=(url,data) => axios.post(url,data);

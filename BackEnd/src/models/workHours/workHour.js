@@ -153,8 +153,7 @@ const workHourSchema = new Schema({
           {
           __v:0,
           breakfast:0,
-          lunch:0,
-          creationDate:0
+          lunch:0
         }).populate({
           path:'employee',
           select:'area profile',
@@ -165,7 +164,7 @@ const workHourSchema = new Schema({
           }
         }).populate({
           path: 'news',
-          select: '-__v -employee -creationDate -_id'
+          select: '-__v -employee  -_id'
         }).exec();
       console.log('hours',hours);
       const filterHours=hours.filter(hour=>{

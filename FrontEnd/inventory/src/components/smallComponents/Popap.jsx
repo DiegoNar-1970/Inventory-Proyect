@@ -1,7 +1,7 @@
 import { useState } from "react";
 import { IoCloseOutline } from "react-icons/io5";
 
-export const Popap = ({see,changeSee,component:Component}) => {
+export const Popap = ({see,changeSee,component:Component,optional}) => {
   const [loading,setLoading]=useState({
     component:'component',
     message:''
@@ -11,7 +11,7 @@ console.log(loading.component )
 
   return (
     <section className="fixed top-0 left-0 h-screen w-screen bg-[#ffffff41] z-10 flex items-center justify-start ">
-      <article className=" m-auto p-auto bg-gray-200 p-2 rounded-lg flex flex-col  text-black min-w-[300px] max-w-[430px] ">
+      <article className=" m-auto p-auto bg-[#ffffff0b] p-2 rounded-[1em] flex flex-col  text-black min-w-[300px]  max-w-[600px]">
         <div className="bg-white p-2 rounded-[1em] ">
           <div className="self-end text-[30px]">
             <button onClick={changeSee}>
@@ -19,7 +19,7 @@ console.log(loading.component )
             </button>
           </div>
           <div>
-            {loading.component === 'component' && <Component item={see} setLoading={setLoading} ></Component>}
+            {loading.component === 'component' && <Component item={see} setLoading={setLoading} optional={optional} ></Component>}
             {loading.component === 'loading' && <div className="loader"></div>}
             {loading.component === 'message' 
              && <div className="flex gap-4 flex-col justify-between text-center">
@@ -35,7 +35,7 @@ console.log(loading.component )
           <div className="w-[100%] mt-[10px]">
             <button
               onClick={changeSee}
-              className="mt-2 w-[100%] bg-red-500 text-white p-2 rounded">
+              className="mt-2 w-[100%] p-2 rounded font-sans hover:bg-black hover:text-white transition-all">
               Cerrar
             </button>
           </div>

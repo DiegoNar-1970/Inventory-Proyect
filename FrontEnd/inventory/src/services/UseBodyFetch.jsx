@@ -1,4 +1,4 @@
-import { useState, useEffect } from "react";
+import { useEffect, useState } from "react";
 
 export function UseBodyFetch(url, options = {}, dependencies = []) {
   const [data, setData] = useState(null);

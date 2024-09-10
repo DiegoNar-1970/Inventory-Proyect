@@ -39,13 +39,25 @@ const Hours = () => {
   });
 
   const searchFilter = ({ target }) => {
-    target.value 
-    ? setNameFilter(data.filter(obj=>obj.employee.profile.name.toLowerCase()
-      .includes(target.value.toLowerCase()))) 
-    : setNameFilter();
-    
-
-  };
+    if (data) {
+      const filterText = target.value.toLowerCase();
+      const filteredData = Object.entries(data).reduce((acc, [key, value]) => {
+        //generamos el filtro de la data por el nombre del empleado
+        const filteredInfo = value.info.filter(info => 
+          info.employee.profile.name.toLowerCase().includes(filterText)
+        );
+        //recreamos el formato de los datos para mantener la estructura 
+        if (filteredInfo.length > 0) {
+          acc[key] = {
+            ...value,
+            info: filteredInfo
+          };
+        }
+        return acc;
+      }, {});
+      setNameFilter(Object.keys(filteredData).length > 0 ? filteredData : null);
+    }
+  }
 
   return (
     <section className="flex flex-col flex-wrap flex-1 rounded-lg gap-3 text-white">

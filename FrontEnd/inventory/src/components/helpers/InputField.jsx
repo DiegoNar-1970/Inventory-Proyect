@@ -27,7 +27,7 @@ const InputField = ({
             })}
             className={`outline outline-[1px] rounded-lg p-[2px] outline-gray-400 ${styleIput}`}
           >
-            <option value="">Turno</option>
+            <option value="">Selecciona una opcion</option>
             {options.map((option) => (
               <option key={option.value} value={option.value}>
                 {option.label}
