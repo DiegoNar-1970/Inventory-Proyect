@@ -24,7 +24,6 @@ const HoursTable = ({ datos }) => {
             <th className="border-b-[1px] border-gray-500">nombre</th>
             <th className="border-b-[1px] border-gray-500">Cedula</th>
             <th className="border-b-[1px] border-gray-500">Horas</th>
-            <th className="border-b-[1px] border-gray-500">Festivo</th>
             <th className="border-b-[1px] border-gray-500">Semana</th>
             <th className="border-b-[1px] border-gray-500">Fecha</th>
             <th className="border-b-[1px] border-gray-500">Acciones</th>
@@ -46,7 +45,6 @@ const HoursTable = ({ datos }) => {
                 </td>
                 <td className="text-gray-500">{info.employee.profile.cc}</td>
                 <td>{info.dayHour.hours}</td>
-                <td>{info.isHoliday ? "Sí" : "No"}</td>
                 <td>{info.week}</td>
                 <td className="text-gray-500">
 

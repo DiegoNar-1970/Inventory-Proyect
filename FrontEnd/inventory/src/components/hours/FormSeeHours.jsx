@@ -1,8 +1,8 @@
-import { formatedDate } from "../../helpers/formateDate"
-import img from '../../media/img/img.png'
+import { formatedDate } from "../../helpers/formateDate";
+import img from '../../media/img/img.png';
 
 const FormSeeHours = ({item}) => {
-
+  console.log(item);
   return (
     <section className="flex flex-col gap-2">
       <article className="flex justify-center">
