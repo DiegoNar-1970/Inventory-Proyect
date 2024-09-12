@@ -14,6 +14,7 @@ const Hours = () => {
   
 
   let style = "items-center justify-center";
+  
   const [view, setView] = useState(style);
 
   const url = `http://localhost:3000/workHour/?area=${area}`;
@@ -31,6 +32,7 @@ const Hours = () => {
     },
     formData
   );
+
   const onSubmit = ((condiciones) => {
      condiciones.startDate = transformDate(condiciones.startDate);
      condiciones.endDate = transformDate(condiciones.endDate);

@@ -24,14 +24,14 @@ export const Popap = ({ see, changeSee, component: Component, optional }) => {
       }`}
     >
       <article
-        className={`bg-[#ffffff0b] p-2 rounded-[1em] flex flex-col text-black min-w-[300px] max-w-[600px] transition-transform duration-300 ease-in-out ${
+        className={`bg-[#ffffff0b] p-2  rounded-[1em] flex flex-col text-black min-w-[450px] max-w-[600px] transition-transform duration-300 ease-in-out ${
           isOpen ? "transform scale-100" : "transform scale-90"
         }`}
       >
         <div className="bg-white p-2 rounded-[1em]">
-          <div className="self-end text-[30px]">
-            <button onClick={changeSee}>
-              <IoCloseOutline />
+          <div className="flex justify-end text-[30px] w-full hover:text-red-600 transition-all ">
+            <button onClick={changeSee} >
+              <IoCloseOutline  />
             </button>
           </div>
           <div className="p-4">
@@ -62,7 +62,7 @@ export const Popap = ({ see, changeSee, component: Component, optional }) => {
           <div className="w-[100%] mt-[10px] p-4">
             <button
               onClick={changeSee}
-              className="mt-2 w-[100%] p-2 rounded font-sans hover:bg-black hover:text-white transition-all"
+              className="mt-2 w-[100%] p-2 rounded font-sans hover:bg-black hover:text-white transition-all "
             >
               Cerrar
             </button>

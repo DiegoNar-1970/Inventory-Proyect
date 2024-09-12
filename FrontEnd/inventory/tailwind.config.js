@@ -14,6 +14,10 @@ export default {
         boxShadow: {
           'shadow1': '0 5px 15px rgba(0, 0, 0, 0.60)',
         },
+        fontFamily: {
+          'spotify':['spotify', 'sans-serif'],
+          'spotify-regular': ['spotify-regular', 'sans-serif'],
+        },
     },
   },
   plugins: [],

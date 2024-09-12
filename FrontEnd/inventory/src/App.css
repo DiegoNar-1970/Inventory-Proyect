@@ -37,7 +37,7 @@ td,th{
 }
 @font-face {
     font-family: 'spotify-regular';
-    src: url('./fonts/Gilroy-Regular.ttf') format("woff2");
+    src: url('./fonts/Gilroy-Regular.ttf') format("truetype");
     font-weight:700;
     font-style:normal;
     font-display:swap;

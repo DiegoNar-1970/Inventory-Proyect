@@ -12,6 +12,7 @@ const HoursTable = ({ datos }) => {
     isTrue: false,
     dataResult: {},
   });
+  console.log(datos);
   const changeSee = () => {
     setSee({ component: "", isTrue: false, dataItem: {} });
   };
@@ -19,20 +20,21 @@ const HoursTable = ({ datos }) => {
     <>
       <h1 className=" ml-1 text-[17px] text-gray-500">Horas</h1>
       <table className="text-left text-[13px] border-collapse text-white rounded-r-lg">
-        <thead className="text-white rounded-r-lg ">
+        <thead className="text-white rounded-r-lg text-center ">
           <tr className="">
             <th className="border-b-[1px] border-gray-500">nombre</th>
             <th className="border-b-[1px] border-gray-500">Cedula</th>
             <th className="border-b-[1px] border-gray-500">Horas</th>
             <th className="border-b-[1px] border-gray-500">Semana</th>
-            <th className="border-b-[1px] border-gray-500">Fecha</th>
+            <th className="border-b-[1px] border-gray-500">Novedades</th>
+            <th className="border-b-[1px] border-gray-500">Fecha de registro</th>
             <th className="border-b-[1px] border-gray-500">Acciones</th>
           </tr>
         </thead>
         <tbody>
         {datos && Object.entries(datos).map(([key, value]) =>
             value.info.map((info) => (
-              <tr key={info._id}>
+              <tr key={info._id} className='text-center'>
                 <td>
                   <div className="flex gap-2 results-center box-border mt-1">
                     <img
@@ -44,8 +46,9 @@ const HoursTable = ({ datos }) => {
                   </div>
                 </td>
                 <td className="text-gray-500">{info.employee.profile.cc}</td>
-                <td>{info.dayHour.hours}</td>
+                <td  >{info.dayHour.hours}</td>
                 <td>{info.week}</td>
+                <td>{info.news!=null? 'Si':"No"}</td>
                 <td className="text-gray-500">
 
                   {formatedDate(info.creationDate)}

@@ -15,3 +15,13 @@ export const formatedDateLocal = (date) => {
 
     return `${year}-${month}-${day}T${hours}:${minutes}`;
   }
+
+  export const formatedTime=(date)=>{
+    const newDate = new Date(date);
+    const hours = String(newDate.getHours()).padStart(2, '0');
+    const minutes = String(newDate.getMinutes()).padStart(2, '0');
+    const isPM = hours >= 12;
+    const formattedHours = isPM ? (hours % 12 || 12) : (hours % 12 || 12);
+    const period = isPM ? 'PM' : 'AM';
+    return `${formattedHours}:${minutes} ${period}`;
+  }

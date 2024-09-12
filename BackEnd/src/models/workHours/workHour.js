@@ -151,9 +151,7 @@ const workHourSchema = new Schema({
       try{ 
         const hours =await WorkHour.find(query,
           {
-          __v:0,
-          breakfast:0,
-          lunch:0
+          __v:0
         }).populate({
           path:'employee',
           select:'area profile',
@@ -166,7 +164,6 @@ const workHourSchema = new Schema({
           path: 'news',
           select: '-__v -employee  -_id'
         }).exec();
-      console.log('hours',hours);
       const filterHours=hours.filter(hour=>{
         return hour.employee?.area===area
       })

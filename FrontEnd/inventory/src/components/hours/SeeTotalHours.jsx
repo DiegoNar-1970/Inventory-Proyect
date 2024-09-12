@@ -1,5 +1,5 @@
 import { formatedDate } from "../../helpers/formateDate";
-import { COMISSIONS, EX_HOUR } from "../../helpers/typeHours";
+import { newFormatComission, newFormatHour } from "../../helpers/formatsHours";
 import img from "../../media/img/img.png";
 const SeeTotalHours = ({ item, optional }) => {
   console.log("item", optional);
@@ -8,31 +8,10 @@ const SeeTotalHours = ({ item, optional }) => {
   const news = optional ? optional[id].info : "";
 
   console.log("esats son las news", news);
-  const newFormatHour = (data) => {
-    if (data === EX_HOUR.DAYTIME_HOLIDAY) {
-      return "Dominical";
-    }
-    if (data === EX_HOUR.DAYTIME_OVERTIME) {
-      return "Diurna";
-    }
-    if (data === EX_HOUR.NIGHT_HOLIDAY) {
-      return "Dominical Nocturna";
-    }
-    if (data === EX_HOUR.NIGHT_OVERTIME) {
-      return "Nocturna";
-    }
-    return "N/A";
-  };
-  const newFormatComission = (data) => {
-    if (data === COMISSIONS.NIGHT_SURCHARGE) {
-      return "Nocturno";
-    }
-    if (data === COMISSIONS.SUNDAY_NIGHT) {
-      return "Dominical Nocturno";
-    }
-    return 'N/A'
-  };
+
+
   const allNewsAreNull = news.every((item) => item.news === null);
+
   return (
     <section className="flex flex-col gap-2">
       <article className="flex gap-4 justify-between">
@@ -78,10 +57,10 @@ const SeeTotalHours = ({ item, optional }) => {
                       <td className="text-[17px] text-red">
                         {newFormatHour(newItem.news.extraHours.type)}
                       </td>
-                      <td className="text-[17px] text-center">
+                      <td className="text-[17px] text-center font-sans font-medium ">
                         {newItem.news.extraHours.hours}
                       </td>
-                      <td className="text-[17px] text-center">
+                      <td className="text-[17px] text-center font-sans font-medium ">
                         {newFormatComission(newItem.news.comissions.type)}
                       </td>
                       <td className="text-[17px] text-center">
