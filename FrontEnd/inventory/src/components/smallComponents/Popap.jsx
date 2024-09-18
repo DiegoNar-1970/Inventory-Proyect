@@ -19,15 +19,11 @@ export const Popap = ({ see, changeSee, component: Component, optional }) => {
 
   return (
     <section
-      className={`fixed top-0 left-0 h-screen w-screen bg-[#ffffff41] z-10 flex items-center justify-center transition-opacity duration-300 ease-in-out ${
-        isOpen ? "opacity-100" : "opacity-0"
-      }`}
-    >
+      className={`fixed top-0 left-0 h-screen w-screen bg-[#ffffff41] z-10 flex items-center justify-center transition-opacity duration-300 ease-in-out 
+        ${ isOpen ? "opacity-100" : "opacity-0"}`}>
       <article
-        className={`bg-[#ffffff0b] p-2  rounded-[1em] flex flex-col text-black min-w-[450px] max-w-[600px] transition-transform duration-300 ease-in-out ${
-          isOpen ? "transform scale-100" : "transform scale-90"
-        }`}
-      >
+        className={`bg-[#ffffff0b] p-2  rounded-[1em] flex flex-col text-black min-w-[450px] max-w-[600px] transition-transform duration-300 ease-in-out 
+          ${isOpen ? "transform scale-100" : "transform scale-90"}`}>
         <div className="bg-white p-2 rounded-[1em]">
           <div className="flex justify-end text-[30px] w-full hover:text-red-600 transition-all ">
             <button onClick={changeSee} >
@@ -59,10 +55,10 @@ export const Popap = ({ see, changeSee, component: Component, optional }) => {
               </div>
             )}
           </div>
-          <div className="w-[100%] mt-[10px] p-4">
+          <div className="w-[100%] pr-4 pl-4 ">
             <button
               onClick={changeSee}
-              className="mt-2 w-[100%] p-2 rounded font-sans hover:bg-black hover:text-white transition-all "
+              className="w-[100%] p-2 rounded-[17px] font-sans hover:bg-black hover:text-white transition-all mb-[16px]  "
             >
               Cerrar
             </button>

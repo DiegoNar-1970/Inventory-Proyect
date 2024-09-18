@@ -50,15 +50,15 @@ const FormHour = ({ item, setLoading }) => {
           {item.profile.name} {item.profile.lastName}
         </span>
       </section>
-      <section className="flex gap-4 flex-wrap mb-[20px] ">
+      <section className="flex gap-4 flex-wrap">
         <InputField
           label="Semana"
           name="week"
           type="number"
-          style="max-w-[195px]"
+          style="max-w-[100px]"
           register={register}
           styleDiv="flex-col "
-          styleIput="min-w-[276px]"
+          styleIput="min-w-[260px]"
           validates={validateWeek}
           errors={errors}
           valueAsNumber={true}
@@ -72,7 +72,7 @@ const FormHour = ({ item, setLoading }) => {
           errors={errors}
           styleDiv="flex-col "
           placeHolder="Hora de entrada"
-          styleIput="min-w-[276px]"
+          styleIput="min-w-[260px]"
           requiredMessage="Se requiere la hora de entrada"
         />
         <InputField
@@ -82,7 +82,7 @@ const FormHour = ({ item, setLoading }) => {
           register={register}
           errors={errors}
           styleDiv="flex-col "
-          styleIput="min-w-[276px] "
+          styleIput="min-w-[260px] "
           placeHolder="Hora de salida"
           requiredMessage="Se requiere la hora de salida"
         />
@@ -93,7 +93,7 @@ const FormHour = ({ item, setLoading }) => {
           register={register}
           errors={errors}
           styleDiv=" max-w-[300px] flex-col justify-center "
-          styleIput=" min-w-[276px]  h-[31px] "
+          styleIput=" min-w-[260px]  h-[31px] "
           options={shiftOptions}
           requiredMessage="Este campo es obligatorio"
         />
@@ -128,8 +128,8 @@ const FormHour = ({ item, setLoading }) => {
         errors={errors}
       />
 
-      <button className="bg-black text-white rounded-lg p-1 mt-2">
-        Enviar
+      <button className="bg-green-600 text-white rounded-[17px] p-2 mt-2 hover:bg-green-700 ">
+        Registrar
       </button>
     </form>
   );

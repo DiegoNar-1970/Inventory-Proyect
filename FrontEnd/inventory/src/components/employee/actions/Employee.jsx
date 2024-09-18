@@ -57,7 +57,7 @@ const Employee = () => {
 
         <div className="flex gap-2 items-center">
           <IoPersonAddOutline className="text-[30px] text-green-500" />
-          <button onClick={()=>setSee({...see,bolean:!see.bolean})}>agregar persona</button>
+          <button onClick={()=>setSee({...see,bolean:!see.bolean})}>Registrar Personal</button>
         </div>
 
       </article>

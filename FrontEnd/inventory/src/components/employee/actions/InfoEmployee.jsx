@@ -14,8 +14,8 @@ const InfoEmployee = () => {
   const [loading,setLoading]=useState(false);
   const [data,setData]=useState({});
     const [tables,setTable]=useState({
-        view:'pay',
-        component:'pay',
+        view:'permissions',
+        component:'permissions',
         optional:'',
         responseOk:false,
     })
@@ -81,6 +81,12 @@ const InfoEmployee = () => {
                 <button
                  onClick={()=>setTable(prevState=>({...prevState,view:'permissions',component:'permissions',optional:''}))}
                  >Permisos</button>
+            </div>
+            <div className={`${tables.view ===''?'bg-gray-600 text-white ':''}bg-[#202124] rounded-[1em] p-2 hover:bg-gray-600 hover:text-white transition-all flex gap-2 items-center`}>
+            <FaListCheck className="text-[20px]"/>
+                <button
+                 onClick={()=>setTable(prevState=>({...prevState,view:'',component:'',optional:''}))}
+                 >Horas</button>
             </div>
            </div>
       </article>

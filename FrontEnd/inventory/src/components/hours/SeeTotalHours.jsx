@@ -2,7 +2,6 @@ import { formatedDate } from "../../helpers/formateDate";
 import { newFormatComission, newFormatHour } from "../../helpers/formatsHours";
 import img from "../../media/img/img.png";
 const SeeTotalHours = ({ item, optional }) => {
-  console.log("item", optional);
   const id = item ? item.employee.profile.cc : "";
   const totalHours = optional ? optional[id].totalHours : "";
   const news = optional ? optional[id].info : "";

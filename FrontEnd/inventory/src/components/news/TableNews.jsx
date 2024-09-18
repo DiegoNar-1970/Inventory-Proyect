@@ -50,10 +50,10 @@ const TableNews = ({datos,setTable}) => {
                 <td className="text-center">
                   {info.week}
                 </td>
-                <td className="text-gray-500">
+                <td className="text-gray-500 text-center">
                   {formatedDate(info.creationDate)}
                 </td>
-                <td>
+                <td className=" flex justify-center">
                   <button
                     onClick={() => {
                       setSee({

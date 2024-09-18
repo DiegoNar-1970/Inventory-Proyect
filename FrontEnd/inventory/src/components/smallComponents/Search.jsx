@@ -1,5 +1,4 @@
-import { IoPersonAddOutline } from "react-icons/io5";
-import { IoSearch } from "react-icons/io5";
+import { IoPersonAddOutline, IoSearch } from "react-icons/io5";
 
 const Search = () => {
   return (
@@ -14,7 +13,7 @@ const Search = () => {
         </div>
         <div className="flex items-center gap-2">
           <IoPersonAddOutline className="text-[30px] text-green-500" />
-          <button>agregar persona</button>
+          <button>Regitrar Personal</button>
         </div>
         <div>
         </div>
