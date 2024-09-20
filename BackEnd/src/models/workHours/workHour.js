@@ -206,7 +206,6 @@ const workHourSchema = new Schema({
       if(hours.length === 0){
         return {message:'No se Encontraron Datos Por favor ingresa fechas con registros'}
       };
-        
         hours={
           ...hours,
           endWeek:endWeek,

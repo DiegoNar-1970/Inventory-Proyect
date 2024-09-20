@@ -9,6 +9,7 @@ import TablePays from "../../employee/pays/TablePays.jsx";
 import SearchForm from "../../Forms/SearchForm.jsx";
 import TableNews from "../../news/TableNews.jsx";
 import Table from "../../smallComponents/Table.jsx";
+import { FaHourglassHalf } from "react-icons/fa";
 
 const InfoEmployee = () => {
   const [loading,setLoading]=useState(false);
@@ -83,7 +84,7 @@ const InfoEmployee = () => {
                  >Permisos</button>
             </div>
             <div className={`${tables.view ===''?'bg-gray-600 text-white ':''}bg-[#202124] rounded-[1em] p-2 hover:bg-gray-600 hover:text-white transition-all flex gap-2 items-center`}>
-            <FaListCheck className="text-[20px]"/>
+            <FaHourglassHalf className="text-[20px]"/>
                 <button
                  onClick={()=>setTable(prevState=>({...prevState,view:'',component:'',optional:''}))}
                  >Horas</button>

@@ -33,7 +33,7 @@ export const calcComissions = (news) => {
         if (comissionRate) {
             hourType.paiForComissions += value.calcHoursTotal * comissionRate;
             paiForComissions += hourType.paiForComissions;
-            // paiForComissions += value.calcHoursTotal * comissionRate;
+            paiForComissions += value.calcHoursTotal * comissionRate;
         }
         paiForComissions += hourType.paiForHour;
         if (value._id.comissions !== "NO_APLICA") {

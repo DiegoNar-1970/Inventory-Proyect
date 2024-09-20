@@ -151,7 +151,7 @@ const CreateEmployee = ({ onChangue, see, setSee }) => {
                 register={register}
                 errors={errors}
                 styleDiv="flex-col  "
-                styleIput="max-w-[200px]"
+                styleIput="max-w-[182px] min-w-[182px]"
                 type="select"
                 options={areaOptions}
                 placeHolder="Area"

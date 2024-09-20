@@ -3,6 +3,7 @@ import { shiftOptions, validateWeek } from "../../helpers/options.js";
 import { creteHour } from "../../services/auth.js";
 import { createHourURL } from "../../services/urls.js";
 import InputField from "../helpers/InputField";
+
 const FormHour = ({ item, setLoading }) => {
   const {
     register,
@@ -18,7 +19,9 @@ const FormHour = ({ item, setLoading }) => {
         component: "loading",
       }));
       const { employee: _, ...rest } = data;
+
       const result = await creteHour(createHourURL(data.employee), rest);
+
       console.log(result);
       if (result.status === 201) {
         setLoading((prevState) => ({
@@ -29,6 +32,11 @@ const FormHour = ({ item, setLoading }) => {
       }
     } catch (err) {
       console.log(err);
+      setLoading((prevState) => ({
+        ...prevState,
+        component: "message",
+        message: "Ocurrio un error al registrar la hora ❌",
+      }));
     }
   });
 

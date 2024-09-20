@@ -73,13 +73,22 @@ import { Popap } from './Popap.jsx';
                     <td >{item.profile.cc}</td> 
                      <td className="text-gray-500">{item.area}</td> 
                     <td >
+                    <button onClick={''}
+                        className=" bg-[#ff969601] border-[1px] border-[#2c5f9598] text-[#4190d9] hover:text-white
+                        hover:bg-[#2c3f9598] ml-[5px] rounded-[1em] p-[4px]">Generar Pago</button>
                     <button onClick={()=>{setSee({
                           component:'hour',
                           isTrue:true,
                           dataItem:item
                         })}}
                     className="ml-[5px] bg-[##00800017] text-green-500 rounded-[1em] 
-                      border-[1px] border-green-500 hover:text-white hover:bg-[#52d9669b] p-[4px]">Registrar Hora</button>
+                      border-[1px] border-green-800 hover:text-white hover:bg-[#52d9669b] p-[4px]">Registrar Hora</button>
+                                            {pathLocation.includes('profileEmployee')
+                        ?''
+                        : <button onClick={()=>delEmployee(item)}
+                        className=" bg-[#ff969601] border-[1px] border-[#952c2c77] text-[#be3b3b] hover:text-white
+                        hover:bg-[#952c2c98] ml-[5px] rounded-[1em] p-[4px]">Eliminar</button>
+                      }
                       <button onClick={()=>{
                         setSee({
                           component:'update',
@@ -87,7 +96,8 @@ import { Popap } from './Popap.jsx';
                           dataItem:item
                         })
                       }} className="ml-[5px] bg-[##00800017] text-white rounded-[1em] 
-                      border-[1px] border-white hover:text-[#52d9669b] hover:border-[#52d9669b] transition-all p-[4px]">Actualizar</button>
+                      border-[1px] border-gray-500 hover:text-[#52d9669b] hover:border-[#52d9669b] transition-all p-[4px]">Actualizar</button>
+                      
                       {pathLocation.includes('profileEmployee') 
                       ? <button onClick={()=>{
                         setSee({
@@ -96,23 +106,17 @@ import { Popap } from './Popap.jsx';
                           dataItem:item
                         })
                       }}  
-                          className="ml-[5px] bg-[##00800017] text-white rounded-[1em] border-[1px] border-white hover:text-[#52d9669b] 
+                          className="ml-[5px] bg-[##00800017] text-white rounded-[1em] border-[1px] border-gray-500 hover:text-[#52d9669b] 
                         hover:border-[#52d9669b] p-[4px]">
                           Ver Perfil
                         </button>
                       : <button onClick={()=>seeProfile(item._id,item)}  
-                          className="ml-[5px] bg-[##00800017] text-white rounded-[1em] border-[1px] border-white hover:text-[#52d9669b] 
+                          className="ml-[5px] bg-[##00800017] text-white rounded-[1em] border-[1px] border-gray-500 hover:text-[#52d9669b] 
                           hover:border-[#52d9669b] p-[4px]">
                           Informacion Personal
                         </button>
                       }
-                      {pathLocation.includes('profileEmployee')
-                        ?''
-                        : <button onClick={()=>delEmployee(item)}
-                        className=" bg-[#ff969601] border-[1px] border-[#952c2c98] text-[#952c2c] hover:text-white
-                        hover:bg-[#952c2c98] ml-[5px] rounded-[1em] p-[4px]">Eliminar</button>
-                      }
-                     
+
                     </td>
                 </tr>
               ))}

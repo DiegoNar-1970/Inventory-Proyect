@@ -84,18 +84,22 @@ try {
       if(news.message){
           return res.status(401).json({message:news.message})
          }
+
          let paiDayShift={pai:0,hrs:0,type:''};
          let paiForHour=0;
+         console.log(workHour);
          Object.entries(workHour.hours).forEach(([key,value])=>{
           if(value._id===TYPE_SHIFT.DAY_SHIFT){
               paiDayShift.pai=value.calcHoursTotal * PAY_FOR_HOUR
               paiDayShift.hrs=value.calcHoursTotal;
+              paiDayShift.type=value._id;
               paiForHour=paiDayShift.pai;
           }
          })
          console.log('paiDayShift',paiDayShift) 
          const {dayTimeOvertime,nightOvertime,dayTimeHoliday,nightHoliday,paiForComissions}=calcComissions(news);
-
+         console.log(news)
+         console.log(dayTimeHoliday,nightHoliday,dayTimeOvertime,nightOvertime,paiForComissions);
         return res.send(workHour);
 
       }catch(err){
