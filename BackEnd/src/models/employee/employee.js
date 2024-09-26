@@ -69,11 +69,12 @@ export class EmployeeModel{
     }
     static async getByid(id){
         try{
-            const employee= await Employee.findById(id).populate({},{
+            const employee = await Employee.findById(id,{
                 __v:0,
                 parafiscales:0,
                 position:0
             });
+            
             if(!employee){
                 return {message:'Employee not found'};
             }

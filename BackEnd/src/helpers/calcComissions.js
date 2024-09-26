@@ -1,4 +1,6 @@
 import { EX_HOUR } from "../const/TYPES_HOURS.js";
+import { initHourType } from '../const/const.js';
+
 import {
     COMMISION_NIGHT_HOLIDAY,
     COMMISION_NIGHT_OVERTIME,
@@ -9,16 +11,7 @@ import {
 } from '../const/payForHour.js';
 
 export const calcComissions = (news) => {
-
-    const initHourType = () => ({
-        totalHours: 0,
-        paiForHour: 0,
-        comissions: [],
-        paiForComissions: 0,
-        typeHour: '',
-        hrsComission: 0
-    });
-
+    
     let dayTimeOvertime = initHourType();
     let nightOvertime = initHourType();
     let dayTimeHoliday = initHourType();
@@ -37,7 +30,7 @@ export const calcComissions = (news) => {
         }
         paiForComissions += hourType.paiForHour;
         if (value._id.comissions !== "NO_APLICA") {
-            hourType.comissions.push(value._id.comissions);
+            hourType.comissions=value._id.comissions;
         }
     };
 

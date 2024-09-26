@@ -1,7 +1,7 @@
 
-import { PAY_FOR_HOUR } from '../const/payForHour.js';
-import { TYPE_SHIFT } from '../const/TYPES_HOURS.js';
+import { HRS_MONTH } from '../const/payForHour.js';
 import { calcComissions } from '../helpers/calcComissions.js';
+import { calcPaiment } from '../helpers/calcPaiment.js';
 import { EmployeeModel } from "../models/employee/employee.js";
 import { NewsModel } from "../models/news/news.js";
 import { WorkHourModel } from "../models/workHours/workHour.js";
@@ -20,6 +20,7 @@ if (!result || !id) {
 
 try {
   const {newWorkH,message,error} = await WorkHourModel.create(id, result);
+  console.log(error,message,newWorkH)
   if (message) {
     return res.status(400).json({ message: message , err:error });
   }
@@ -70,13 +71,12 @@ try {
 
       try{
         const employee= await EmployeeModel.getByid(id);
-
-        if(!employee){
-          return res.status(400).json({message:'Empleado no encontrado'});
+        if(employee.message){
+          return res.status(400).json({message:'Empleado no encontrado',err:employee.message});
         }
-
         const news=await NewsModel.groupByType(id,data,newsStartW,newsEndW);
         const workHour=await WorkHourModel.groupByType(id,req.body,startWeek,endWeek);
+
       if(workHour.message){
           return res.status(401).json({message:workHour.message})
           }
@@ -84,23 +84,14 @@ try {
       if(news.message){
           return res.status(401).json({message:news.message})
          }
+         
+         const baseSalary=(employee.baseSalary / HRS_MONTH );
+         //podriamos evitar hacer la busqueda del empleado si desde el front enviamos la info del empleado 
+         const {paiDayShift,paiNigthShift,paiDominicalShift,paiNigthDominicalShift,totalPaiment}=calcPaiment(workHour,baseSalary);
 
-         let paiDayShift={pai:0,hrs:0,type:''};
-         let paiForHour=0;
-         console.log(workHour);
-         Object.entries(workHour.hours).forEach(([key,value])=>{
-          if(value._id===TYPE_SHIFT.DAY_SHIFT){
-              paiDayShift.pai=value.calcHoursTotal * PAY_FOR_HOUR
-              paiDayShift.hrs=value.calcHoursTotal;
-              paiDayShift.type=value._id;
-              paiForHour=paiDayShift.pai;
-          }
-         })
-         console.log('paiDayShift',paiDayShift) 
          const {dayTimeOvertime,nightOvertime,dayTimeHoliday,nightHoliday,paiForComissions}=calcComissions(news);
-         console.log(news)
-         console.log(dayTimeHoliday,nightHoliday,dayTimeOvertime,nightOvertime,paiForComissions);
-        return res.send(workHour);
+
+        return res.send({employee,news,dayTimeHoliday,nightHoliday,dayTimeOvertime,nightOvertime,workHour,paiForComissions,totalPaiment});
 
       }catch(err){
           return res.status(404).json({message:err.message})

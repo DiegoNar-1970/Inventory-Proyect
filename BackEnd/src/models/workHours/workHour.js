@@ -30,13 +30,14 @@ const workHourSchema = new Schema({
 
     static async create(id,data){
       const result = vWorkHourSchemaZod({...data,employee:id});
-
+      console.log(result);
       if (!result.success) {
         return { message: 'invalid type', error: result.error };
       }
 
       try {
         const employee = await Employee.findById(id);
+        console.log('usuario',employee);
           if(!employee){
             return { message: 'El empleado no existe' };
           }
@@ -47,7 +48,7 @@ const workHourSchema = new Schema({
             result.data.lunch,
             result.data.typeHour,
           )
-
+          
         const {checkTime : _, leaveWork : __, ...rest}=result.data;
         const {breakfast : b, lunch : l, typeHour:t, ...dataNews}=rest;
 
@@ -56,6 +57,7 @@ const workHourSchema = new Schema({
           extraHours:{...horasExtras},
           comissions:{...recargos},
         });
+        console.log('news',news);
         const newsId = (news.comissions.type === 'NO_APLICA' && news.extraHours.type === 'NO_APLICA')
           ? null
           : news._id;
@@ -69,9 +71,11 @@ const workHourSchema = new Schema({
           news:newsId,
           ...rest
         });
+        console.log('newWorkH',newWorkH);
         await newWorkH.save();
         return {newWorkH};
       } catch (err) {
+        console.log('error',err)
         return { message: err };
       }
     }
@@ -174,7 +178,7 @@ const workHourSchema = new Schema({
     }
 
     static async groupByType(id,data,endWeek,startWeek){
-
+      try{
         const query=queryCond(data);
         const employeeId = new mongoose.Types.ObjectId(id);
         let hours=await WorkHour.aggregate([
@@ -213,6 +217,11 @@ const workHourSchema = new Schema({
         };
 
         return{hours}
+
+      }catch(err){
+        console.log(err)
+          return {message:err}
+      }
       }
       
     }

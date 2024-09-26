@@ -1,4 +1,7 @@
-export const PAY_FOR_HOUR = 6087;
+export const HRS_MONTH = 184;
+export const P_NIGHT_SHIFT=0.35;
+export const P_DOMINICAL_SHIFT=0.75;
+export const P_NIGH_DOMINICAL_SHIFT=1.1;
 export const EH_DAYTIME_OVERTIME = 7609;
 export const EH_NIGHT_OVERTIME = 10652;
 export const EH_DAYTIME_HOLIDAY = 10652;

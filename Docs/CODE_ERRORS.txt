@@ -556,3 +556,191 @@ uso de groupby
           {errors.week && (
             <span className="text-red-600">{errors.week.message}</span>
           )}
+          pero si se filtra solo un empleado porque hay que usa undwind para descomponer y first para acceder al primero, no se supone que es el unico? ademas no entiendo para que sirve el pipeline y el $expr y el $eq explicamelo con ejemplos 
+ChatGPT dijo:
+ChatGPT
+¡Claro! Vamos a desglosar cada uno de esos conceptos y explicar por qué se usan en este contexto.
+
+1. $unwind
+Aunque estés buscando un solo empleado, el $lookup devuelve un array. Por lo tanto, debes usar $unwind para descomponer ese array en un documento individual. Esto te permite acceder a los campos de ese empleado como si fueran parte del documento principal.
+
+Ejemplo de $unwind
+Imagina que después de un $lookup, tienes el siguiente documento:
+
+json
+Copiar código
+{
+  "_id": "1",
+  "employee": "123",
+  "employeeDetails": [
+    { "baseSalary": 5000 }
+  ]
+}
+Después de aplicar $unwind:
+
+json
+Copiar código
+{
+  "_id": "1",
+  "employee": "123",
+  "employeeDetails": { "baseSalary": 5000 }
+}
+2. $first
+El operador $first se usa para obtener el primer valor en un grupo de documentos. En este caso, aunque solo esperas un empleado, el resultado de $lookup es un array. Por eso, al usar $first, garantizas que estás tomando el primer (y único) elemento de ese array.
+
+Ejemplo de $first
+Si tuvieras varios documentos (aunque en este caso no es el caso, pero para ilustrar):
+
+json
+Copiar código
+[
+  { "employeeDetails": { "baseSalary": 5000 } },
+  { "employeeDetails": { "baseSalary": 6000 } }
+]
+Usando $first:
+
+json
+Copiar código
+{
+  "baseSalary": { $first: "$employeeDetails.baseSalary" } // Esto sería 5000
+}
+3. pipeline
+El pipeline dentro de $lookup es donde defines una serie de etapas que aplican a los documentos de la colección que estás uniendo. Permite filtrar, transformar o agregar datos antes de que sean unidos al documento principal.
+
+Ejemplo de pipeline
+Si solo deseas obtener el baseSalary de los empleados:
+
+javascript
+Copiar código
+pipeline: [
+  { $match: { $expr: { $eq: ["$_id", "$$employeeId"] } } },
+  { $project: { baseSalary: 1 } }
+]
+Esto significa que solo traerás los documentos de employees que coincidan con el employeeId.
+
+4. $expr y $eq
+$expr: Permite usar expresiones dentro de $match. Esto es útil cuando necesitas hacer comparaciones entre campos de diferentes documentos.
+Ejemplo de $expr
+Si deseas comparar el employeeId de workHours con el _id de employees:
+
+javascript
+Copiar código
+$match: { $expr: { $eq: ["$_id", "$$employeeId"] } }
+Aquí, $eq compara los valores de los dos campos.
+
+$eq: Es un operador que compara dos valores y devuelve true si son iguales.
+Ejemplo de $eq
+javascript
+Copiar código
+{
+  $match: {
+    $expr: {
+      $eq: ["$fieldA", "$fieldB"]
+    }
+  }
+}
+Esto devuelve documentos donde fieldA es igual a fieldB.
+
+Resumen
+$unwind: Necesario para descomponer el array resultante de $lookup y trabajar con él como un único documento.
+$first: Garantiza que obtengas el primer elemento del array, que en este caso es el único.
+pipeline: Define cómo procesar los documentos de la colección unida antes de agregarlos al documento principal.
+$expr y $eq: Permiten comparar campos en un $match de manera flexible.
+Espero que esto te aclare cómo funciona cada componente y su propósito. Si tienes más preguntas o necesitas más ejemplos, ¡déjame saber!
+
+
+
+Dijiste:
+que es una expresion en este contexto?  ademas porque usas dos $$ en esta linea? pipeline: [
+        { $match: { $expr: { $eq: ["$_id", "$$employeeId"] } } }
+ChatGPT dijo:
+ChatGPT
+En este contexto, una expresión es una combinación de valores, operadores y funciones que se evalúan para obtener un resultado. En MongoDB, las expresiones se utilizan para realizar cálculos y comparaciones dentro de consultas y agregaciones. Por ejemplo, puedes usar expresiones para comparar campos entre documentos, realizar operaciones matemáticas, o manipular cadenas de texto.
+
+Detalles sobre las expresiones
+$expr: Este operador permite usar expresiones dentro de la etapa $match. Normalmente, en $match, solo puedes hacer comparaciones directas entre campos y valores. Con $expr, puedes realizar comparaciones más complejas que involucren varios campos o funciones.
+
+$eq: Es un operador de comparación que se utiliza dentro de una expresión para verificar si dos valores son iguales.
+
+Uso de $$ en las variables
+Cuando ves $$ en MongoDB, significa que estás usando una variable de sistema o una variable definida en el contexto de la agregación.
+
+Un solo $ se usa para referirse a campos del documento actual.
+Dos $$ se utilizan para referirse a variables que se han definido en el contexto del pipeline de agregación.
+Ejemplo de la línea que mencionaste
+javascript
+Copiar código
+pipeline: [
+  { $match: { $expr: { $eq: ["$_id", "$$employeeId"] } } }
+]
+$_id: Es un campo del documento actual en la colección que estás consultando.
+$$employeeId: Es una variable que se ha definido en el contexto de la agregación. Por ejemplo, podrías haberla definido en una etapa anterior del pipeline para representar el ID del empleado que estás buscando.
+Resumiendo
+Expresiones son combinaciones de valores y operadores que se evalúan para realizar comparaciones, cálculos, etc.
+Usar $$ permite acceder a variables definidas en el contexto de la consulta o agregación, mientras que $ se usa para referirse a campos del documento actual.
+Si necesitas más aclaraciones o ejemplos, ¡estaré encantado de ayudar!
+ static async groupByType(id,data,endWeek,startWeek){
+      try{
+        const query=queryCond(data);
+        const employeeId = new mongoose.Types.ObjectId(id);
+        let hours=await WorkHour.aggregate([
+          {
+            $match: {
+              ...query,
+              employee: employeeId 
+            }
+          },
+          {
+            //el lookup es para unir la tabla de workhour con employee pero trae dependiendo de que pongamos puede traer o toda las colecciones o una sola coleccion
+            $lookup: {
+              from: 'employees',
+              let:{employeeId:'$employee'},
+              pipeline:[
+                {$match :{ $expr: { $eq : ["$_id","$$employeeId"]}}},
+                { $project: { baseSalary: 1 } }
+              ],
+              as: 'employeeDetails',
+            },
+          },
+          { $unwind: "$employeeDetails" },
+          {
+            $group:{
+            _id: "$typeHour", 
+            totalMinutes: { $sum: "$dayHour.minutes"},
+            totalHoras: { $sum:"$dayHour.hours" }
+          }
+        },
+        {
+            $project: {
+            _id: 1,
+            calcHoursTotal: {
+                $sum: [
+                  "$totalHoras", 
+                  { $divide: ["$totalMinutes", 60] }]
+              }
+          }
+        },
+        {
+          $addFields: {
+            baseSalary:{$first:"$employeeDetails.baseSalary"} 
+          }
+        }
+      ]);
+      
+      if(hours.length === 0){
+        return {message:'No se Encontraron Datos Por favor ingresa fechas con registros'}
+      };
+        hours={
+          ...hours,
+          endWeek:endWeek,
+          startWeek:startWeek,
+        };
+        console.log(hours)
+        return{hours}
+
+      }catch(err){
+        console.error(err)
+          return {message:err}
+      }
+      }
+      
