@@ -1,10 +1,9 @@
 export const HRS_MONTH = 184;
+//porcentage and type of shift
 export const P_NIGHT_SHIFT=0.35;
 export const P_DOMINICAL_SHIFT=0.75;
 export const P_NIGH_DOMINICAL_SHIFT=1.1;
-export const EH_DAYTIME_OVERTIME = 7609;
-export const EH_NIGHT_OVERTIME = 10652;
-export const EH_DAYTIME_HOLIDAY = 10652;
-export const EH_NIGHT_HOLIDAY = 15217;
-export const COMMISION_NIGHT_HOLIDAY = 6696;
-export const COMMISION_NIGHT_OVERTIME = 2130;
+export const PEH_DAYTIME_OVERTIME = 0.25;
+export const PEH_NIGHT_OVERTIME = 0.75;
+export const PEH_DAYTIME_HOLIDAY = 1;
+export const PEH_NIGHT_HOLIDAY = 1.5;

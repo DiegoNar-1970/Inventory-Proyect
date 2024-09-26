@@ -89,7 +89,7 @@ try {
          //podriamos evitar hacer la busqueda del empleado si desde el front enviamos la info del empleado 
          const {paiDayShift,paiNigthShift,paiDominicalShift,paiNigthDominicalShift,totalPaiment}=calcPaiment(workHour,baseSalary);
 
-         const {dayTimeOvertime,nightOvertime,dayTimeHoliday,nightHoliday,paiForComissions}=calcComissions(news);
+         const {dayTimeOvertime,nightOvertime,dayTimeHoliday,nightHoliday,paiForComissions}=calcComissions(news,baseSalary);
 
         return res.send({employee,news,dayTimeHoliday,nightHoliday,dayTimeOvertime,nightOvertime,workHour,paiForComissions,totalPaiment});
 
