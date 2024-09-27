@@ -13,13 +13,10 @@ const newsSchema=new Schema({
     extraHours:{
         type:{type:String,default:'NO_APLICA'},
         hours:{type:Number,default:0},
-        minutes:{type:Number,default:0},
-        percentage:{type:Number,default:0},
+        minutes:{type:Number,default:0}
       },
       comissions:{
         type:{type:String,default:'NO_APLICA'},
-        apply:{type:Boolean,default:false},
-        value:{type:Number,default:0},
         hrs:{type:Number,default:0}
       }
 })

@@ -30,14 +30,12 @@ const workHourSchema = new Schema({
 
     static async create(id,data){
       const result = vWorkHourSchemaZod({...data,employee:id});
-      console.log(result);
       if (!result.success) {
         return { message: 'invalid type', error: result.error };
       }
 
       try {
         const employee = await Employee.findById(id);
-        console.log('usuario',employee);
           if(!employee){
             return { message: 'El empleado no existe' };
           }
@@ -57,10 +55,11 @@ const workHourSchema = new Schema({
           extraHours:{...horasExtras},
           comissions:{...recargos},
         });
-        console.log('news',news);
+
         const newsId = (news.comissions.type === 'NO_APLICA' && news.extraHours.type === 'NO_APLICA')
           ? null
           : news._id;
+
         const newWorkH = new WorkHour({
           checkTime:checkTime,
           leaveWork:leaveWork,
@@ -71,11 +70,10 @@ const workHourSchema = new Schema({
           news:newsId,
           ...rest
         });
-        console.log('newWorkH',newWorkH);
         await newWorkH.save();
         return {newWorkH};
       } catch (err) {
-        console.log('error',err)
+        console.error('error',err)
         return { message: err };
       }
     }
@@ -115,6 +113,8 @@ const workHourSchema = new Schema({
           if(hours.message){
             return{message:hours.message}
           }
+          
+          //separa esto en una funcion aparte 
           const groupedByEmployee = hours.reduce((acc, curr) => {
             const employeeId = curr.employee.profile.cc.toString(); 
             
@@ -143,7 +143,6 @@ const workHourSchema = new Schema({
           
             return acc;
           }, {});
-
           
           return groupedByEmployee;
       }catch(err){

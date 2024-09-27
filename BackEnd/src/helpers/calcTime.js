@@ -12,12 +12,10 @@ export const calcTime = (initialDate, endDate, breakfast, lunch, typeHour) => {
       type: 'NO_APLICA',
       hours: 0,
       minutes: 0,
-      percentage: 0,
     };
+
     let recargos = {
       type: 'NO_APLICA',
-      apply: false,
-      value: 0,
       hrs: 0,
     };
 
@@ -40,31 +38,26 @@ export const calcTime = (initialDate, endDate, breakfast, lunch, typeHour) => {
       switch (typeHour) {
         case TYPE_SHIFT.DAY_SHIFT:
           horasExtras.type = `HORA_EXTRA_${typeHour}`;
-          horasExtras.percentage = 1.25;
+          recargos = calculateTypeOfRecarge(horasExtras,COMISSIONS.COMISSION_DAY_SHIFT);
           break;
 
         case TYPE_SHIFT.NIGHT_SHIFT:
           horasExtras.type = `HORA_EXTRA_${typeHour}`;
-          horasExtras.percentage = 1.75;
-          recargos = calculateNightShiftRecargos(checkTime, hours, horasExtras.hours);
+          recargos = calculateTypeOfRecarge(horasExtras,COMISSIONS.NIGHT_SURCHARGE);
           break;
 
         case TYPE_SHIFT.DOMINICAL_SHIFT:
           horasExtras.type = `HORA_EXTRA_${typeHour}`;
-          horasExtras.percentage = 2;
-          recargos = calculateSundayRecargos(hours, minutes, horasExtras);
+          recargos = calculateTypeOfRecarge(horasExtras,COMISSIONS.COMISSION_HOLIDAY_SHIFT);
           break;
 
         case TYPE_SHIFT.NIGH_DOMINICAL_SHIFT:
           horasExtras.type = `HORA_EXTRA_${typeHour}`;
-          horasExtras.percentage = 2.5;
-          recargos = calculateNightSundayRecargos(checkTime, hours, horasExtras.hours);
+          recargos = calculateTypeOfRecarge(horasExtras,COMISSIONS.COMISSION_SUNDAY_NIGHT);
           break;
       }
-    } else {
-      recargos = applyRecargosWithoutExtras(typeHour, checkTime, hours, minutes);
-    }
 
+    } 
     return {
       hours,
       minutes,
@@ -78,51 +71,11 @@ export const calcTime = (initialDate, endDate, breakfast, lunch, typeHour) => {
   }
 };
 
-
-const calculateNightShiftRecargos = (checkTime, hours, extraHours) => {
+const calculateTypeOfRecarge = (horasExtras,typeRecarge) => {
   let recargos = {
-    type: COMISSIONS.NIGHT_SURCHARGE,
-    apply: true,
-    value: 0.35,
-    hrs: adjustHoursForNightShift(checkTime, hours, extraHours),
+    type: typeRecarge,
+    hrs: horasExtras.hours + (horasExtras.minutes / 60)
   };
-  return recargos;
-};
-
-const calculateSundayRecargos = (hours, minutes, horasExtras) => ({
-  type: COMISSIONS.SUNDAY,
-  apply: true,
-  value: 0.75,
-  hrs: (hours + horasExtras.hours) + (horasExtras.minutes / 60),
-});
-
-const calculateNightSundayRecargos = (checkTime, hours, extraHours) => ({
-  type: COMISSIONS.SUNDAY_NIGHT,
-  apply: true,
-  value: 1.1,
-  hrs: adjustHoursForNightShift(checkTime, hours, extraHours),
-});
-
-const applyRecargosWithoutExtras = (typeHour, checkTime, hours, minutes) => {
-  let recargos = {
-    type: 'NO_APLICA',
-    apply: false,
-    value: 0,
-    hrs: 0,
-  };
-
-  if (typeHour === TYPE_SHIFT.NIGHT_SHIFT || typeHour === TYPE_SHIFT.NIGH_DOMINICAL_SHIFT) {
-    recargos.type = typeHour === TYPE_SHIFT.NIGHT_SHIFT ? COMISSIONS.NIGHT_SURCHARGE : COMISSIONS.SUNDAY_NIGHT;
-    recargos.apply = true;
-    recargos.value = typeHour === TYPE_SHIFT.NIGHT_SHIFT ? 0.35 : 1.1;
-    recargos.hrs = adjustHoursForNightShift(checkTime, hours, 0);
-  } else if (typeHour === TYPE_SHIFT.DOMINICAL_SHIFT) {
-    recargos.type = COMISSIONS.SUNDAY;
-    recargos.apply = true;
-    recargos.value = 0.75;
-    recargos.hrs = hours + (minutes / 60);
-  }
-
   return recargos;
 };
 

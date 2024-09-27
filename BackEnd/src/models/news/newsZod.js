@@ -10,13 +10,10 @@ const newsSchema=z.object({
     extraHours:z.object({
         type : z.string(),
         hours : z.number().min(0).max(24),
-        minutes:z.number().max(61),
-        percentage:z.number()
+        minutes:z.number().max(61)
     }),
     comissions:z.object({
         type:z.string(),
-        apply:z.boolean(),
-        value:z.number(),
         hrs:z.number()
     })
 })

@@ -20,7 +20,6 @@ if (!result || !id) {
 
 try {
   const {newWorkH,message,error} = await WorkHourModel.create(id, result);
-  console.log(error,message,newWorkH)
   if (message) {
     return res.status(400).json({ message: message , err:error });
   }
