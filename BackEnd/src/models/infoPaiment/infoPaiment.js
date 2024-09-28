@@ -13,7 +13,10 @@ const infoPaimentSche = new Schema({
         startWeek:{type:Number},
         endWeek:{type:Number}
     },
-    weeksHours:[{ type: Number }],
+    weeksHours:{
+        startWeek:{type:Number},
+        endWeek:{type:Number}
+    },
     horasDominicales:{
             hours: { type: Number, default:0 },
             paimentForHour: { type:Number, default:11.062}
