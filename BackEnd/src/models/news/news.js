@@ -131,8 +131,8 @@ export class NewsModel{
     }
 
     static async groupByType(id,data,newsEndW,newsStartW){
-
-        const query=queryCond(data);
+        try{
+            const query=queryCond(data);
         const employeeId = new mongoose.Types.ObjectId(id);
         
         let news = await News.aggregate([
@@ -171,15 +171,12 @@ export class NewsModel{
             return {message:'No se Encontraron Datos Por favor ingresa fechas con registros'}
         }
         
-        // news={
-        //      ...news,
-        //     endWeek:newsEndW,
-        //     startWeek:newsStartW,
-        // }
-        
         return{
             news,
-            newsEndW,
-            newsStartW,}
+            newsEndWeek:newsEndW,
+            newsStartWeek:newsStartW}
+        }catch(err){ 
+            return {message:err};
+         }  
       }
 }

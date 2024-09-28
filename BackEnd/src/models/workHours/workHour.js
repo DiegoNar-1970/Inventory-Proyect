@@ -184,7 +184,7 @@ const workHourSchema = new Schema({
       try{
         const query=queryCond(data);
         const employeeId = new mongoose.Types.ObjectId(id);
-        let hours=await WorkHour.aggregate([
+        let workHour=await WorkHour.aggregate([
           {
             $match: {
               ...query,
@@ -212,20 +212,19 @@ const workHourSchema = new Schema({
         }
       ]);
       
-      if(hours.length === 0){
+      if(workHour.length === 0){
         return {message:'No se Encontraron Datos Por favor ingresa fechas con registros'}
       };
-        hours={
-          ...hours,
-          endWeek:endWeek,
-          startWeek:startWeek,
-        };
 
-        return{hours}
+        return{
+          workHour,
+          endWeekWorkHour:endWeek,
+          startWeekworkHour:startWeek
+        }
 
       }catch(err){
         console.log(err)
-          return {message:err}
+          return {messageW:err}
       }
       }
       

@@ -73,17 +73,14 @@ try {
         if(employee.message){
           return res.status(400).json({message:'Empleado no encontrado',err:employee.message});
         }
-        const {news,newsEndW,newsStartW}=await NewsModel.groupByType(id,data,newsStartW,newsEndW);
+        const {news,newsEndWeek,newsStartWeek,messageN}=await NewsModel.groupByType(id,data,newsStartW,newsEndW);
         
-        const workHour=await WorkHourModel.groupByType(id,req.body,startWeek,endWeek);
-      if(workHour.message){
-          return res.status(401).json({message:workHour.message})
-          }
-          
-      if(news.message){
-          return res.status(401).json({message:news.message})
-         }
-         
+        if(messageN)return res.status(401).json({message:messageN})
+
+        const {workHour,endWeekWorkHour,startWeekworkHour,messageW}=await WorkHourModel.groupByType(id,req.body,startWeek,endWeek);
+
+        if(messageW)return res.status(401).json({message:message})
+
          const baseSalary=(employee.baseSalary / HRS_MONTH );
          //podriamos evitar hacer la busqueda del empleado si desde el front enviamos la info del empleado 
          const {paiDayShift,paiNigthShift,paiDominicalShift,paiNigthDominicalShift,totalPaiment}=calcPaiment(workHour,baseSalary);

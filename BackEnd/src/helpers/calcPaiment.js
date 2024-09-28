@@ -25,7 +25,7 @@ export const calcPaiment = (workHour,baseSalary) => {
         
     };
 
-    Object.entries(workHour.hours).forEach(([key, value]) => {
+    Object.entries(workHour).forEach(([key, value]) => {
         switch (value._id) {
             case TYPE_SHIFT.DAY_SHIFT:
                 totalPaiment += processPaiment(paiDayShift, baseSalary, 0, totalPaiment ,value);

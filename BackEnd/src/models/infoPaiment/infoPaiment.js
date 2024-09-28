@@ -3,6 +3,8 @@ import { calcPaiment } from "../../helpers/filtersPaiment.js";
 import { queryCond } from "../../helpers/queryConditios.js";
 import Employee from "../employee/employee.js";
 import WorkHour from "../workHours/workHour.js";
+import { hourDetailSchema, infoWorkHoursSchema, newsInfoSchema } from "./schemasComplements.js";
+
 const {Schema,model}=mongoose
 
 const infoPaimentSche = new Schema({
@@ -17,29 +19,20 @@ const infoPaimentSche = new Schema({
         startWeek:{type:Number},
         endWeek:{type:Number}
     },
-    horasDominicales:{
-            hours: { type: Number, default:0 },
-            paimentForHour: { type:Number, default:11.062}
-        },
-    horasDominicalesNocturnas:{
-            hours: { type: Number, default:0 },
-            paimentForHour: { type: Number, default:13.830}
-        },
-    horasDiurnas:{
-            hours: { type: Number, default:0},
-            paimentForHour: { type: Number, default:5.531}
-        },
-    horasNocturnas:{
-            hours: { type: Number, default:0},
-            paimentForHour: { type: Number, default:9.681 }
-        },
-    horasExtras:{
-                hours: { type: Number, default:0},
-                paimentForHour: { type: Number, default:6.915 }
+    News:{
+        type:[newsInfoSchema],
+        newsStartWeek: { type: Number, default:null},
+        newsEndWeek: { type: Number, default:null }
     },
-    creationDate: { type: Date, default:Date.now() },
-    sueldoBasico:{type:Number},
-    sueldoTotal:{type:Number}
+    dayTimeHoliday: { type:hourDetailSchema, default:null },
+    nightHoliday: { type:hourDetailSchema, default:null },
+    dayTimeOvertime: { type:hourDetailSchema, default:null },
+    nightOvertime: { type:hourDetailSchema, default:null },
+    WorkHour:{
+        workHours:{type:infoWorkHoursSchema},
+        startWeekworkHour:{type:Number},
+        endWeekWorkHour:{type:Number}
+    },
   });
   
   const InfoPaiment = model('InfoPaiment',infoPaimentSche)
