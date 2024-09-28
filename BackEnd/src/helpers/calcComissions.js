@@ -26,7 +26,7 @@ export const calcComissions = (news,baseSalary) => {
         return hourType.paiOfHours;
     };
 
-    Object.entries(news.news).forEach(([key, value]) => {
+    Object.entries(news).forEach(([key, value]) => {
         switch (value._id?.extraHours) {
             case EX_HOUR.DAYTIME_OVERTIME:
                 paiForComissions += processExtraHour(dayTimeOvertime, PEH_DAYTIME_OVERTIME,baseSalary,value);

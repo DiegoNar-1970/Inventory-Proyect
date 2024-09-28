@@ -146,8 +146,7 @@ export class NewsModel{
             $group:{
             _id: {
                 extraHours:"$extraHours.type",
-                comissions:"$comissions.type",
-                employee: "$employee"
+                comissions:"$comissions.type"
             }, 
             totalMinutes: { $sum:"$extraHours.minutes"},
             totalHoras: { $sum:"$extraHours.hours" },
@@ -163,7 +162,6 @@ export class NewsModel{
                   "$totalHoras", 
                   { $divide: ["$totalMinutes", 60] }]
               },
-              employee: 1,
               commissionHours:1
           }
         }
@@ -173,12 +171,15 @@ export class NewsModel{
             return {message:'No se Encontraron Datos Por favor ingresa fechas con registros'}
         }
         
-        news={
-             ...news,
-            endWeek:newsEndW,
-            startWeek:newsStartW,
-        }
+        // news={
+        //      ...news,
+        //     endWeek:newsEndW,
+        //     startWeek:newsStartW,
+        // }
         
-        return{news}
+        return{
+            news,
+            newsEndW,
+            newsStartW,}
       }
 }

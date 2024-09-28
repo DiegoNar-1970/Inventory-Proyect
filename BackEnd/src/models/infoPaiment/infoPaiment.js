@@ -9,7 +9,11 @@ const infoPaimentSche = new Schema({
     employee: { 
       type: mongoose.Schema.Types.ObjectId, ref: 'Employee'
     },
-    week:[{ type: Number }],
+    weeksNews:{
+        startWeek:{type:Number},
+        endWeek:{type:Number}
+    },
+    weeksHours:[{ type: Number }],
     horasDominicales:{
             hours: { type: Number, default:0 },
             paimentForHour: { type:Number, default:11.062}

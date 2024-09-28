@@ -73,9 +73,9 @@ try {
         if(employee.message){
           return res.status(400).json({message:'Empleado no encontrado',err:employee.message});
         }
-        const news=await NewsModel.groupByType(id,data,newsStartW,newsEndW);
+        const {news,newsEndW,newsStartW}=await NewsModel.groupByType(id,data,newsStartW,newsEndW);
+        console.log('asi es como se retorna las novedades',news);
         const workHour=await WorkHourModel.groupByType(id,req.body,startWeek,endWeek);
-
       if(workHour.message){
           return res.status(401).json({message:workHour.message})
           }
