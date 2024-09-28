@@ -164,7 +164,7 @@ export class NewsModel{
                   { $divide: ["$totalMinutes", 60] }]
               },
               employee: 1,
-              commissionHours:1,
+              commissionHours:1
           }
         }
         ]);

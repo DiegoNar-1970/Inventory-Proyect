@@ -16,9 +16,9 @@ export const calcTime = (initialDate, endDate, breakfast, lunch, typeHour) => {
 
     let recargos = {
       type: 'NO_APLICA',
-      hrs: 0,
+      hrs: 0
     };
-
+    let comissionForNigthShift = 0;
     const differenceInMillis = leaveWork - checkTime;
     let totalMinutes = Math.floor(differenceInMillis / (1000 * 60));
 
@@ -27,7 +27,8 @@ export const calcTime = (initialDate, endDate, breakfast, lunch, typeHour) => {
 
     let hours = Math.floor(totalMinutes / 60);
     let minutes = totalMinutes % 60;
-
+    if (hours > 24) return {
+      message:'No puedes registrar mas de 24 horas'}
 
     if (hours > standardHours) {
       horasExtras.hours = hours - standardHours;
@@ -43,7 +44,8 @@ export const calcTime = (initialDate, endDate, breakfast, lunch, typeHour) => {
 
         case TYPE_SHIFT.NIGHT_SHIFT:
           horasExtras.type = `HORA_EXTRA_${typeHour}`;
-          recargos = calculateTypeOfRecarge(horasExtras,COMISSIONS.NIGHT_SURCHARGE);
+          recargos = calculateTypeOfRecarge(horasExtras,COMISSIONS.COMISSION_NIGHT_SURCHARGE);
+          comissionForNigthShift=adjustHoursForNightShift(checkTime,hours); 
           break;
 
         case TYPE_SHIFT.DOMINICAL_SHIFT:
@@ -54,6 +56,7 @@ export const calcTime = (initialDate, endDate, breakfast, lunch, typeHour) => {
         case TYPE_SHIFT.NIGH_DOMINICAL_SHIFT:
           horasExtras.type = `HORA_EXTRA_${typeHour}`;
           recargos = calculateTypeOfRecarge(horasExtras,COMISSIONS.COMISSION_SUNDAY_NIGHT);
+          comissionForNigthShift=adjustHoursForNightShift(checkTime,hours);
           break;
       }
 
@@ -64,25 +67,27 @@ export const calcTime = (initialDate, endDate, breakfast, lunch, typeHour) => {
       checkTime,
       leaveWork,
       horasExtras,
-      recargos
+      recargos,
+      comissionForNigthShift
     };
   } catch (err) {
-    console.log(err);
+    console.error('error',err);
   }
 };
 
 const calculateTypeOfRecarge = (horasExtras,typeRecarge) => {
   let recargos = {
     type: typeRecarge,
+    //resviasar este calculo por si hay que cambiarlo
     hrs: horasExtras.hours + (horasExtras.minutes / 60)
   };
   return recargos;
 };
 
-const adjustHoursForNightShift = (checkTime, hours, extraHours) => {
+const adjustHoursForNightShift = (checkTime, hours) => {
   const startHour = checkTime.getHours();
-  if (startHour === 17) return hours - 3 + extraHours;
-  if (startHour === 18) return hours - 2 + extraHours;
-  if (startHour === 19) return hours - 1 + extraHours;
-  return hours + extraHours;
+  if (startHour === 17) return hours - 3;
+  if (startHour === 18) return hours - 2;
+  if (startHour === 19) return hours - 1;
+  return hours ;
 };

@@ -16,13 +16,14 @@ export const calcComissions = (news,baseSalary) => {
     let nightHoliday = initHourType();
     let paiForComissions = 0;
 
-    const processExtraHour = (hourType = initHourType() , porcentageComission, baseSalary ,value) => {
+    const processExtraHour = (hourType, porcentageComission, baseSalary ,value) => {
         hourType.totalHours = value.calcHoursTotal;
         hourType.typeHour = value._id.extraHours;
         hourType.comissions = value._id?.comissions;
-        hourType.paiForHour = porcentageComission * baseSalary;
+        hourType.paiExtraForHour = porcentageComission * baseSalary;
         hourType.paiOfHours = value.calcHoursTotal * ((baseSalary * porcentageComission) + baseSalary);
-        hourType.paiForHour += value.calcHoursTotal * rate;
+        hourType.paiForHourComission = (baseSalary * porcentageComission) + baseSalary;
+        return hourType.paiOfHours;
     };
 
     Object.entries(news.news).forEach(([key, value]) => {

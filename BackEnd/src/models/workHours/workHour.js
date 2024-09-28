@@ -4,7 +4,6 @@ import { queryCond } from '../../helpers/queryConditios.js';
 import Employee from '../employee/employee.js';
 import { NewsModel } from "../news/news.js";
 import { vWorkHourSchemaZod } from './workHourZod.js';
-
 const {Schema}=mongoose
 const workHourSchema = new Schema({
     employee: { type: Schema.Types.ObjectId, ref: 'Employee' },
@@ -20,6 +19,7 @@ const workHourSchema = new Schema({
     lunch:{type:Boolean,default:false},
     typeHour:{ type: String},
     news:{type: Schema.Types.ObjectId, ref:'News'},
+    comissionForNigthShift:{type:Number},
 
   });
   
@@ -35,18 +35,21 @@ const workHourSchema = new Schema({
       }
 
       try {
+
         const employee = await Employee.findById(id);
           if(!employee){
             return { message: 'El empleado no existe' };
           }
-          const {checkTime,leaveWork,hours,minutes,horasExtras,recargos}=calcTime(
+          const {checkTime,leaveWork,hours,minutes,horasExtras,recargos,comissionForNigthShift,message}=calcTime(
             result.data.checkTime,
             result.data.leaveWork,
             result.data.breakfast,
             result.data.lunch,
             result.data.typeHour,
           )
-          
+          if(message){
+            return { message };
+          }
         const {checkTime : _, leaveWork : __, ...rest}=result.data;
         const {breakfast : b, lunch : l, typeHour:t, ...dataNews}=rest;
 
@@ -68,12 +71,13 @@ const workHourSchema = new Schema({
             minutes:minutes, 
           }, 
           news:newsId,
+          comissionForNigthShift:comissionForNigthShift,
           ...rest
         });
         await newWorkH.save();
         return {newWorkH};
       } catch (err) {
-        console.error('error',err)
+        console.error(err)
         return { message: err };
       }
     }
@@ -191,7 +195,8 @@ const workHourSchema = new Schema({
             $group:{
             _id: "$typeHour", 
             totalMinutes: { $sum: "$dayHour.minutes"},
-            totalHoras: { $sum:"$dayHour.hours" }
+            totalHoras: { $sum:"$dayHour.hours" },
+            comissionForNigthShift: { $sum:"$comissionForNigthShift" }
           }
         },
         {
@@ -201,7 +206,8 @@ const workHourSchema = new Schema({
                 $sum: [
                   "$totalHoras", 
                   { $divide: ["$totalMinutes", 60] }]
-              }
+              },
+              comissionForNigthShift:1
           }
         }
       ]);

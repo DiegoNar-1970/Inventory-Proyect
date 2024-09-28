@@ -73,7 +73,7 @@ import { Popap } from './Popap.jsx';
                     <td >{item.profile.cc}</td> 
                      <td className="text-gray-500">{item.area}</td> 
                     <td >
-                    <button onClick={''}
+                    <button 
                         className=" bg-[#ff969601] border-[1px] border-[#2c5f9598] text-[#4190d9] hover:text-white
                         hover:bg-[#2c3f9598] ml-[5px] rounded-[1em] p-[4px]">Generar Pago</button>
                     <button onClick={()=>{setSee({

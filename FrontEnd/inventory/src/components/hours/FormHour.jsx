@@ -32,6 +32,14 @@ const FormHour = ({ item, setLoading }) => {
       }
     } catch (err) {
       console.log(err);
+      let resErr=err?.response.data?.message ?? null
+      if(resErr) {
+        return setLoading((prevState) => ({
+          ...prevState,
+          component: "message",
+          message: resErr
+        }));
+      }
       setLoading((prevState) => ({
         ...prevState,
         component: "message",
