@@ -9,11 +9,11 @@ import {
 } from '../const/payForHour.js';
 
 export const calcComissions = (news,baseSalary) => {
-    
-    let dayTimeOvertime = initHourType();
-    let nightOvertime = initHourType();
-    let dayTimeHoliday = initHourType();
-    let nightHoliday = initHourType();
+    console.log('news', news);
+    let dayTimeOvertime = null;
+    let nightOvertime = null;
+    let dayTimeHoliday = null;
+    let nightHoliday = null;
     let paiForComissions = 0;
 
     const processExtraHour = (hourType, porcentageComission, baseSalary ,value) => {
@@ -29,23 +29,26 @@ export const calcComissions = (news,baseSalary) => {
     Object.entries(news).forEach(([key, value]) => {
         switch (value._id?.extraHours) {
             case EX_HOUR.DAYTIME_OVERTIME:
+                dayTimeOvertime = dayTimeHoliday || initHourType();
                 paiForComissions += processExtraHour(dayTimeOvertime, PEH_DAYTIME_OVERTIME,baseSalary,value);
                 break;
             case EX_HOUR.NIGHT_OVERTIME:
+                nightOvertime= nightOvertime || initHourType();
                 paiForComissions += processExtraHour(nightOvertime, PEH_NIGHT_OVERTIME,baseSalary, value);
                 break;
             case EX_HOUR.DAYTIME_HOLIDAY:
+                dayTimeHoliday = dayTimeHoliday || initHourType();
                 paiForComissions += processExtraHour(dayTimeHoliday, PEH_DAYTIME_HOLIDAY,baseSalary ,value);
                 break;
             case EX_HOUR.NIGHT_HOLIDAY:
+                nightHoliday= nightHoliday || initHourType();
                 paiForComissions += processExtraHour(nightHoliday, PEH_NIGHT_HOLIDAY,baseSalary,value);
                 break;
         }
     });
-
     return {
         dayTimeOvertime,
-        nightOvertime,
+        nightOvertime ,
         dayTimeHoliday,
         nightHoliday,
         paiForComissions

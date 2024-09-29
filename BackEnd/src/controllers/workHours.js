@@ -3,6 +3,7 @@ import { HRS_MONTH } from '../const/payForHour.js';
 import { calcComissions } from '../helpers/calcComissions.js';
 import { calcPaiment } from '../helpers/calcPaiment.js';
 import { EmployeeModel } from "../models/employee/employee.js";
+import { InfoPaimentModel } from "../models/infoPaiment/infoPaiment.js";
 import { NewsModel } from "../models/news/news.js";
 import { WorkHourModel } from "../models/workHours/workHour.js";
 
@@ -74,21 +75,52 @@ try {
           return res.status(400).json({message:'Empleado no encontrado',err:employee.message});
         }
         const {news,newsEndWeek,newsStartWeek,messageN}=await NewsModel.groupByType(id,data,newsStartW,newsEndW);
-        
+
         if(messageN)return res.status(401).json({message:messageN})
 
         const {workHour,endWeekWorkHour,startWeekworkHour,messageW}=await WorkHourModel.groupByType(id,req.body,startWeek,endWeek);
 
-        if(messageW)return res.status(401).json({message:message})
+
+        if(messageW)return res.status(401).json({message:messageW})
 
          const baseSalary=(employee.baseSalary / HRS_MONTH );
          //podriamos evitar hacer la busqueda del empleado si desde el front enviamos la info del empleado 
-         const {paiDayShift,paiNigthShift,paiDominicalShift,paiNigthDominicalShift,totalPaiment}=calcPaiment(workHour,baseSalary);
+         console.log('este es el worHour',workHour)
+         let {paiDayShift,paiNigthShift,paiDominicalShift,paiNigthDominicalShift,totalPaiment}=calcPaiment(workHour,baseSalary);
 
-         const {dayTimeOvertime,nightOvertime,dayTimeHoliday,nightHoliday,paiForComissions}=calcComissions(news,baseSalary) ;
+         let {dayTimeOvertime,nightOvertime,dayTimeHoliday,nightHoliday,paiForComissions}=calcComissions(news,baseSalary) ;
 
-        return res.send({employee,news,dayTimeHoliday,nightHoliday,dayTimeOvertime,nightOvertime,workHour,paiForComissions,totalPaiment});
-
+          totalPaiment=parseFloat((totalPaiment + paiForComissions).toFixed(2));
+          paiForComissions=parseFloat((paiForComissions).toFixed(2));
+          
+          const paymentInfo = {
+            employee: id,
+            News: {
+              news: news || [],
+              newsStartWeek: newsStartWeek || 0,
+              newsEndWeek: newsEndWeek || 0,
+            }|| {},
+            dayTimeHoliday: dayTimeHoliday || null,
+            nightHoliday: nightHoliday || null,
+            dayTimeOvertime: dayTimeOvertime || null,
+            nightOvertime: nightOvertime || null,
+            WorkHour: {
+              workHours: workHour || [],
+              startWeekworkHour: startWeekworkHour || 0,
+              endWeekWorkHour: endWeekWorkHour || 0,
+            },
+            paiForComissions: paiForComissions || 0,
+            totalPaiment: totalPaiment || 0,
+            paiDayShift: paiDayShift || null,
+            paiNigthShift: paiNigthShift || null,
+            paiDominicalShift: paiDominicalShift || null,
+            paiNigthDominicalShift: paiNigthDominicalShift || null,
+          };
+          
+          const newInfoPaiment= await InfoPaimentModel.create(paymentInfo)
+          
+          return res.send({newInfoPaiment});
+          
       }catch(err){
           return res.status(404).json({message:err.message})
         }

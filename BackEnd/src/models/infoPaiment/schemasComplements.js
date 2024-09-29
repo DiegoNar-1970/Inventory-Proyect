@@ -1,39 +1,35 @@
 import mongoose from "mongoose";
 
-const {Schema, model} = mongoose;
+const { Schema, model } = mongoose;
 
 const extraHourSchema = new Schema({
-    extraHours: { type: String },
-    comissions: { type: String }
-}, { _id: false }); 
-
-const newsItemSchema = new Schema({
-    _id: {type: extraHourSchema},
-    commissionHours: {type: Number},
-    calcHoursTotal: {type: Number}
+    extraHours: { type: String, default: null },
+    comissions: { type: String, default: null }
 }, { _id: false });
 
-export const newsInfoSchema = new Schema({
-    news: {type: [newsItemSchema], default: [] }
-});
-export const NewsInfo = model('NewsInfo', newsInfoSchema);
+export const newsItemSchema = new Schema({
+    _id: { type: extraHourSchema },
+    commissionHours: { type: Number, default: null },
+    calcHoursTotal: { type: Number, default: null }
+}, { _id: false });
 
 export const hourDetailSchema = new Schema({
-    totalHours: { type: Number},
-    typeHour: { type: String  },
-    comissions: { type: String  },
-    paiExtraForHour: { type: Number  },
-    paiOfHours: { type: Number },
-    paiForHourComission: { type: Number }
-}, { _id: false }); 
+    totalHours: { type: Number, default: null },
+    typeHour: { type: String, default: null },
+    comissions: { type: String, default: null },
+    paiExtraForHour: { type: Number, default: null },
+    paiOfHours: { type: Number, default: null },
+    paiForHourComission: { type: Number, default: null }
+}, { _id: false });
 
 export const WorkHoursItem = new Schema({
-    _id: {type:String},
-    comissionForNigthShift: { type: Number  },
-    calcHoursTotal: { type: Number  }
-},{_id: false});
+    _id: { type: String, default: null },
+    comissionForNigthShift: { type: Number, default: null },
+    calcHoursTotal: { type: Number, default: null }
+}, { _id: false });
 
-export const infoWorkHoursSchema = new Schema({
-    workHours:[{type:WorkHoursItem}],
-});
-
+export const paiForHoursShiftSchema = new Schema({
+    pai: { type: Number, default: null },
+    hrs: { type: Number, default: null },
+    type: { type: String, default: null },
+}, { _id: false });

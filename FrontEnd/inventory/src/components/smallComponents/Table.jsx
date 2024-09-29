@@ -73,7 +73,11 @@ import { Popap } from './Popap.jsx';
                     <td >{item.profile.cc}</td> 
                      <td className="text-gray-500">{item.area}</td> 
                     <td >
-                    <button 
+                    <button onClick={()=>{setSee({
+                          component:'paiment',
+                          isTrue:true,
+                          dataItem:item
+                        })}}
                         className=" bg-[#ff969601] border-[1px] border-[#2c5f9598] text-[#4190d9] hover:text-white
                         hover:bg-[#2c3f9598] ml-[5px] rounded-[1em] p-[4px]">Generar Pago</button>
                     <button onClick={()=>{setSee({
@@ -123,7 +127,6 @@ import { Popap } from './Popap.jsx';
             </tbody>
           </table>
           {see.component === 'update' && see.isTrue===true && (
-          
           <Popap
           see={see.dataItem}
           changeSee={changeSee}
@@ -144,6 +147,15 @@ import { Popap } from './Popap.jsx';
             setSee={setSee}
            />
           )}
+            {see.component === 'paiment' && see.isTrue===true && (
+           <Popap
+            see={see.dataItem}
+            changeSee={changeSee}
+            component={''}
+            setSee={setSee}
+           />
+          )}
+          
     </>
   )
 }
