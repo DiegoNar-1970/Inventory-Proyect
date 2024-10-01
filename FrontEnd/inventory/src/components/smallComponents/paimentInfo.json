@@ -1,0 +1,131 @@
+{
+    "paymentInfo": {
+      "employee": "66df8664bc94a15cc4aa4f8a",
+      "News": {
+        "news": [
+          {
+            "_id": {
+              "extraHours": "HORA_EXTRA_FESTIVO_NOCTURNO",
+              "comissions": "COMISION_DOMINICAL_NOCTURNO"
+            },
+            "commissionHours": 2.6666666666666665,
+            "calcHoursTotal": 2.6666666666666665
+          },
+          {
+            "_id": {
+              "extraHours": "HORA_EXTRA_FESTIVO_DIURNO",
+              "comissions": "COMISION_DOMINICAL_DIURNO"
+            },
+            "commissionHours": 5.233333333333333,
+            "calcHoursTotal": 5.233333333333333
+          },
+          {
+            "_id": {
+              "extraHours": "HORA_EXTRA_NOCTURNO",
+              "comissions": "COMISION_NOCTURNO"
+            },
+            "commissionHours": 3.8333333333333335,
+            "calcHoursTotal": 3.8333333333333335
+          },
+          {
+            "_id": {
+              "extraHours": "HORA_EXTRA_DIURNO",
+              "comissions": "COMISION_DIURNO"
+            },
+            "commissionHours": 17.833333333333332,
+            "calcHoursTotal": 17.833333333333332
+          }
+        ],
+        "newsStartWeek": 1,
+        "newsEndWeek": 2
+      },
+      "dayTimeHoliday": {
+        "totalHours": 17.833333333333332,
+        "typeHour": "HORA_EXTRA_DIURNO",
+        "comissions": "COMISION_DIURNO",
+        "paiExtraForHour": 1766.304347826087,
+        "paiOfHours": 157495.47101449277,
+        "paiForHourComission": 8831.521739130436
+      },
+      "nightHoliday": {
+        "totalHours": 2.6666666666666665,
+        "typeHour": "HORA_EXTRA_FESTIVO_NOCTURNO",
+        "comissions": "COMISION_DOMINICAL_NOCTURNO",
+        "paiExtraForHour": 10597.826086956522,
+        "paiOfHours": 47101.44927536232,
+        "paiForHourComission": 17663.04347826087
+      },
+      "dayTimeOvertime": {
+        "totalHours": 17.833333333333332,
+        "typeHour": "HORA_EXTRA_DIURNO",
+        "comissions": "COMISION_DIURNO",
+        "paiExtraForHour": 1766.304347826087,
+        "paiOfHours": 157495.47101449277,
+        "paiForHourComission": 8831.521739130436
+      },
+      "nightOvertime": {
+        "totalHours": 3.8333333333333335,
+        "typeHour": "HORA_EXTRA_NOCTURNO",
+        "comissions": "COMISION_NOCTURNO",
+        "paiExtraForHour": 5298.913043478261,
+        "paiOfHours": 47395.833333333336,
+        "paiForHourComission": 12364.130434782608
+      },
+      "WorkHour": {
+        "workHours": [
+          {
+            "_id": "DIURNO",
+            "comissionForNigthShift": 0,
+            "calcHoursTotal": 46
+          },
+          {
+            "_id": "NOCTURNO",
+            "comissionForNigthShift": 5,
+            "calcHoursTotal": 7
+          },
+          {
+            "_id": "FESTIVO_DIURNO",
+            "comissionForNigthShift": 0,
+            "calcHoursTotal": 15
+          },
+          {
+            "_id": "FESTIVO_NOCTURNO",
+            "comissionForNigthShift": 6,
+            "calcHoursTotal": 8
+          }
+        ],
+        "startWeekworkHour": 2,
+        "endWeekWorkHour": 1
+      },
+      "deducctions": {
+        "pension": 44114.64,
+        "salud": 44114.64
+      },
+      "totalPaiment": 1102865.94,
+      "paiDayShift": {
+        "pai": 325000,
+        "hrs": 46,
+        "type": "DIURNO"
+      },
+      "paiNigthShift": {
+        "pai": 66766.3043478261,
+        "hrs": 7,
+        "type": "NOCTURNO"
+      },
+      "paiDominicalShift": {
+        "pai": 185461.95652173914,
+        "hrs": 15,
+        "type": "FESTIVO_DIURNO"
+      },
+      "paiNigthDominicalShift": {
+        "pai": 118695.65217391305,
+        "hrs": 8,
+        "type": "FESTIVO_NOCTURNO"
+      },
+      "paiForComissions": 325942.03,
+      "auxTransportHrs": 880.4347826086956,
+      "paiOutDeductions": 1014636.66,
+      "totalHrs": 105.56666666666666,
+      "auxTransportPai": 81000
+    }
+  }

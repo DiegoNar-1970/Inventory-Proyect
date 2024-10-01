@@ -15,9 +15,13 @@ export const calcComissions = (news,baseSalary) => {
     let dayTimeHoliday = null;
     let nightHoliday = null;
     let paiForComissions = 0;
+    let hrsC = {
+        hrsC: 0,
+    };
 
-    const processExtraHour = (hourType, porcentageComission, baseSalary ,value) => {
+    const processExtraHour = (hourType, porcentageComission, baseSalary ,value,hrsC) => {
         hourType.totalHours = value.calcHoursTotal;
+        hrsC.hrsC += value.calcHoursTotal;
         hourType.typeHour = value._id.extraHours;
         hourType.comissions = value._id?.comissions;
         hourType.paiExtraForHour = porcentageComission * baseSalary;
@@ -30,19 +34,19 @@ export const calcComissions = (news,baseSalary) => {
         switch (value._id?.extraHours) {
             case EX_HOUR.DAYTIME_OVERTIME:
                 dayTimeOvertime = dayTimeHoliday || initHourType();
-                paiForComissions += processExtraHour(dayTimeOvertime, PEH_DAYTIME_OVERTIME,baseSalary,value);
+                paiForComissions += processExtraHour(dayTimeOvertime, PEH_DAYTIME_OVERTIME,baseSalary,value,hrsC);
                 break;
             case EX_HOUR.NIGHT_OVERTIME:
                 nightOvertime= nightOvertime || initHourType();
-                paiForComissions += processExtraHour(nightOvertime, PEH_NIGHT_OVERTIME,baseSalary, value);
+                paiForComissions += processExtraHour(nightOvertime, PEH_NIGHT_OVERTIME,baseSalary, value,hrsC);
                 break;
             case EX_HOUR.DAYTIME_HOLIDAY:
                 dayTimeHoliday = dayTimeHoliday || initHourType();
-                paiForComissions += processExtraHour(dayTimeHoliday, PEH_DAYTIME_HOLIDAY,baseSalary ,value);
+                paiForComissions += processExtraHour(dayTimeHoliday, PEH_DAYTIME_HOLIDAY,baseSalary ,value,hrsC);
                 break;
             case EX_HOUR.NIGHT_HOLIDAY:
                 nightHoliday= nightHoliday || initHourType();
-                paiForComissions += processExtraHour(nightHoliday, PEH_NIGHT_HOLIDAY,baseSalary,value);
+                paiForComissions += processExtraHour(nightHoliday, PEH_NIGHT_HOLIDAY,baseSalary,value,hrsC);
                 break;
         }
     });
@@ -51,6 +55,7 @@ export const calcComissions = (news,baseSalary) => {
         nightOvertime ,
         dayTimeHoliday,
         nightHoliday,
-        paiForComissions
+        paiForComissions,
+        hrsC
     };
 };

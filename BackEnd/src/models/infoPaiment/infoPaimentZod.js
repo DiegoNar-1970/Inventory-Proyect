@@ -69,6 +69,14 @@ export const infoPaiScheZod = z.object({
     hrs: z.number(),
     type: z.string(),
   }).nullable(),
+  deducctions:z.object({
+    pension: z.number(),
+    salud: z.number()
+  }),
+  auxTransportHrs:z.number(),
+  paiOutDeductions:z.number(),
+  totalHrs:z.number(),
+  auxTransportPai:z.number(),
 });
 
 // Funciones de validación

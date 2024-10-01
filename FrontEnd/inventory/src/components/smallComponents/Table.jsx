@@ -7,6 +7,7 @@ import { deleteEmployee } from '../../services/auth.js';
 import FormUpEmployee from '../employee/Forms/FormUpEmployee.jsx';
 import Profile from '../employee/actions/Profile.jsx';
 import FormHour from '../hours/FormHour.jsx';
+import CardInfoPaiment from '../paiment/CardInfoPaiment.jsx';
 import { Popap } from './Popap.jsx';
 
   const Table = ({data,onChangue}) => {
@@ -151,7 +152,7 @@ import { Popap } from './Popap.jsx';
            <Popap
             see={see.dataItem}
             changeSee={changeSee}
-            component={''}
+            component={CardInfoPaiment}
             setSee={setSee}
            />
           )}

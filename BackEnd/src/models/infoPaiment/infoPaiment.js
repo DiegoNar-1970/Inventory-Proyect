@@ -21,6 +21,10 @@ const infoPaimentSche = new Schema({
         startWeekworkHour:{type:Number},
         endWeekWorkHour:{type:Number}
     },
+    deducctions:{
+        pension:{type:Number},
+        salud:{type:Number}
+    },
     dayTimeHoliday: { type:hourDetailSchema, default:null },
     nightHoliday: { type:hourDetailSchema, default:null },
     dayTimeOvertime: { type:hourDetailSchema, default:null },
@@ -30,8 +34,11 @@ const infoPaimentSche = new Schema({
     paiDominicalShift:{type:paiForHoursShiftSchema},
     paiNigthDominicalShift:{type:paiForHoursShiftSchema},
     paiForComissions:{type:Number},
-    totalPaiment:{type:Number}
-
+    totalPaiment:{type:Number},
+    auxTransportHrs:{type:Number},
+    paiOutDeductions:{type:Number},
+    totalHrs:{type:Number},
+    auxTransportPai:{type:Number},
   });
   
   const InfoPaiment = model('InfoPaiment',infoPaimentSche)

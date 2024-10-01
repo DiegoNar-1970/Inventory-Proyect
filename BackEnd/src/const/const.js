@@ -12,3 +12,4 @@ export const typePaiment=() =>({
     hrs:0,
     type:''
 });
+export const auxTransportHrs=(162000 / 2) / 92;

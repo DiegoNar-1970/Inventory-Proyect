@@ -1,12 +1,11 @@
 
+import { auxTransportHrs } from '../const/const.js';
 import { HRS_MONTH } from '../const/payForHour.js';
 import { calcComissions } from '../helpers/calcComissions.js';
 import { calcPaiment } from '../helpers/calcPaiment.js';
 import { EmployeeModel } from "../models/employee/employee.js";
-import { InfoPaimentModel } from "../models/infoPaiment/infoPaiment.js";
 import { NewsModel } from "../models/news/news.js";
 import { WorkHourModel } from "../models/workHours/workHour.js";
-
 export class WorkHourController{
   static async create(req,res){
     const { id } = req.params;
@@ -85,13 +84,22 @@ try {
 
          const baseSalary=(employee.baseSalary / HRS_MONTH );
          //podriamos evitar hacer la busqueda del empleado si desde el front enviamos la info del empleado 
-         console.log('este es el worHour',workHour)
-         let {paiDayShift,paiNigthShift,paiDominicalShift,paiNigthDominicalShift,totalPaiment}=calcPaiment(workHour,baseSalary);
+         let {paiDayShift,paiNigthShift,paiDominicalShift,paiNigthDominicalShift,totalPaiment,hrs}=calcPaiment(workHour,baseSalary);
 
-         let {dayTimeOvertime,nightOvertime,dayTimeHoliday,nightHoliday,paiForComissions}=calcComissions(news,baseSalary) ;
+         let {dayTimeOvertime,nightOvertime,dayTimeHoliday,nightHoliday,paiForComissions,hrsC}=calcComissions(news,baseSalary) ;
 
+          let totalHrs=hrs.hrs + hrsC.hrsC;
+          let auxTransportPai= auxTransportHrs * totalHrs;
+          if(auxTransportPai > 81000) auxTransportPai = 81000;
+
+          totalPaiment+=auxTransportPai
           totalPaiment=parseFloat((totalPaiment + paiForComissions).toFixed(2));
           paiForComissions=parseFloat((paiForComissions).toFixed(2));
+          
+          let pension= parseFloat((totalPaiment * 0.04).toFixed(2)); 
+          let salud= parseFloat((totalPaiment * 0.04).toFixed(2)); 
+
+          let paiOutDeductions= (totalPaiment - pension) - salud;
           
           const paymentInfo = {
             employee: id,
@@ -109,17 +117,25 @@ try {
               startWeekworkHour: startWeekworkHour || 0,
               endWeekWorkHour: endWeekWorkHour || 0,
             },
-            paiForComissions: paiForComissions || 0,
+            deducctions:{
+              pension:pension,
+              salud:salud
+            },
             totalPaiment: totalPaiment || 0,
             paiDayShift: paiDayShift || null,
             paiNigthShift: paiNigthShift || null,
             paiDominicalShift: paiDominicalShift || null,
             paiNigthDominicalShift: paiNigthDominicalShift || null,
+            paiForComissions: paiForComissions || 0,
+            auxTransportHrs:auxTransportHrs,
+            paiOutDeductions:paiOutDeductions,
+            totalHrs: totalHrs,
+            auxTransportPai:auxTransportPai,
           };
           
-          const newInfoPaiment= await InfoPaimentModel.create(paymentInfo)
+          // const newInfoPaiment= await InfoPaimentModel.create(paymentInfo)
           
-          return res.send({newInfoPaiment});
+          return res.send({paymentInfo});
           
       }catch(err){
           return res.status(404).json({message:err.message})
