@@ -14,6 +14,7 @@ const InputField = ({
     ...rest 
   }) => {
     return (
+      //el error esta generando un re renderizado inapropiado
       <div className={`flex gap-2 ${styleDiv}`}>
         <label htmlFor={name} className="font-sans">{label}</label>
         {type === "select" ? (
