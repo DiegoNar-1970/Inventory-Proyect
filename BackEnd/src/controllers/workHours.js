@@ -4,6 +4,7 @@ import { HRS_MONTH } from '../const/payForHour.js';
 import { calcComissions } from '../helpers/calcComissions.js';
 import { calcPaiment } from '../helpers/calcPaiment.js';
 import { EmployeeModel } from "../models/employee/employee.js";
+import { InfoPaimentModel } from '../models/infoPaiment/infoPaiment.js';
 import { NewsModel } from "../models/news/news.js";
 import { WorkHourModel } from "../models/workHours/workHour.js";
 export class WorkHourController{
@@ -133,9 +134,9 @@ try {
             auxTransportPai:auxTransportPai,
           };
           
-          // const newInfoPaiment= await InfoPaimentModel.create(paymentInfo)
+          const newInfoPaiment= await InfoPaimentModel.create(paymentInfo)
           
-          return res.send({paymentInfo});
+          return res.send({newInfoPaiment});
           
       }catch(err){
           return res.status(404).json({message:err.message})

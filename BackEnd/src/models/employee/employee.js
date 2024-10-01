@@ -12,13 +12,6 @@ const employeeSchema = new Schema({
     },
     parafiscales:{type:Boolean,default:false},
     baseSalary:{type:Number},
-    // bonifics:{
-    //     auxTrasnport:{type:Number},
-    // },
-    // deduccions:{
-    //     salud,
-    //     pension
-    // }
 });
 const Employee=mongoose.model('Employee',employeeSchema);
 export default Employee;

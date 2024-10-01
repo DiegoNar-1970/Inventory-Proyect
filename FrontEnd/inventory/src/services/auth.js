@@ -21,3 +21,5 @@
     export const getNews=(url,data)=>axios.post(url,data);
 
     export const getAllHours=(url,data) => axios.post(url,data);
+
+    export const genrePaimentFetch=(url,data) => axios.post(url,data);

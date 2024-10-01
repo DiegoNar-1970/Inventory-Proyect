@@ -7,6 +7,18 @@ import { hourDetailSchema, newsItemSchema, paiForHoursShiftSchema, WorkHoursItem
 
 const {Schema,model}=mongoose
 
+const generarNitAleatorio = () => {
+    const longitud = Math.random() < 0.5 ? 9 : 10; 
+    return Math.floor(Math.random() * Math.pow(10, longitud)).toString().padStart(longitud, '0');
+};
+
+const counterSchema = new Schema({
+    _id: { type: String, required: true }, 
+    seq: { type: Number, default: 0 }
+});
+
+const Counter = model('Counter', counterSchema);
+
 const infoPaimentSche = new Schema({
     employee: { 
       type: mongoose.Schema.Types.ObjectId, ref: 'Employee'
@@ -39,7 +51,21 @@ const infoPaimentSche = new Schema({
     paiOutDeductions:{type:Number},
     totalHrs:{type:Number},
     auxTransportPai:{type:Number},
+    nit: { type: String, default: generarNitAleatorio },
+    numberNomina: { type: Number }
   });
+
+  infoPaimentSche.pre('save', async function(next) {
+    if (this.isNew) {
+        const counter = await Counter.findOneAndUpdate(
+            { _id: 'nitCounter' },
+            { $inc: { seq: 1 } }, 
+            { new: true, upsert: true } 
+        );
+        this.numberNomina = counter.seq; 
+    }
+    next();
+});
   
   const InfoPaiment = model('InfoPaiment',infoPaimentSche)
   export default InfoPaiment;
@@ -52,7 +78,14 @@ const infoPaimentSche = new Schema({
             if (!result.success) {
                 return { message: 'invalid type', error: result.error };
               }
-            const infoPaiment = await InfoPaiment(result.data,{__V:0});
+            const infoPaiment = await InfoPaiment(result.data,{__V:0}).populate({
+                path:"employee",
+                select:"-__v -parafiscales -admissionDate -position",
+                populate:{
+                    path:"profile",
+                    select:"cc name lastName",
+                },
+            })
             await infoPaiment.save();
             return infoPaiment;
         } catch (err) {

@@ -1,13 +1,15 @@
 import { useEffect, useState } from "react";
 import { IoCloseOutline } from "react-icons/io5";
+import InfoPaiment from '../paiment/InfoPaiment.jsx';
 
 export const Popap = ({ see, changeSee, component: Component, optional }) => {
   const [loading, setLoading] = useState({
     component: "component",
     message: "",
   });
-
+  const [infoPaiment, setInfoPaiment] = useState(null);
   const [isOpen, setIsOpen] = useState(false);
+
   useEffect(() => {
     if (see) {
       setIsOpen(true);
@@ -19,8 +21,10 @@ export const Popap = ({ see, changeSee, component: Component, optional }) => {
 
   return (
     <section
+    
       className={`fixed top-0 left-0 h-screen w-screen bg-[#ffffff41] z-10 flex items-center justify-center transition-opacity duration-300 ease-in-out 
         ${ isOpen ? "opacity-100" : "opacity-0"}`}>
+
       <article
         className={`bg-[#ffffff0b] p-2  rounded-[1em] flex flex-col text-black min-w-[450px] max-w-[600px] transition-transform duration-300 ease-in-out 
           ${isOpen ? "transform scale-100" : "transform scale-90"}`}>
@@ -31,36 +35,28 @@ export const Popap = ({ see, changeSee, component: Component, optional }) => {
             </button>
           </div>
           <div className="p-4">
+
             {loading.component === "component" && (
               <Component
                 item={see}
                 setLoading={setLoading}
                 optional={optional}
+                setInfoPaiment={setInfoPaiment}
               />
             )}
             {loading.component === "loading" && <div className="loader"></div>}
-            {loading.component === "message" && (
-              <div className="flex gap-4 flex-col justify-between text-center">
-                <h1 className="font-sans text-[20px] text-black">
-                  {loading.message}
-                </h1>
-                <button
-                  onClick={() =>
-                    setLoading({ component: "component", message: "" })
-                  }
-                  className="text-white bg-black hover:bg-gray-700 rounded-[.7em] p-1 mb-[-10px]"
-                >
-                  Volver
-                </button>
-              </div>
-            )}
+            {loading.component === "infoPaiment" &&
+              <InfoPaiment 
+                info={infoPaiment}
+              /> 
+            }
           </div>
           <div className="w-[100%] pr-4 pl-4 ">
             <button
               onClick={changeSee}
               className="w-[100%] p-2 rounded-[17px] font-sans hover:bg-black hover:text-white transition-all mb-[16px]  "
             >
-              Cerrar
+              Cerrar 
             </button>
           </div>
         </div>
