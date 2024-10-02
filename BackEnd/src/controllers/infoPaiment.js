@@ -16,6 +16,14 @@ export class InfoPaimentController{
             return res.status(500).json({ message: 'Internal server error', error: err.message });
         }
     }
+    static async getAll(req,res){
+        try{
+            const paiments=await InfoPaimentModel.getAll();
+            return res.status(200).json(paiments);
+        }catch(err){
+            return res.status(500).json({ message: 'Internal server error', error: err.message });
+        }
+    }
     static async getById(req,res){
         
         try{

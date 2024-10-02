@@ -71,7 +71,15 @@ const infoPaimentSche = new Schema({
   export default InfoPaiment;
 
   export class InfoPaimentModel{
-
+    static async getAll(){
+        try{
+            const  info=await InfoPaiment.find();
+            
+            return info
+        }catch(e){
+            return {message:e}
+        }
+    }
     static async create(data){
         try{
             const result = new validatePayment(data);

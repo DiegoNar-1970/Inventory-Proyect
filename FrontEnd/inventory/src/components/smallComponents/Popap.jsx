@@ -47,7 +47,9 @@ export const Popap = ({ see, changeSee, component: Component, optional }) => {
             {loading.component === "loading" && <div className="loader"></div>}
             {loading.component === "infoPaiment" &&
               <InfoPaiment 
-                info={infoPaiment}
+                info={infoPaiment.paiment.newInfoPaiment}
+                startDate={infoPaiment.startDate}
+                endDate={infoPaiment.endDate}
               /> 
             }
           </div>
