@@ -26,7 +26,7 @@ export const Popap = ({ see, changeSee, component: Component, optional }) => {
         ${ isOpen ? "opacity-100" : "opacity-0"}`}>
 
       <article
-        className={`bg-[#ffffff0b] p-2  rounded-[1em] flex flex-col text-black min-w-[450px] max-w-[600px] transition-transform duration-300 ease-in-out 
+        className={`bg-[#ffffff0b] p-2  rounded-[1em] flex flex-col text-black min-w-[450px]  transition-transform duration-300 ease-in-out 
           ${isOpen ? "transform scale-100" : "transform scale-90"}`}>
         <div className="bg-white p-2 rounded-[1em]">
           <div className="flex justify-end text-[30px] w-full hover:text-red-600 transition-all ">

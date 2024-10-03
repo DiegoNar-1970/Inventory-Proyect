@@ -10,6 +10,7 @@
     "preview": "vite preview"
   },
   "dependencies": {
+    "@react-pdf/renderer": "^4.0.0",
     "axios": "^1.7.2",
     "js-cookie": "^3.0.5",
     "prop-types": "^15.8.1",
