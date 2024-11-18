@@ -19,7 +19,7 @@ const SearchForm = ({onSubmit, saveUser={} }) => {
             onSubmit={data}
           >
             <h3 className="text-[25px] font-sans font-medium mb-[1px] ">
-              Filtrar por fechas
+              Fecha de busqueda
             </h3>
             <h3 className="text-[15px] font-sans font-ligth mb-[30px] text-[#6b7280]">
               Selecciona el rango de fechas y semanas para consultar.

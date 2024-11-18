@@ -154,6 +154,7 @@ import { Popap } from './Popap.jsx';
             changeSee={changeSee}
             component={CardInfoPaiment}
             setSee={setSee}
+            
            />
           )}
           
