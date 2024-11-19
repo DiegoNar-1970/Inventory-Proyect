@@ -6,7 +6,7 @@ import { LiaCalendarWeekSolid } from "react-icons/lia";
 import { MdOutlineEmojiFoodBeverage } from "react-icons/md";
 import { formatedDate, formatedTime } from "../../helpers/formateDate";
 import { newFormatShift } from "../../helpers/formatsHours";
-
+import {newFormatHour, newFormatComission} from '../../helpers/formatsHours.js'
 const FormSeeHours = ({item}) => {  
   console.log(item);
   return (
@@ -55,6 +55,18 @@ const FormSeeHours = ({item}) => {
         <h2 className=" font-sans font-medium ">Novedades Registradas:</h2>
         <span className=" font-normal">{item.news !=null ? 'Si' : 'No' }</span>
       </article>
+      {item.news != null 
+      ? 
+      <article className="flex gap-2">
+          <FaRegNewspaper className="text-[22px]"/>
+          <h2 className="font-sans font-medium ">Horas Extras:</h2>
+          <span>{newFormatHour(item.news.extraHours.type)}</span>
+          <div>
+            <span> {item.news.extraHours.hours} Horas y</span>
+            <span> {item.news.extraHours.minutes} Minutos</span>
+          </div>
+        </article>
+      : null }
     </section>
   )
 }

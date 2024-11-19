@@ -4,10 +4,9 @@ import img from "../../media/img/img.png";
 const SeeTotalHours = ({ item, optional }) => {
   const id = item ? item.employee.profile.cc : "";
   const totalHours = optional ? optional[id].totalHours : "";
+  const totalMinutes = optional ? optional[id].totalMinutes : "";
   const news = optional ? optional[id].info : "";
-
   console.log("esats son las news", news);
-
 
   const allNewsAreNull = news.every((item) => item.news === null);
 
@@ -20,11 +19,13 @@ const SeeTotalHours = ({ item, optional }) => {
               {item.employee.profile.name} {item.employee.profile.lastName}
             </span>
             <span className="text-[15px]">{item.employee.profile.cc}</span>
-          </div>
+          </div>  
           <div>
-            <span className="font-semibold font-sans"> Tiene: </span>
-            <span className="font-semibold font-sans"> {totalHours}</span>
+            <span className="font-semibold font-sans">En total Tiene: </span>
+            <span className="font-semibold font-sans"> {totalHours}:{totalMinutes}</span>
             <span className="font-semibold font-sans"> Horas acumuladas </span>
+            <br></br>
+            <span className="text-[15px] text-gray-500">Incluye el total de horas que lleva hasta la fecha mas el total acumulado en novedades</span>
           </div>
         </article>
         <img
@@ -38,17 +39,18 @@ const SeeTotalHours = ({ item, optional }) => {
         {allNewsAreNull ? (
           <h1 className="text-center m-2 font-semibold font-sans text-red-500">No tiene registros de novedades</h1>
         ) : (
+          <div className="overflow-auto max-h-[300px] scroll_none">
           <table className="text-left text-[17px] border-collapse rounded-r-lg">
             <thead className="rounded-r-lg">
               <tr className="border-green-500">
                 <th>Hora Extra</th>
                 <th>Horas</th>
-                <th>Recargo</th>
+                <th className="text-center">Recargo</th>
                 <th>Fecha</th>
                 <th>Semana</th>
               </tr>
             </thead>
-            <tbody>
+            <tbody >
               {news.map((newItem, index) => (
                 <tr key={index}>
                   {newItem.news && newItem.news.extraHours && newItem.news.comissions ? (
@@ -57,7 +59,7 @@ const SeeTotalHours = ({ item, optional }) => {
                         {newFormatHour(newItem.news.extraHours.type)}
                       </td>
                       <td className="text-[17px] text-center font-sans font-medium ">
-                        {newItem.news.extraHours.hours}
+                        {newItem.news.extraHours.hours}:{newItem.news.extraHours.minutes}
                       </td>
                       <td className="text-[17px] text-center font-sans font-medium ">
                         {newFormatComission(newItem.news.comissions.type)}
@@ -74,6 +76,8 @@ const SeeTotalHours = ({ item, optional }) => {
               ))}
             </tbody>
           </table>
+          </div>
+
         )}
       </article>
     </section>

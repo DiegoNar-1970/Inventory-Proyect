@@ -8,6 +8,11 @@
     background: #202124;
     font-family: 'spotify-regular', -apple-system, system-ui, sans-serif;
 }
+
+.scroll_none{
+    scrollbar-width:none;
+}
+
 #main{
   display: grid;
   grid-template-areas:

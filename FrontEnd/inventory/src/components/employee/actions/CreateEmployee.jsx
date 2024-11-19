@@ -1,6 +1,5 @@
 import { useState } from "react";
 import { useForm } from "react-hook-form";
-import { OnSubmit } from "../../../helpers/Funtions.js";
 import { areaOptions, sexOptions } from "../../../helpers/options.js";
 import ErrorDisplay from "../../errors/ErrorDisplay.jsx";
 import InputField from "../../helpers/InputField.jsx";
@@ -18,9 +17,10 @@ const CreateEmployee = ({ onChangue, see, setSee }) => {
   const [resOk, setResOk] = useState("");
 
   const onSubmit = (data) => {
-    setSee({ ...see, isReRender: true, boolean: true });
-    // onChangue('',true,true)
-    OnSubmit(data, setLoading, setErrorReq, setResOk);
+    console.log(data)
+    // setSee({ ...see, isReRender: true, boolean: true });
+    // // onChangue('',true,true)
+    // OnSubmit(data, setLoading, setErrorReq, setResOk);
   };
 
   return (
@@ -41,12 +41,11 @@ const CreateEmployee = ({ onChangue, see, setSee }) => {
         />
       ) : (
         <form
-          className="flex flex-col gap-2 max-w-[400px]"
+          className="flex flex-col gap-2 max-w-[400px] "
           onSubmit={handleSubmit(onSubmit)}
         >
           <div className="flex flex-col gap-2">
             <div className="flex flex-col text-center gap-1 mb-[20px]">
-              <h1 className="text-[20px] font-medium font-sans">Formulario</h1>
               <h1 className="text-[20px] font-medium font-sans">
                 Registro de empleado
               </h1>
@@ -162,10 +161,23 @@ const CreateEmployee = ({ onChangue, see, setSee }) => {
                 type="number"
                 register={register}
                 errors={errors}
-                styleDiv="flex-col flex-1  "
+                styleDiv="flex-col   "
                 placeHolder="Salario"
                 style={"w-full"}
-                valueAsNumber
+                styleIput="max-w-[182px] min-w-[182px]"
+
+              />
+              <InputField
+                label="Cargar la imagen"
+                name="imgUrl"
+                type="file"
+                register={register}
+                errors={errors}
+                styleDiv="flex-col"
+                placeHolder="Salario"
+                style={"w-full"}
+                styleIput="max-w-[182px] min-w-[182px]"
+
               />
             </div>
           </div>

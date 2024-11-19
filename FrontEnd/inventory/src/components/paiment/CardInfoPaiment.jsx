@@ -29,7 +29,7 @@ const CardInfoPaiment = ({item,setLoading,setInfoPaiment}) => {
     }
   })
   return (
-    <form   className="flex flex-col gap-10">
+    <form   className="flex flex-col gap-10 ">
         <section className="text-center flex flex-col gap-2"> 
           <h1 className="font-semibold font-sans text-[30px]">Genera el pago De nomina </h1>
           <h3 className="font-sans text-gray-500 text-[18px]"> Ingresa un rango entre novedades y fechas  </h3>

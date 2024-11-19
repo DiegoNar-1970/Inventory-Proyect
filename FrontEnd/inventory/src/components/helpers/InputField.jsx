@@ -14,6 +14,7 @@ const InputField = ({
     ...rest 
   }) => {
     return (
+      //esta logica esta fatal y hay que mejorarla 
       //el error esta generando un re renderizado inapropiado
       <div className={`flex gap-2 ${styleDiv}`}>
         <label htmlFor={name} className="font-sans">{label}</label>
@@ -50,7 +51,7 @@ const InputField = ({
             type={type}
             placeholder={placeHolder}
             {...register(name, { required: "Campo Requerido", ...validates, ...rest })}
-            defaultValue={defaultValue}
+            defaultValue={defaultValue?defaultValue:null}
             className={`border-[1px] rounded-lg p-[2px] border-gray-400 text-gray-600 ${styleIput}`}
           />
         )}
