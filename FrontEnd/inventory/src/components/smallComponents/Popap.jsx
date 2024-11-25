@@ -21,7 +21,7 @@ export const Popap = ({ see, changeSee, component: Component, optional }) => {
 
   return (
     <section
-    
+    //debo modificar cosas 
       className={`fixed top-0 left-0 h-screen w-screen bg-[#ffffff41] z-10 flex items-center justify-center transition-opacity duration-300 ease-in-out 
         ${ isOpen ? "opacity-100" : "opacity-0"}`}>
 
