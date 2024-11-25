@@ -1,6 +1,5 @@
 import { useState } from "react";
 import { formatedDate } from "../../helpers/formateDate.js";
-import img from '../../media/img/img.png';
 import FormSeeHour from "../hours/FormSeeHours.jsx";
 import FormUpHour from "../hours/FormUpHour.jsx";
 import SeeTotalHours from "../hours/SeeTotalHours.jsx";
@@ -37,11 +36,7 @@ const HoursTable = ({ datos }) => {
               <tr key={info._id} className='text-center'>
                 <td>
                   <div className="flex gap-2 results-center box-border mt-1">
-                    <img
-                      className="min-w-[30px] max-w-[30px] h-full rounded-[2em] overflow-hidden text-ellipsis"
-                      src={img}
-                      alt=""
-                    />
+
                     <span>{info.employee.profile.name}</span>
                   </div>
                 </td>

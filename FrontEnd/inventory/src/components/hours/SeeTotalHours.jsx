@@ -1,6 +1,5 @@
 import { formatedDate } from "../../helpers/formateDate";
 import { newFormatComission, newFormatHour } from "../../helpers/formatsHours";
-import img from "../../media/img/img.png";
 const SeeTotalHours = ({ item, optional }) => {
   const id = item ? item.employee.profile.cc : "";
   const totalHours = optional ? optional[id].totalHours : "";
@@ -27,20 +26,15 @@ const SeeTotalHours = ({ item, optional }) => {
             <br></br>
             <span className="text-[15px] text-gray-500">Incluye el total de horas que lleva hasta la fecha mas el total acumulado en novedades</span>
           </div>
-        </article>
-        <img
-          className="self-center w-[100px] rounded-full h-[100px]"
-          src={img}
-          alt={`${item.employee.profile.name}`}
-        />
+        </article>  
       </article>
       <article className="flex flex-col gap-2 text-[18px] mt-[20px]">
         <h2 className= "font-semibold font-sans" >Novedades</h2>
         {allNewsAreNull ? (
           <h1 className="text-center m-2 font-semibold font-sans text-red-500">No tiene registros de novedades</h1>
         ) : (
-          <div className="overflow-auto max-h-[300px] scroll_none">
-          <table className="text-left text-[17px] border-collapse rounded-r-lg">
+          <div className="overflow-auto max-h-[300px] w-full  scroll_none">
+          <table className="text-left text-[17px] border-collapse w-full rounded-r-lg">
             <thead className="rounded-r-lg">
               <tr className="border-green-500">
                 <th>Hora Extra</th>

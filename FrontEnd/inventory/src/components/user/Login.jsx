@@ -1,7 +1,7 @@
 // import { useState } from "react";
 import { useContext, useEffect } from "react";
 import { useForm } from "react-hook-form";
-import { Link, useNavigate } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import { AuthContext } from "../../context/AuthContext.jsx";
 const url='/login'
 
@@ -58,9 +58,8 @@ const Login = () => {
                     {errors.password && <span className="text-red-600">{errors.password.message}</span>}
                 </div>
                 <div className="flex justify-between text-white mt-[19px]" >
-                    <Link to='/register' className="  text-orange-300 rounded-[1em] outline outline-[1px] p-[5px] 
-                     hover:bg-[#fdbb741c]  hover:outline-none hover:text-orange-400 transition-all" >Registrarse</Link>
-                    <button className=" text-green-300 rounded-[1em] p-1">Login</button>
+                    <button className=" text-white rounded-[1em] p-1 w-full bg-[#22c55e39] outline outline-[1px] outline-[#22c55e]
+                     hover:bg-[#22c55e] duration-200">Login</button>
                 </div>
             </form>
     </div>
